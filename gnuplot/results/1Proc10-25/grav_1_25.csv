@@ -1,0 +1,9 @@
+Run with 1 processes and 2^25 elements per node
+step;total_time;work_time_min;work_time_avg;work_time_max;prep_time_min;prep_time_avg;prep_time_max;comm_time_min;comm_time_avg;comm_time_max
+1;1,27e+03;1,29e+03;1,29e+03;1,29e+03;4,82e-05;4,82e-05;4,82e-05;7,15e-06;7,15e-06;7,15e-06
+2;1,27e+03;1,29e+03;1,29e+03;1,29e+03;2,22e-05;2,22e-05;2,22e-05;2,86e-06;2,86e-06;2,86e-06
+3;1,27e+03;1,29e+03;1,29e+03;1,29e+03;1,6e-05;1,6e-05;1,6e-05;2,86e-06;2,86e-06;2,86e-06
+4;1,27e+03;1,29e+03;1,29e+03;1,29e+03;1,5e-05;1,5e-05;1,5e-05;3,1e-06;3,1e-06;3,1e-06
+5;1,27e+03;1,29e+03;1,29e+03;1,29e+03;2,1e-05;2,1e-05;2,1e-05;3,1e-06;3,1e-06;3,1e-06
+
+%NQSII(INFO): Batch job received signal SIGKILL. (Exceeded per-req elapse time limit)

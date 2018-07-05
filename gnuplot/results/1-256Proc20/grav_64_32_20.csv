@@ -1,0 +1,121 @@
+
+%NQSII(INFO): ------- Output from job:0000 -------
+Run with 32 processes and 2^20 elements per node
+step;total_time;work_time_min;work_time_avg;work_time_max;prep_time_min;prep_time_avg;prep_time_max;comm_time_min;comm_time_avg;comm_time_max
+1;40,9;41,4;60,9;111;0,0675;0,174;0,211;0,00876;0,0106;0,0119
+2;40,8;41,3;60,8;111;0,0794;37,2;69,3;0,00619;0,00775;0,00925
+3;40,8;41,3;60,8;111;0,08;37,2;69,3;0,00639;0,00796;0,00945
+4;40,8;41,3;60,8;111;0,0826;37,2;69,3;0,00681;0,00851;0,00991
+5;40,8;41,3;60,8;111;0,079;37,2;69,3;0,00625;0,00783;0,00936
+6;40,8;41,3;60,8;111;0,0795;37,2;69,3;0,00619;0,00783;0,00927
+7;40,8;41,3;60,9;111;0,0804;37,2;69,3;0,0062;0,0079;0,00941
+8;41;41,5;62;115;0,075;37,2;69,3;0,00603;0,00776;0,00909
+9;40,7;41,3;60,8;111;0,0796;39,3;73;0,00615;0,00785;0,00923
+10;40,8;41,4;61,2;112;0,0792;37,2;69,3;0,00633;0,00801;0,00965
+
+real	18m27.945s
+user	293m55.126s
+sys	0m29.949s
+Request ID: 139197.ace-ssiox
+    Request Name = gravitation_64_32_20
+    User  Name = sunms434
+    User  ID   = 62718
+    Group ID   = 8229
+    Current State           = Running
+    Previous State          = Pre-running
+    State Transition Time   = Thu Jun  7 13:25:31 2018
+    State Transition Reason = PRERUN_SUCCESS
+    Queue = clmedium@ace-ssiox (Execution Queue)
+    Job Topology = INTMPI Job
+    Request Privilege = Level 0
+    Ticket Key        = (none)
+    Request Priority  = 0
+    Request Loglevel  = 0
+    Rerunable    = Yes
+    Holdable     = Yes
+    Hold Type    = (none)
+    Migratable   = Yes
+    Suspend Type = (none)
+    Account Code = (none)
+    Stdout = nesh-fe1:/gpfs/fs5/home-sh/sunms434/gravitation/grav_64_32_20.csv
+    Stderr = nesh-fe1:/gpfs/fs5/home-sh/sunms434/gravitation/grav_64_32_20.csv
+    Reqlog = (none)
+    Shell = (none)
+    Mail Address = sunms434@nesh-fe1.rz.uni-kiel.de
+    Mail Option  = (none)
+    Job Condition:
+        Job NO: 0-1 ""
+    Number of Jobs = 2
+    Created Request Time = Thu Jun  7 13:03:14 2018
+    Entered Queue Time   = Thu Jun  7 13:03:14 2018
+    Planned Start Time   = Thu Jun  7 13:25:29 2018
+    Execute Request Time = (none)
+    Started Request Time = Thu Jun  7 13:25:31 2018
+    Ended Request Time   = (none)
+    Requested Start Time = (none)
+    Deadline Time        = (none)
+    UMASK = 022
+    Checkpoint Interval = 0
+    Restart File Directory = (none)
+    Reservation ID      = (none)
+    qattach command = Enable
+    Attach = No
+    Cluster Type Select = NONE
+  Resources Information:
+    Memory    = 23.544903GB
+    CPU Time  = 17271.700000S
+    Accumulated CPU Time = 17271.700000S
+    Elapse    = 1109S
+    Remaining Elapse = 6091S
+    Virtual Memory = 29.510567GB
+  Resources Limits:
+    (Per-Req) Elapse Time Limit       = Max:     7200S Warn:     7200S 
+    (Per-Job) CPU Time                = Max:   230400S Warn:   230400S 
+    (Per-Job) CPU Resident Number     = Max: UNLIMITED Warn:       --- 
+    (Per-Job) CPU Resident Time       = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) CPU Number              = Max:        32 Warn:       --- 
+    (Per-Job) Tape Number             = Max: UNLIMITED Warn:       --- 
+    (Per-Job) Open File Number        = Max: UNLIMITED Warn:       --- 
+    (Per-Job) Process Number          = Max: UNLIMITED Warn:       --- 
+    (Per-Job) Memory Size             = Max:      196G Warn:      196G 
+    (Per-Job) Virtual Memory Size     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) Permanent File Capacity = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) Temporary File Capacity = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) RLG 0 File Capacity     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) RLG 1 File Capacity     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) RLG 2 File Capacity     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) RLG 3 File Capacity     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) GPID Number             = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) CPU Time                = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) CPU Resident Number     = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) CPU Resident Time       = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) CPU Number              = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) Task Number             = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) Open File Number        = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) Memory Size             = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Virtual Memory Size     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Data Segment Size       = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Stack Segment Size      = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Core File Size          = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Permanent File Size     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Permanent File Capacity = Max: UNLIMITED Warn: UNLIMITED 
+  Kernel Parameter:
+    Resource Sharing Group     = 0
+    Nice Value                 = 0
+    Base Priority              = 80
+    Modification Factor of CPU = 2
+    Tick Count                 = 0
+    Decay Factor               = 1
+    Decay Interval             = 1
+    Timeslice Value            = 1000
+    Memory Priority            = 0
+    MRT Size Effect            = 30
+    MRT Priority Effect        = 100
+    MRT Minimum                = 2
+    Aging Range                = 160
+    Slave Priority             = 0
+  User Attributes:
+    (none)
+
+
+%NQSII(INFO): ------- Output from job:0001 -------

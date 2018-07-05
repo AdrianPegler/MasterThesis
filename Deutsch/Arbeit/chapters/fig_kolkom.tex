@@ -1,0 +1,88 @@
+\begin{figure}[tbp]%
+      \begin{subfigure}[l]{0.87\textwidth}
+	\begin{tabular}[]{m{0.2cm} m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm} m{1.5cm} m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}}
+	  & \multicolumn{13}{l}{Daten $\longrightarrow$}\\
+	  \cline{2-7} \cline{9-14}
+	  \multirow{6}{*}{\begin{turn}{-90} Prozesse $\longrightarrow$ \end{turn}}
+	  &\multicolumn{1}{|c|}{$A_0$}& & & & &\multicolumn{1}{|m{0.3cm}|}{ } &\multirow{6}{*}{\large $\xrightarrow{\text{Broadcast}}$} & \multicolumn{1}{|c|}{$A_0$}& & & & &\multicolumn{1}{|m{0.3cm}|}{ }\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_0$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_0$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_0$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_0$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_0$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	\end{tabular}
+	\subcaption{Beim \code{MPI\_Bcast} wird ein Datensatz von einem Root-Prozess an alle anderen Prozesse gesendet und von diesen empfangen.}
+      \end{subfigure}
+      
+      \begin{subfigure}[l]{0.87\textwidth}
+	\begin{tabular}[]{m{0.2cm} m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm} m{1.5cm} m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}}
+	  & \multicolumn{13}{l}{Daten $\longrightarrow$}\\
+	  \cline{2-7} \cline{9-14}
+	  \multirow{6}{*}{\begin{turn}{-90} Prozesse $\longrightarrow$ \end{turn}}
+	  &\multicolumn{1}{|c|}{$A_0$}&$A_1$&$A_2$&$A_3$&$A_4$&\multicolumn{1}{|m{0.3cm}|}{$A_5$} &\multirow{6}{*}{\large \shortstack{ $\xrightarrow{\text{ Scatter }}$ \\ $\xleftarrow[\text{ Gather }]{}$ }} & \multicolumn{1}{|c|}{$A_0$}& & & & &\multicolumn{1}{|m{0.3cm}|}{ }\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_1$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_2$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_3$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_4$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{ }& & & & &\multicolumn{1}{|c|}{ }                         & & \multicolumn{1}{|c|}{$A_5$}    & & & & &                \multicolumn{1}{|c|}{ }    \\
+	  \cline{2-7} \cline{9-14}
+	\end{tabular}
+	\subcaption{\code{MPI\_Scatter} verteilt ein Array von Daten auf die Prozesse. \code{MPI\_Gather} vereinigt Daten aller Prozesse in einem Array auf einem Root-Prozess.}
+      \end{subfigure}
+      
+      \begin{subfigure}[l]{0.87\textwidth}
+	\begin{tabular}[]{m{0.2cm} m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm} m{1.5cm} m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}}
+	  & \multicolumn{13}{l}{Daten $\longrightarrow$}\\
+	  \cline{2-7} \cline{9-14}
+	  \multirow{6}{*}{\begin{turn}{-90} Prozesse $\longrightarrow$ \end{turn}}
+	  &\multicolumn{1}{|c|}{$A_0$}&$B_0$&$C_0$&$D_0$&$E_0$&\multicolumn{1}{|m{0.3cm}|}{$F_0$} &\multirow{6}{*}{\large $\xleftarrow{\text{Allgather}}$} & \multicolumn{1}{|c|}{$A_0$}& & & & &\multicolumn{1}{|m{0.3cm}|}{ }\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$A_0$}&$B_0$&$C_0$&$D_0$&$E_0$&\multicolumn{1}{|m{0.3cm}|}{$F_0$}                         & & \multicolumn{1}{|c|}{$B_0$}& & & & &\multicolumn{1}{|c|}{ }\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$A_0$}&$B_0$&$C_0$&$D_0$&$E_0$&\multicolumn{1}{|m{0.3cm}|}{$F_0$}                         & & \multicolumn{1}{|c|}{$C_0$}& & & & &\multicolumn{1}{|c|}{ }\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$A_0$}&$B_0$&$C_0$&$D_0$&$E_0$&\multicolumn{1}{|m{0.3cm}|}{$F_0$}                         & & \multicolumn{1}{|c|}{$D_0$}& & & & &\multicolumn{1}{|c|}{ }\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$A_0$}&$B_0$&$C_0$&$D_0$&$E_0$&\multicolumn{1}{|m{0.3cm}|}{$F_0$}                         & & \multicolumn{1}{|c|}{$E_0$}& & & & &\multicolumn{1}{|c|}{ }\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$A_0$}&$B_0$&$C_0$&$D_0$&$E_0$&\multicolumn{1}{|m{0.3cm}|}{$F_0$}                         & & \multicolumn{1}{|c|}{$F_0$}& & & & &\multicolumn{1}{|c|}{ }\\
+	  \cline{2-7} \cline{9-14}
+	\end{tabular}
+	\subcaption{\code{MPI\_Allgather} vereint ebenfalls Daten aller Prozesse, allerdings erhält jeder Prozess eine Kopie des Arrays.}
+      \end{subfigure}
+      
+      \begin{subfigure}[l]{0.87\textwidth}
+	\begin{tabular}[]{m{0.2cm} m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm} m{1.5cm} m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}|m{0.3cm}}
+	  & \multicolumn{13}{l}{Daten $\longrightarrow$}\\
+	  \cline{2-7} \cline{9-14}
+	  \multirow{6}{*}{\begin{turn}{-90} Prozesse $\longrightarrow$ \end{turn}}
+	  &\multicolumn{1}{|c|}{$A_0$}&$A_1$&$A_2$&$A_3$&$A_4$&\multicolumn{1}{|m{0.3cm}|}{$A_5$} &\multirow{6}{*}{\large $\xrightarrow{\text{Alltoall}}$} & \multicolumn{1}{|c|}{$A_0$}&$B_0$&$C_0$&$D_0$&$E_0$&\multicolumn{1}{|m{0.3cm}|}{$F_0$}\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$B_0$}&$B_1$&$B_2$&$B_3$&$B_4$&\multicolumn{1}{|m{0.3cm}|}{$B_5$} & & \multicolumn{1}{|c|}{$A_1$}&$B_1$&$C_1$&$D_1$&$E_1$&\multicolumn{1}{|m{0.3cm}|}{$F_1$}\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$C_0$}&$C_1$&$C_2$&$C_3$&$C_4$&\multicolumn{1}{|m{0.3cm}|}{$C_5$} & & \multicolumn{1}{|c|}{$A_2$}&$B_2$&$C_2$&$D_2$&$E_2$&\multicolumn{1}{|m{0.3cm}|}{$F_2$}\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$D_0$}&$D_1$&$D_2$&$D_3$&$D_4$&\multicolumn{1}{|m{0.3cm}|}{$D_5$} & & \multicolumn{1}{|c|}{$A_3$}&$B_3$&$C_3$&$D_3$&$E_3$&\multicolumn{1}{|m{0.3cm}|}{$F_3$}\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$E_0$}&$E_1$&$E_2$&$E_3$&$E_4$&\multicolumn{1}{|m{0.3cm}|}{$E_5$} & & \multicolumn{1}{|c|}{$A_4$}&$B_4$&$C_4$&$D_4$&$E_4$&\multicolumn{1}{|m{0.3cm}|}{$F_4$}\\
+	  \cline{2-7} \cline{9-14}
+	  &\multicolumn{1}{|c|}{$F_0$}&$F_1$&$F_2$&$F_3$&$F_4$&\multicolumn{1}{|m{0.3cm}|}{$F_5$} & & \multicolumn{1}{|c|}{$A_5$}&$B_5$&$C_5$&$D_5$&$E_5$&\multicolumn{1}{|m{0.3cm}|}{$F_5$}\\
+	  \cline{2-7} \cline{9-14}
+	\end{tabular}
+	\subcaption{\code{MPI\_Alltoall} ist ein simultanes MPI\_Scatter aller Prozesse. Betrachtet man die Prozesse und Daten als Matrix, wird eine Matrixtranformation durchgeführt.}
+      \end{subfigure}
+      
+      \caption{Möglichkeiten der kollektiven Kommunikation in MPI. (Quelle: \citet{dartmouth})}%
+      \label{fig:kolkom}%
+\end{figure}%

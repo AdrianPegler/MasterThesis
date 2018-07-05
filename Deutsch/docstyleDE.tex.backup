@@ -1,0 +1,54 @@
+\usepackage{etex}		% fix for miktex version 2.9 and above
+\reserveinserts{10}		% fix for miktex version 2.9 and above
+\usepackage{fixltx2e}
+\usepackage[resetfonts]{cmap}
+\usepackage{nameref}
+
+%% imports "SE-KCSS-Style"
+\usepackage[%
+  language=german,paper=a4paper,largepaper=true,%
+  algorithm=false,%
+  biblatexstyle=authoryear-square,biblatexOptions={natbib=true,backend=biber},%
+  acronymOptions={smaller,printonlyused},%,withpage
+]{ifiseries}
+
+\usepackage[format=hang]{caption}[2008/08/24]
+\usepackage{textcomp}
+\usepackage{todonotes}
+\newcommand{\thesistitlepage}[5]{\gentitlepage{#1}{#2}{#3\\\Large\vspace{5ex}#4}{\Large\textsc{Christian-Albrechts-Universit\"{a}t zu Kiel\\Institut f\"{u}r Informatik\\ Arbeitsgruppe Scientific Computing }\\\vspace{10ex}\begin{tabular}{rl}Betreut durch: & Prof. Dr. Steffen B\"{o}rm \\ & #5 \\\end{tabular}}}
+\ExecuteBibliographyOptions{sortcase=false,babel=other,backref=true,abbreviate=false}
+\ExecuteBibliographyOptions{isbn=false,url=true,doi=false,eprint=false}
+\addbibresource{bibliography.bib}
+
+\hypersetup{bookmarksdepth=3}
+\hypersetup{bookmarksopen=true}
+\hypersetup{bookmarksopenlevel=0}
+\hypersetup{bookmarksnumbered=true}
+
+\newcommand{\TODO}[1]{\todo[inline]{#1}}
+
+\renewcommand*{\eidesstatt}{%
+\newpage\thispagestyle{empty}~\newpage
+\thispagestyle{plain}
+\hskip 0mm
+\vfill
+\noindent
+\begin{otherlanguage}{ngerman}
+	\textbf{Eidesstattliche Erkl{\"a}rung}\par
+	\bigskip\noindent Hiermit erkl{\"a}re ich an Eides statt, dass
+	ich die vorliegende Arbeit selbst\-st{\"a}n\-dig verfasst und keine
+	anderen als die angegebenen Quellen und Hilfsmittel verwendet habe.\par
+	\bigskip\noindent Kiel, \today
+	\vskip 10mm
+	\hfill\rule{18em}{.3pt}%
+\end{otherlanguage}}
+
+\lstset{
+	frame=single,
+	breaklines=true,
+	numbers=left,
+	numbersep=6pt,
+	tabsize=3,
+}
+
+\endinput

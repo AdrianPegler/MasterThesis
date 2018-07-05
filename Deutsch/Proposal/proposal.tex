@@ -1,0 +1,160 @@
+\documentclass[10pt]{book}
+
+\usepackage{import}
+
+% Searches packages and includes within docstyleDE relative to the given path "../"
+\subimport{../}{docstyleDE}
+% Important: the files docstyleDE.tex and ifiseries.sty must be in the same directory.
+
+\usepackage{pgfgantt}
+\ganttset{%
+  calendar week text={%
+    \currentweek%
+  }%
+}
+
+\usepackage{rotating}
+%\usepackage{lscape}
+\usepackage{pdflscape}
+
+\hypersetup{pdftitle=Meine Fake Bachelorarbeit mit einem sehr sehr sehr lange Titel}
+\hypersetup{pdfauthor=John Q. Pregraduate}
+\hypersetup{pdfsubject=Proposal einer Bachelorarbeit}
+\hypersetup{pdfkeywords=}
+
+\begin{document}
+\frontmatter
+  \thesistitlepage
+    {Meine Fake Bachelorarbeit \\[.1em]mit einem sehr sehr \\[.1em]sehr langen Titel}% Title
+    {Proposal einer Bachelorarbeit}% Thesistype
+    {Hans Eduard Wurst}% Name
+    {\today}% Date
+    %[..] andere akademische Grade (Bakk., PhD, Bachelor- und Mastergrade mit englischen Bezeichnungen) sind nachzustellen (§ 88 Abs. 2 Universitätsgesetz)
+    {M.Sc. weiterer Betreuer} % additional advisors (add more than one with: name1 \\& name2 \\& name3
+
+  \tableofcontents{}
+  %\listoffigures{}\listoftables{}\lstlistoflistings{}
+  %\chapter*{List of Acronyms}
+  %% List of acronyms
+
+\mainmatter
+
+%% the actual thesis
+%% use \include{filename} and \includeonly{filename} to organize your thesis
+
+\chapter{Einleitung}
+  Dies ist die Einleitung
+  \citet{Shaw2003} haben ein ganz tolles Papier geschrieben
+  Dies war ein Beispiel für den \textit{natbib} Befehl für \texttt{\textbackslash{}citet\{\}}.
+  
+  \textit{AspectJ} ist ein tolles Tool~\citep{AspectJ}. Dies war ein Beispiel für den \textit{natbib} Befehl \texttt{\textbackslash{}citep\{\}}.
+  
+  Kieker: \citep{Rohr2008, Hoorn2009, Hoorn2012}
+  
+  Artikel Beispiel: \citep{Frey2011}
+  
+  Wir werden nun die Verwendung von Bildern veranschaulichen (siehe \autoref{fig:figure}).
+  
+  \begin{figure}[t]%
+    \centering%
+    \includegraphics[width=0.3\textwidth]{img/template_circle.pdf}%
+    \caption{Ein Kreis}%
+    \label{fig:figure}%
+  \end{figure}%
+
+  Weitere Hinweise auf \url{http://se.informatik.uni-kiel.de/research/scientific-work/} und \url{http://www.twenzel.de/}.
+
+  \section{Motivation}
+    \blindtext
+  \section{Aufbau}
+    \autoref{chp:Foundations} präsentiert alle schönen Grundlagen. \TODO{Anpassen!}
+
+\chapter{Ziele}\label{chp:Goals}
+Inhalt:
+\begin{itemize}
+	\item \textbf{Was} wird angestrebt? => Beschreibung des Problems
+	\item \textbf{Warum} wird es angestrebt? => Kontext und Zweck
+\end{itemize}
+
+\section{Z1: xxx}
+\blindtext
+
+\section{Z2: xxx}
+\blindtext
+
+\chapter{Grundlagen und Technologien}\label{chp:Foundations}
+
+Jedes Unterkapitel muss eine Begründung enthalten, die angibt, inwiefern das Unterkapitel relevant für die Thesis ist.
+
+  \section{Grundlage oder Technologie 1}
+    \blindtext
+  \section{Grundlage oder Technologie 2}
+    \blindtext
+  \section{Grundlage oder Technologie n}
+    \blindtext
+
+\chapter{Ansatz Teil 1}\label{chp:Approach1}
+  \section{Ansatz Teil 1 Unterkapitel 1}
+    \blindtext
+  \section{Ansatz Teil 1 Unterkapitel 2}
+    \blindtext
+  \section{Ansatz Teil 1 Unterkapitel n}
+    \blindtext
+
+\chapter{Zeitplan}\label{chp:Schedule}
+  Ein erster Zeitplan und ein Gantt-Chart.
+  \section{AP1: Literature Research}
+  	\blindtext
+  \section{AP2: xxx}
+	\blindtext
+  \section{AP3: xxx}
+    \blindtext
+  \section{AP4: Thesis}
+    \blindtext
+  \section{AP5: Presentation}
+	\blindtext
+
+  \section{Gantt Chart}
+  \begin{landscape}
+
+	\begin{figure}
+		\centering
+		\begin{ganttchart}[%Specs
+			vgrid,
+			hgrid,
+	        x unit=0.75mm,
+	        y unit chart=0.7cm,
+	        link bulge=2.5,
+	        milestone right shift=3,
+			time slot format=isodate
+		]{2015-04-23}{2015-10-31}
+		  \gantttitlecalendar{month=shortname, week} \\
+		  
+		  %\ganttgroup{Preparation}{2015-04-23}{2015-05-31} \\
+		  %\ganttgroup{Development}{2015-06-01}{2015-09-14} \\
+		  %\ganttgroup{Writing}{2015-04-23}{2015-10-31} \\
+		  
+		  \ganttbar[name=lit]{AP1: Literature Research}{2015-04-23}{2015-05-25} \\
+		  \ganttbar[name=fam]{AP2: xxx}{2015-04-23}{2015-05-31} \\
+		  \ganttbar[name=des]{AP3: xxx}{2015-06-01}{2015-06-31} \\
+		  %\ganttbar[name=imp]{Implementation}{2015-07-01}{2015-08-31} \\
+		  %\ganttbar[name=tes]{Testing}{2015-07-01}{2015-09-14} \\
+		  %\ganttbar[name=pro]{Proposal}{2015-04-23}{2015-05-15} \\
+		  \ganttbar[name=the]{AP4: Thesis}{2015-05-16}{2015-10-31} \\
+		  \ganttbar[name=pre]{AP5: Presentation}{2015-10-01}{2015-10-14} \\
+		  
+		  \ganttlink{fam}{des}
+		  %\ganttlink{des}{imp}
+		  %\ganttlink[link mid=0.25]{des}{tes}
+		  %\ganttlink{pro}{the}
+		\end{ganttchart}
+		\caption{Gantt chart showing the schedule of this thesis}
+		\label{fig:Gantt}
+	 \end{figure}
+  \end{landscape}
+%%
+
+\backmatter
+\tocbibliography
+
+\end{document}

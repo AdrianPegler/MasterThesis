@@ -1,0 +1,92 @@
+\begin{figure}[t]
+\begin{subfigure}{0.9\textwidth}
+\begin{lstlisting}[language=C, label=lst:setup, 
+		    caption={Dies sind die Kernmethoden der Konstruktion des Clusterbaumes. Die Teilung der bounding box wird hier vorgenommen
+		    sowie die Sortierung der Elemente und Konstruktion der Sohncluster gestartet.}]
+void _setup(Cluster *c, int depth){
+[...]
+  if(depth < MAX_DEPTH){		//split as long as condition is not met
+      _setup_nonLeafCluster(c, depth);
+  }
+[...]
+}
+void _setup_nonLeafCluster(Cluster *c, int depth){
+  int dir = _largest_direction(c);		
+  int border = _sortIndices(c, dir);	//number of elements in the first son cluster
+  double b1[3],a2[3];			//new bounding box points
+  for(int d = 0; d < 3; d++){
+      if(d == dir){
+	  b1[d] = c->center[d];
+	  a2[d] = c->center[d];
+      } else {
+	  b1[d] = c->b[d];
+	  a2[d] = c->a[d];
+      }
+  }
+  c->num_sons = 2;
+  c->son[0] = _new_bound_Cluster(c->start, border, c->bodies, c->a, b1);
+  _setup(c->son[0], depth+1);
+  c->son[1] = _new_bound_Cluster(c->start + border, c->n - border, c->bodies, a2, c->b);
+  _setup(c->son[1], depth+1);
+}
+\end{lstlisting}
+\end{subfigure}
+\end{figure}
+
+\begin{figure}[t]
+\begin{subfigure}{0.9\textwidth}
+\begin{lstlisting}[language=C, label=lst:init, caption={Hier wird der Wert \code{MAX\_DEPTH} für die Abbruchbedingung berechnet.}]
+void init(int argc, String* argv){
+[...]
+switch(argc){
+  case 3:
+    pot = atoi(argv[2]);
+  case 2:
+    INTERPOLATION_POINTS = atoi(argv[1]);
+    [...]
+}
+  NUM_SUB_MASSES = INTERPOLATION_POINTS * INTERPOLATION_POINTS * INTERPOLATION_POINTS;
+[...]
+  int leaf_pot = INTERPOLATION_POINTS - 1 ? ceil(log2(2 * NUM_SUB_MASSES)) : 4;
+  MAX_DEPTH = pot - leaf_pot;
+[...]
+}
+\end{lstlisting}
+\end{subfigure}
+\end{figure}
+
+\begin{figure}[t]
+\begin{subfigure}{0.9\textwidth}
+\begin{lstlisting}[language=C, label=lst:sort, caption={Diese Methode nimmt die Sortierung der \code{bodies} anhand einer vorgegebenen Koordinatenrichtung vor.}]
+int _sortIndices(Cluster *c, int dir){
+  if(0 == c->n){
+      return 0;
+  }
+  int j, front, back;
+  double *assoc_coord;
+  
+  //get associated coordinates of bodies
+  assoc_coord = _getAssocCoord(c->bodies, dir);
+  
+  //sort the bodies according to clusters center
+  front = 0;
+  back  = c->n;
+  back -= 1;
+  do {
+      j = c->start + front;
+      
+      if(assoc_coord[j] < c->center[dir]){
+	  front++;
+      } else {
+	  if(assoc_coord[c->start + back] <= c->center[dir]){
+	      swap_bodies(c->bodies, c->start + front, c->start + back);
+	  }
+	  back--;
+      }
+  } while(front <= back);
+
+  return front;
+}
+\end{lstlisting}
+\end{subfigure}
+\end{figure}

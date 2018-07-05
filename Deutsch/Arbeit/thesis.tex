@@ -1,0 +1,76 @@
+\documentclass[10pt]{book}
+
+\usepackage{import}
+
+% Searches packages and includes within docstyleDE relative to the given path "../"
+\subimport{../}{docstyleDE}
+% Important: the files docstyleDE.tex and ifiseries.sty must be in the same directory.
+
+%\bibliographystyle{ksfh_nat}
+
+\hypersetup{pdftitle=Simulation eines Vielkörpersystems auf einem verteilten Rechner}
+\hypersetup{pdfauthor=Adrian Pegler}
+\hypersetup{pdfsubject=Masterarbeit}
+\hypersetup{pdfkeywords=}
+
+\begin{document}
+\frontmatter
+  \thesistitlepage
+    {Simulation eines Vielkörpersystems auf einem verteilten Rechner}
+    %{Meine Fake Bachelorarbeit \\[.1em]mit einem sehr sehr \\[.1em]sehr langen Titel}% Title
+    {Masterarbeit}% Thesistype
+    {Adrian Pegler}% Name
+    {\today}% Date
+    {Dipl.-Inf. Sven Christophersen} % additional advisors (add more than one with: name1 \\& name2 \\& name3
+
+  \eidesstatt{}
+
+  \chapter*{Zusammenfassung}
+    \blindtext
+
+  \tableofcontents{}
+  %\listoffigures{}\listoftables{}\lstlistoflistings{}
+  %\chapter*{List of Acronyms}
+  %% List of acronyms
+
+\mainmatter
+
+%% the actual thesis
+%% use \include{filename} and \includeonly{filename} to organize your thesis
+
+%Chapter: Einleitung
+\include{chapters/einleitung}
+
+\include{chapters/foundations}
+
+  %\include{chapters/parallel}
+  %\include{chapters/mpi}
+
+\include{chapters/hauptteil}
+
+% \chapter{Ansatz Teil 2}\label{chp:Approach2}
+%   \section{Ansatz Teil 2 Unterkapitel 1}
+%     \blindtext
+%   \section{Ansatz Teil 2 Unterkapitel 2}
+%     \blindtext
+%   \section{Ansatz Teil 2 Unterkapitel n}
+%     \blindtext
+
+\chapter{Evaluierung}\label{chp:Evaluation}
+  \blindtext
+
+% \chapter{Verwandte Arbeiten}\label{chp:Related}
+%   \blindtext
+
+\chapter{Fazit und Ausblick}\label{chp:Conclusions}
+  \section{Fazit}
+    \blindtext
+  \section{Ausblick}
+    \blindtext
+
+%%
+
+\backmatter
+  \tocbibliography
+
+\end{document}

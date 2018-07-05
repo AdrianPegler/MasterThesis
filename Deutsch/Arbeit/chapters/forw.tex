@@ -1,0 +1,103 @@
+\begin{figure}[t]
+  \begin{subfigure}{0.9\textwidth}
+    \begin{lstlisting}[language=C, label=lst:forw, caption={Diese Methode dient dem rekursiven Aufruf der Vorwärtstransformation und delegiert die Konstruktion der Ersatzmassen.
+							    Dabei wird zwischen Blatt-und Nicht-Blattclustern unterschieden.}]
+void forward(Cluster *c){
+  if(c->num_sons){
+      _forward_nonLeaf(c);
+  } else {
+      _forward_leaf(c);
+  }
+}
+    \end{lstlisting}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[p]
+  \begin{subfigure}{0.9\textwidth}
+    \begin{lstlisting}[language=C, label=lst:forwnonleaf, caption={Diese Methode arbeitet auf den Transfermatrizen und ruft daher zuert rekursiv die Vorwärtstransformation für die Sohncluster auf.}]
+void _forward_nonLeaf(Cluster *c){
+  int i, j, k, w, wj, son, ison, json, kson, wson, wsonj;
+  double sum, l1, l2, l3;
+
+  forward(c->son[0]);	//recursiv call for first son
+  forward(c->son[1]);	//recursiv call for second son
+
+  //for all submasses
+  for(i = 0; i < INTERPOLATION_POINTS; i++){
+    for(j = 0; j < INTERPOLATION_POINTS; j++){
+      wj = i * INTERPOLATION_POINTS + j;
+      for(k = 0; k < INTERPOLATION_POINTS; k++){
+	w = wj * INTERPOLATION_POINTS + k;
+	sum = 0.0;
+	
+	//for all sons
+	for(son = 0; son < 2; son++){
+	  //for all sons submasses
+	  for(ison = 0; ison < INTERPOLATION_POINTS; ison++){
+	    l1 = lagrange(c, i, 0, c->son[son]->xs[ison]);
+	    for(json = 0; json < INTERPOLATION_POINTS; json++){
+	      wsonj = ison * INTERPOLATION_POINTS + json;
+	      l2 = l1 * lagrange(c, j, 1, c->son[son]->xs[INTERPOLATION_POINTS + json]);
+	      for(kson = 0; kson < INTERPOLATION_POINTS; kson++){
+		wson = wsonj * INTERPOLATION_POINTS + kson;
+		l3 = l2 * lagrange(c, k, 2, c->son[son]->xs[2 * INTERPOLATION_POINTS + kson]);
+
+		//calculate the substitution mass
+		sum += c->son[son]->m[wson] * l3;
+	      }
+	    }
+	  }
+	}
+	c->m[w] = sum;
+      }
+    }
+  }
+}     
+    \end{lstlisting}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[p]
+  \begin{subfigure}{0.9\textwidth}
+    \begin{lstlisting}[language=C, label=lst:forwleaf, caption={Diese Methode erstellt die Clusterbasis des Clusterbaumes.}]
+void _forward_leaf(Cluster *c){
+  if(0 == c->n){ return; }
+  int i, j, k, l, m, w, wj;
+  double x, y, z, *mass, l1, l2, l3;
+  bodies *b = c->bodies;
+  mass = b->m;
+
+  for(i = 0; i < NUM_SUB_MASSES; i++){
+    c->m[i] = 0.0;
+  }
+
+  //for all linked actual masses
+  for(l = 0; l < c->n; l++){
+    m = c->start + l;
+    x = b->x[m];
+    y = b->y[m];
+    z = b->z[m];
+
+    //for all interpolation points:
+    for(i = 0; i < INTERPOLATION_POINTS; i++){
+      l1 = lagrange(c, i, 0, x);
+      for(j = 0; j < INTERPOLATION_POINTS; j++){
+	wj = i * INTERPOLATION_POINTS + j;
+	l2 = l1 * lagrange(c, j, 1, y);
+	for(k = 0; k < INTERPOLATION_POINTS; k++){
+	  //actual interpolation point:
+	  w = wj * INTERPOLATION_POINTS + k;
+	  //actual lagrange weight:
+	  l3 = l2 * lagrange(c, k, 2, z);
+
+	  //calculate the substitution mass
+	  c->m[w] += mass[m] * l3;
+	}
+      }
+    }
+  }
+}   
+    \end{lstlisting}
+  \end{subfigure}
+\end{figure}

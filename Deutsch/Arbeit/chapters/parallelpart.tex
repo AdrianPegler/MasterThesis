@@ -1,0 +1,33 @@
+\section{Parallelisierung}
+\label{sec:parallelpart}
+  Im vorherigen Kapitel haben wir die Berechnung der Gravitationskräfte durch Interpolation approximiert. Dadurch konnten wir die Technik \hquad nutzen um den Rechenaufwand des Algorithmus zu 
+  beschleunigen.
+  Um die absolute Laufzeit aber noch weiter zu reduzieren sind wir an einer parallel arbeitende Variante dieses Algorithmus interessiert. In diesem Kapitel wird ein Ansatz vorgestellt.
+  
+  Ziel ist es, zunächst einen einfachen Algorithmus zu entwerfen. Daher beschränken wir uns auf Parallelisierung nach dem Message-Passing-Modell unter Verwendung von MPI. Wir können also 
+  $p \in \N$ Prozesse starten. Jeder von diesen hat eine eindeutige $id \in \nullhaken{p-1}$ und seinen privaten Speicherbereich. Insbesondere ist in diesem Modell Shared-Memory ausgeschlossen. 
+  Außerdem können die Prozesse miteinander kommunizieren um Daten auszutauschen. Die Menge der Prozesse wird im Folgen mit $\Proc$ bezeichnet.
+
+  
+  \subsection{Arbeitsverteilung}
+  \label{sec:work}
+    Damit wir von parallel arbeitenden Prozessen profitieren können, muss die Arbeit möglichst gleichmäßig auf diese Prozesse verteilt werden. Wir folgen, in modifizierter Variante, dem von 
+    \citet{distrh2} vorgestellten Cluster-zentrierten Ansatz. 
+    Dieser basiert auf dem Grundgedanken, dass für Vorwärts- und Rückwärtstranformation ausschließlich Daten zwischen Vater- und Sohnclustern ausgetauscht werden müssen. Daher ist es besonders 
+    effektiv, wenn möglichst viele Söhne durch den selben Prozess verarbeitet werden, wie der Vater. Besonders einfach wird das Verteilen der Cluster und das Loadbalancing, wenn wir $p$ als 
+    Zweierpotenz $p = 2^q$ wählen. Da dann die Anzahl von Clustern in $T_\Omega^{(q)}$ gerade $p$ entspricht, können wir diese Ebene, zuzüglich der Sohncluster, optimal auf die Prozesse verteilen.
+    Wir gehen im Folgenden immer von einer so gewählten Anzahl Prozesse aus.
+    
+    Um diesen Ansatz auf den Algorithmus zu übertragen, wird in der in \autoref{lst:init} aufgeführten init-Methode die globale Variable $\tcode{SPLIT_DEPTH} = log_2(p)$ gesetzt. 
+    Außerdem bekommt die Datenstruktur \code Cluster einen weiteren Member: \code{int activ}. In diesem  wird die $id$ des für dieses Cluster zuständigen Prozesses gespeichert.
+    
+    Zudem gibt es aber noch Cluster auf den Ebenen $T_\Omega^{<q} := T_\Omega^{(0)},\dots,T_\Omega^{(q-1)}$. Um ein Cluster $C \in T_\Omega^{<q}$ zu klassifizieren nutzt jeder Prozess $P \in \Proc$
+    mit $id_P$ zwei Konstanten. Gilt für alle Nachfahren $\tilde C \in sons*(C)$ $C->activ \neq id_P$  , wird der Member \code {C->activ} auf die \code{int}-Konstante \code inactiv gesetzt. Gibt es aber Nachfahren,
+    für die 
+    der Prozess selbst zuständig ist, so wird 
+    
+  
+  \subsection{Datenverteilung}
+  \label{sec:data}
+    \TODO{Eine der ersten und grundlegenden Fragen, die bei parallel arbeitenden Programmen geklärt werden muss, ist, wo welche Daten vorhanden sind. Ein Möglicher Ansatz wäre, dass jeder Prozess
+    eine Kopie aller Daten hat.}
