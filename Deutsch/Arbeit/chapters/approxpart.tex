@@ -1,5 +1,5 @@
   \section{Ausgangssituation}
-   \label{sek:ausgang}
+   \label{sec:ausgang}
     Zur Erinnerung: Wir wollen für $n \in \N_{\geq 2}$ die wechselseitigen Gravitationskräfte von $n$ Himmelskörpern berechnen. Da die größten davon die Sonnen sind und es davon bereits mehr als
     genug in unserer Galaxie gibt beschränken wir uns zunächst auf diese. Die Menge unserer $n$ Sonnen ist im Folgenden mit der Menge $\Omega$ dargestellt. Für jede Sonne
     $x \in \Omega$ muss die Gleichung
@@ -124,7 +124,7 @@ void compute_forces_bodies(bodies *b) {
     \clearpage
     
   \section{$\mathcal{H}^2$-Matrixstruktur und Approximation}
-  \label{sek:approxf}
+  \label{sec:approxf}
     Nun wollen wir die in \autoref{sec:h2} vorgestellte Struktur der hierarchischen Matrizen nutzen, um den Algorithmus zu beschleunigen. Wir wollen also die Kernfunktion
     \[
      f: \Omega \times \Omega \to \R^3, \ (x,y) \mapsto \gamma m_x  m_y \frac{y - x}{\norm{y - x}^3_2}

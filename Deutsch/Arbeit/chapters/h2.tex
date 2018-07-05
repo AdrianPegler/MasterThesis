@@ -31,7 +31,7 @@ $\trans{B} \in \R^{Y \times k}$ mit $A_{x\nu} = a_{\nu}\left(x\right)$, $B_{y\nu
 $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     
     \subsubsection{Approximation}
-    \label{sek:approx}
+    \label{sec:approx}
       Im Folgenden möchte ich eine beispielhafte Approximation einer nicht-entarteten Kernfunktion durch Interpolation vorstellen, um so eine entartete Kernfunktion zu erhalten.
       Der Aufbau folgt weitestgehend dem von \citet{nichtlokop}. Für eine Approximation einer nicht-entarten Kernfunktion durch Taylor-Entwicklung verweise ich auf \citet{h2diss}. 
       
@@ -148,7 +148,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       mit einem überdeckenden Quader $Q_\sigma$.
     
     \subsubsection{Zulässigkeit}
-    \label{sek:zul}
+    \label{sec:zul}
       Wir haben also über Interpolation eine entartete Kernfunktion $g_\sigma$ konstruiert. Für $x \in \Omega$ und $y \in \sigma$ approximiert die Funktion $g_\sigma$ die Funktion $g$ allerdings 
       nur dann gut, wenn $x$ und $\sigma$ hinreichend weit voneinander entfernt sind (vgl. \citet{h2diss, nichtlokop}). 
       Daher wollen wir nun eine Bedingung einführen, die eine Aussage darüber trifft, ob das Gebiet $\sigma$ für ein Gebiet $\tau$ zulässig, also für alle $x \in \tau$
@@ -200,7 +200,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       (vgl. \citet{h2approxint})
       
     \subsubsection{Tschebyscheff-Interpolationspunkte}
-    \label{sek:tscheby}
+    \label{sec:tscheby}
       Die Wahl der Zulässigkeitsbedingung ist nicht der einzige Einflussfaktor auf die Genauigkeit der Approximation. Auch die Wahl der Interpolationspunkte trägt dazu bei.
       Als optimale Interpolationspunkte haben sich die Tschebyscheff-Interpolationspunkte erwiesen (vgl. \citet{nichtlokop}). Daher führen wir diese im Folgenden kurz ein.
       
@@ -236,9 +236,9 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \end{lemdef}
       
     \subsubsection{Clusterung}
-    \label{sek:cluster}
-      Im Abschnitt \nameref{sek:approx} wurde gezeigt, wie die Kernfunktion auf Teilgebieten approximiert werden kann, sofern die Paare von Gebieten zulässig sind.
-      Im Abschnitt \nameref{sek:zul} wurde eine Bedingung aufgestellt, wann Paare von Gebieten zulässig sind und wann nicht.
+    \label{sec:cluster}
+      Im Abschnitt \nameref{sec:approx} wurde gezeigt, wie die Kernfunktion auf Teilgebieten approximiert werden kann, sofern die Paare von Gebieten zulässig sind.
+      Im Abschnitt \nameref{sec:zul} wurde eine Bedingung aufgestellt, wann Paare von Gebieten zulässig sind und wann nicht.
       In diesem Kapitel soll eine Struktur vorgestellt werden, mit der solche Paare von Teilgebieten strukturiert werden können.
       Dazu werden zunächst einige grundlegende Definitionen benötigt.
       
@@ -361,7 +361,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       definieren zu können.
       
   \subsection{\hmat}
-  \label{sek:hmat}
+  \label{sec:hmat}
     \begin{defn}
       (\Rk-Matrix)\\
       Seien $m,n,k \in \N$ sowie $M \in \R^{m \times n}$ gegeben. Wir nennen $M$ eine \textit{\Rk-Matrix}, wenn Matrizen $A \in \R^{m \times k}$ und $B \in \R^{n \times k}$  existieren, sodass
@@ -405,7 +405,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     implementiert werden können. \citet{h2diss} zeigt, dass die Matrix-Vektor-Multiplikation nur $k\left(n+m\right)$ statt $n \cdot m$ Operationen benötigt.
     
     \subsection{Optimierung}
-    \label{sek:optimierung}
+    \label{sec:optimierung}
     Im Folgenden wollen wir noch einige Überlegungen vorstellen, durch die \hmat noch speicherplatzsparender und noch effizienter in der Berechnung werden.
     
     \subsubsection{Zeilen- und Spaltenmatrizen}
@@ -510,7 +510,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     $\tau$ und $\sigma$ beschreiben, wiederum verhältnismäßig klein sind, lassen sich diese wiederum auch effektiv verarbeiten.
     
     \subsection{\hquad}
-    \label{sek:hquad}
+    \label{sec:hquad}
       Die Überlegungen der letzten Abschnitte fließen nun in der Definition der \hquad zusammen.
       
       \begin{defn}
