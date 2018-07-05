@@ -90,16 +90,16 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       ergibt.
       
       Zur Vereinfachung definieren wir für $\nu \in \nullhaken{k}$ und $x \in [a,b]$
-      \begin{eqnarray*}
-	\xi_{[a,b],  \nu} &:=& \Phi_{[a,b]}\left(\xi_\nu\right) = \frac{b + a}{2} + \frac{b - a}{2} \xi_\nu\\
-	\lag_{[a,b], \nu} &:=& \prod_{\substack{\mu \in \nullhaken{k} \\ \mu \neq \nu}} \frac{x - \xi_{[a,b],  \mu}}{\xi_{[a,b],  \nu} - \xi_{[a,b],  \mu}}.
-      \end{eqnarray*}
+      \begin{align*}
+	\xi_{[a,b],  \nu} &:= \Phi_{[a,b]}\left(\xi_\nu\right) = \frac{b + a}{2} + \frac{b - a}{2} \xi_\nu\\
+	\lag_{[a,b], \nu} &:= \prod_{\substack{\mu \in \nullhaken{k} \\ \mu \neq \nu}} \frac{x - \xi_{[a,b],  \mu}}{\xi_{[a,b],  \nu} - \xi_{[a,b],  \mu}}.
+      \end{align*}
       Da mit \autoref{eq:lag_delta} folgende Gleichung für alle $\nu,\mu \in \nullhaken{k}$ gilt
-      \begin{eqnarray*}
-	 \lag_\nu \after \Phi_{[a,b]}^{-1}\left(\xi_{[a,b],\mu}\right) &=& \lag_\nu \after \Phi_{[a,b]}^{-1} \left( \Phi_{[a,b]}\left(\xi_{[a,b],\mu}\right) \right)\\
-							    &=& \lag_\nu \left(\xi_\mu\right) = \delta_{\nu\mu}\\
-							    &=& \lag_{[a,b],\nu}\left( \xi_{[a,b],\mu} \right),
-      \end{eqnarray*}
+      \begin{align*}
+	 \lag_\nu \after \Phi_{[a,b]}^{-1}\left(\xi_{[a,b],\mu}\right) &= \lag_\nu \after \Phi_{[a,b]}^{-1} \left( \Phi_{[a,b]}\left(\xi_{[a,b],\mu}\right) \right)\\
+							    &= \lag_\nu \left(\xi_\mu\right) = \delta_{\nu\mu}\\
+							    &= \lag_{[a,b],\nu}\left( \xi_{[a,b],\mu} \right),
+      \end{align*}
       stimmen $\lag_\nu \after \Phi_{[a,b]}^{-1}$ und $\lag_{[a,b],\nu}$ in $k+1$ Punkten überein. Da beides Polynome in $\Pi_k$ sind, müssen sie identisch sein und wir erhalten die vereinfachte
       Darstellung
       \begin{equation*}
@@ -135,10 +135,10 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 			      \lag_{[a_1,b_1],\nu_1}\left(x_1\right) \dots  \lag_{[a_d,b_d],\nu_d}\left(x_d\right)
       \end{equation*}
       erfüllt. Mit den Definitionen
-      \begin{eqnarray*}
-	\xi_{Q ,\nu} &=& \left(\xi_{[a_1,b_1],\nu_1} ,    \dots , \xi_{[a_d,b_d],\nu_d}\right),\\
-	\lag_{Q,\nu} &=& \lag_{[a_1,b_1],\nu_1}\left(x_1\right) \dots  \lag_{[a_d,b_d],\nu_d}\left(x_d\right) \text{, für alle } \nu \in M := \nullhaken{k}^d, \ x \in Q
-      \end{eqnarray*}
+      \begin{align*}
+	\xi_{Q ,\nu} &= \left(\xi_{[a_1,b_1],\nu_1} ,    \dots , \xi_{[a_d,b_d],\nu_d}\right),\\
+	\lag_{Q,\nu} &= \lag_{[a_1,b_1],\nu_1}\left(x_1\right) \dots  \lag_{[a_d,b_d],\nu_d}\left(x_d\right) \text{, für alle } \nu \in M := \nullhaken{k}^d, \ x \in Q
+      \end{align*}
       erhalten wir die gewohnte Darstellung
       \begin{equation*}
 	\mathfrak{I}_Q[f] = \sum_{\nu \in M} f\left(\xi_{Q,\nu}\right)\lag_{Q,\nu} \text{, für alle } f \in C\left(Q\right).
@@ -348,10 +348,10 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	  sons\left(t\right) = \emptyset = sons\left(s\right),
 	\end{equation*}
 	Mit
-	\begin{eqnarray*}
-		      \mathcal{L}^+\left(T_{X \times Y}\right) &=& \{ b = t \times s \in  \mathcal{L}\left(T_{X \times Y}\right) \ | \ \mathcal{Z}\left(t,s\right) = \ttit{zulässig} \}\\
-	  \text{und } \mathcal{L}^-\left(T_{X \times Y}\right) &=& \{ b = t \times s \in  \mathcal{L}\left(T_{X \times Y}\right) \ | \ \mathcal{Z}\left(t,s\right) = \ttit{unzulässig} \}
-	\end{eqnarray*}
+	\begin{align*}
+		      \mathcal{L}^+\left(T_{X \times Y}\right) &= \{ b = t \times s \in  \mathcal{L}\left(T_{X \times Y}\right) \ | \ \mathcal{Z}\left(t,s\right) = \ttit{zulässig} \}\\
+	  \text{und } \mathcal{L}^-\left(T_{X \times Y}\right) &= \{ b = t \times s \in  \mathcal{L}\left(T_{X \times Y}\right) \ | \ \mathcal{Z}\left(t,s\right) = \ttit{unzulässig} \}
+	\end{align*}
 	bezeichnen wir die Mengen der zulässigen beziehungsweise unzulässigen Blätter eines Blockbaumes. $\mathcal{L}^+\left(T_{X \times Y}\right)$ wird auch \textit{Fernfeld} und 
 	$\mathcal{L}^-\left(T_{X \times Y}\right)$ \textit{Nahfeld} genannt. Die Namen leiten sich von der $\eta$-Zulässigkeitsbedingung her, die auf der relativen Nähe der Cluster zueinander beruht.
 	
