@@ -13,7 +13,7 @@
   \label{sec:work}
     Damit wir von parallel arbeitenden Prozessen profitieren können, muss die Arbeit möglichst gleichmäßig auf diese Prozesse verteilt werden. Wir folgen, in modifizierter Variante, dem von 
     \citet{distrh2} vorgestellten Cluster-zentrierten Ansatz. 
-    Dieser basiert auf dem Grundgedanken, dass für Vorwärts- und Rückwärtstranformation ausschließlich Daten zwischen Vater- und Sohnclustern ausgetauscht werden müssen. Daher ist es besonders 
+    Dieser basiert auf dem Grundgedanken, dass für \vorruck ausschließlich Daten zwischen Vater- und Sohnclustern ausgetauscht werden müssen. Daher ist es besonders 
     effektiv, wenn möglichst viele Söhne durch den selben Prozess verarbeitet werden, wie der Vater. Besonders einfach wird das Verteilen der Cluster und das Loadbalancing, wenn wir $p$ als 
     Zweierpotenz $p = 2^q$ wählen. Da dann die Anzahl von Clustern in $T_\Omega^{(q)}$ gerade $p$ entspricht, können wir diese Ebene, zuzüglich der Sohncluster, optimal auf die Prozesse verteilen.
     Wir gehen im Folgenden immer von einer so gewählten Anzahl Prozesse aus.
@@ -24,13 +24,20 @@
     Zudem gibt es aber noch Cluster auf den Ebenen $T_\Omega^{<q} := T_\Omega^{(0)},\dots,T_\Omega^{(q-1)}$. Um ein Cluster $C \in T_\Omega^{<q}$ zu klassifizieren nutzt jeder Prozess $P \in \Proc$
     mit $id_P$ zwei Konstanten. Gilt für alle Nachfahren $\tilde C \in sons*(C)$ $C.\tcode{activ} \neq id_P$  , wird der Member $C.\tcode {activ}$ auf die \code{int}-Konstante \code inactiv gesetzt. 
     Gibt es aber Nachfahren $\tilde C \in sons*(C)$ mit $C.\tcode{activ} = id_P$, so wird der Member $C.\tcode {activ}$ statt dessen auf die \code{int}-Konstante \code{semi_activ} gesetzt. Inaktive
-    Cluster werden während der Vorwärts- und Rückwärtstranformation nicht weiter beachtet. 
+    Cluster werden während der \vorruck nicht weiter beachtet. 
     
     Die Idee der semi-aktiven Cluster beruht darauf, die Gestalt der Spalten- bzw. Zeilenmatrizen $V_\tau$ und $W_\sigma$ auszunutzen. Diese werden für Nicht-Blattcluster durch die Transfermatrizen 
-    aus den Söhnen konstruiert (vgl. \autoref{sec:approxf}). Wärend der Vorwärtstransformation werden für ein solches Cluster $C_{semi} \in T_\Omega^{<q}$ die Ersatzmassen nur aus (semi-)aktiven Söhnen
-    errechnet. Da diese Cluster für mehrere Prozesse als semi-aktiv gekennzeichnet sind werden global betrachtet alle Söhne in der Vorwärtstransformation beachtet. Ist eines dieser Cluster Bestandteil
+    aus den Söhnen konstruiert (vgl. \autoref{sec:approxf}). Während der \vorw werden für ein solches Cluster $C_{semi} \in T_\Omega^{<q}$ die Ersatzmassen nur aus (semi-)aktiven Söhnen
+    errechnet. Da diese Cluster für mehrere Prozesse als semi-aktiv gekennzeichnet sind, werden global betrachtet alle Söhne in der \vorw beachtet. Ist eines dieser Cluster Bestandteil
     eines zulässigen Blockes $b_0 = C_{semi} \times C$ oder $b1 = C \times C_{semi}$, so können die Prozesse ihre Berechnungen untereinander austauschen. Somit werden die Definitionen der Matrizen
-    $V_\tau$ und $W_\sigma$ aus \autoref{eq:vtau} beziehungsweise \autoref{eq:wsigma} lediglich auf mehrere Prozesse verteilt und die Summation bei Bedarf aus den Teilergebnissen gebildet. 
+    $V_\tau$ und $W_\sigma$ aus \autoref{eq:vtau} beziehungsweise \autoref{eq:wsigma} lediglich auf mehrere Prozesse verteilt und die Summation bei Bedarf aus den Teilergebnissen gebildet.
+    
+    Unter der Voraussetzung, dass alle notwendigen Information für jeden Prozess vorhanden sind, ist die einzige Anpassung der \koppl, dass sich die Auswertung auf (semi-)aktive
+    Targetcluster beschränkt. Auch die \ruckw
+    
+%     sind bei der Auswertung der Kopplungsmatrizen und bei der Rückwärtstranformation keine Änderungen vonnöten, außer sich auf die (semi-)aktiven Cluster zu beschränken.
+    
+%     Bei der Rückwärtstranformation wird wie gehabt das 
     
   
   \subsection{Datenverteilung}

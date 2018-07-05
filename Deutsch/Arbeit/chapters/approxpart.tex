@@ -268,6 +268,7 @@ typedef struct _Cluster Cluster;
     \mbox{\code{\_setup(...)}} entscheidet also anhand der Stufe ob ein Cluster ein Blattcluster bleibt, oder durch Unterteilung zu einem Nicht-Blattcluster wird.
 
     \subsection{Vorwärtstransformation}
+    \label{sec:vorw}
     \input{chapters/forw}
     Nun können wir uns an die Berechnung der Gravitation machen.
     Um eine Matrix-Vektor-Multiplikation mit der Matrix $\tilde F$ auf zulässigen Blöcken auszuwerten, muss diese Operation als erstes auf den Matrizen $W_\sigma$ ausgewertet werden.
@@ -293,6 +294,7 @@ typedef struct _Cluster Cluster;
     
     
     \subsection{Auswertung der Kopplungsmatrizen}
+    \label{sec:kopplung}
     Der nächste Schritt in der Auswertung ist die Multiplikation mit den Kopplungsmatrizen $S_b$. Da diese Matrizen, im Gegensatz zu den Clusterbasen $V_\tau$ und $W_\sigma$, vom Block und damit
     von beiden und nicht nur von einem Cluster abhängen, müssen wir nun den Blockbaum $T_{\Omega \times \Omega}$ durchlaufen. 
     Gleichzeitig können wir in diesem Schritt die Nahfeldmatrizen $N_b$, die ebenfalls von den Blöcken abhängen, auswerten. 
@@ -346,25 +348,26 @@ void _eval(Cluster *ct, Cluster *cs){
     \begin{enumerate}
      \item für alle $x \in \tau$ und $y \in \sigma$ die Funktion $f$ ausgewertet und direkt in den \code{bodies} gespeichert, falls $b$ unzulässig ist, oder
      \item für alle Interpolationspunkte $\xi_\indt{\nu} \text{, } \xi_\indt{\nu}$, mit $\nu,\mu \in M$ der Ausdruck $P(\xi_\indt{\nu} , \xi_\indt{\nu})$ ausgewertet und mit den in der 
-     Vorwärtstransformation berechneten Ersatzmassen $\tcode{m}_\mu$ multipliziert, falls $b$ zulässig ist.
+     \vorw berechneten Ersatzmassen $\tcode{m}_\mu$ multipliziert, falls $b$ zulässig ist.
     \end{enumerate}
     
     Anschaulich werden in diesem Schritt in den zulässigen Blöcken aus den Ersatzmassen und Interpolationspunkten Quasi-Ersatzkräfte\footnote{An dieser Stelle wird nur die 
     Masse des Source-Clusters $\sigma$ verrechnet. Daher handelt es sich im physikalischen Sinne noch nicht um eine Kraft.} berechnet. 
 
     \subsection{Rückwärtstransformation}
+    \label{sec:rückw}
     Der letzte Schritt der Berechnung ist die Auswertung der Matrizen $V_\tau$. Diesen Schritt nennt man auch \textit{Rückwärtstranformation}.
     
     Auch dieser Schritt hängt wieder ausschließlich von den Clustern ab. Daher kann die Rückwärtstranformation wieder unabhängig von den Blöcken für den gesamten Clusterbaum $T_\Omega$ ausgeführt
-    werden. Wir rufen dazu, wieder mit $root(T_\Omega)$ , die Methode \code{backward(Cluster *c)} auf. Wie bereits bei der Vorwärtstransformation unterscheidet diese Methode, ob es sich bei
+    werden. Wir rufen dazu, wieder mit $root(T_\Omega)$ , die Methode \code{backward(Cluster *c)} auf. Wie bereits bei der \vorw unterscheidet diese Methode, ob es sich bei
     dem aktuellen Cluster um ein Blatt- oder ein Nicht-Blattcluster handelt und delegiert die Arbeit entsprechend an die Methoden \code{\_backward\_Leaf(Cluster *c)} und 
-    \code{\_backward\_nonLeaf(Cluster *c)}. Anders als bei der Vorwärtstransformation müssen bei der Rückwärtstransformation die Ergebnisse des Vaterclusters für die Söhne vorliegen. Daher gibt die
+    \code{\_backward\_nonLeaf(Cluster *c)}. Anders als bei der \vorw müssen bei der Rückwärtstransformation die Ergebnisse des Vaterclusters für die Söhne vorliegen. Daher gibt die
     Methode \code{_backward_nonLeaf(Cluster *c)} die approximierten Quasi-Kräfte, gewichtet über die Lagrange-Polynome, an die Sohncluster weiter. Für alle Söhne $\tilde{\tcode{c}} \in sons(\tcode c)$
     und alle $\mu \in M$ wird
     \[
       \tcode{F}_{\tcode{c},\tilde{\tcode{c}},\mu} = \sum_{\nu \in M} \lag_{\tcode{c},\nu}(\xi_{\tilde{\tcode{c}},\mu} \tcode{F}_{\tcode{c},\nu}
     \]
-    zu den dort eventuell bereits aus der Auswertung der Kopplungsmatrizen vorhandenen Quasi-Ersatzkräfte addiert.
+    zu den dort eventuell bereits aus der \koppl vorhandenen Quasi-Ersatzkräfte addiert.
     
     Schließlich werden in der Methode \code{_backward_Leaf(Cluser *c)} die Quasi-Ersatzkräfte $\tcode{F}_{\tcode{c},\nu}$, $\nu \in M$, über die Lagrange-Polynome gewichtet auf alle Sonnen 
     $x \in \tcode{c}$ verteilt und mit deren Masse $m_x$ multipliziert. Da auch hier bereits aus der Nahfeldauswertung Kräfte vorhanden sind, müssen diese approximierten Kräfte\footnote{Durch die
