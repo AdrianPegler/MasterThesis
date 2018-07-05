@@ -25,7 +25,7 @@
       \TODO{Umsetzung in C und Fortran \\* später auch bindings für c++}
       
     \subsection{Point-to-Point-Kommunikation}
-    \label{sek:ptpkom}
+    \label{sec:ptpkom}
     Die Point-to-Point-Kommunikation ist das durch das Message-Passing-Modell beschriebene Herzstück von MPI.  
     Die Standardmethoden in C-Syntax sind:
     \begin{lstlisting}[language=C, label=lst:p2p_standard, caption={Die Syntax der standard Sende- und Empfangsoperationen}, numbers=none]
@@ -53,7 +53,7 @@
     
     Der Umschlag besteht aus:
     \begin{labeling}{Kennzeichnung}
-     \item[Sender] Dieser bei der Point-to-Point-Kommunikation automatisch hinzugefügt, muss aber bei der kollektiven Kommunikation explizit angegeben werden (vgl.: \autoref{sek:kolkom}).
+     \item[Sender] Dieser bei der Point-to-Point-Kommunikation automatisch hinzugefügt, muss aber bei der kollektiven Kommunikation explizit angegeben werden (vgl.: \autoref{sec:kolkom}).
      \item[Empfänger] Jeder Prozess im Kommunikator hat eine eindeutige Nummer. Über diese Nummer (\code{int destination}) wird der Empfänger festgelegt.
      \item[Kennzeichnung] Eine Kennzeichnung (engl.: tag) kann zur Differenzierung der Nachrichten eingesetzt werden (\code{int tag}).
      \item[Kommunikator] Der \code{MPI\_Comm communicator} spezifiziert eine Menge von $p$ Prozessen, die sich diesen Kommunikator teilen. Die \textit{Prozessgruppe} ist geordnet und
@@ -158,7 +158,7 @@
 %     \clearpage
       
     \subsection{Kollektive Kommunikation}
-    \label{sek:kolkom}
+    \label{sec:kolkom}
     
     \begin{center}
       \begin{figure}[b]
