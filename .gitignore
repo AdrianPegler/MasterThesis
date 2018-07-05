@@ -1,0 +1,14 @@
+
+*.aux
+
+*.log
+
+*.toc
+
+*.bbl
+
+Deutsch/Arbeit/thesis\.bcf
+
+Deutsch/Arbeit/thesis\.blg
+
+*.bcf
