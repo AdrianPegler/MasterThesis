@@ -141,23 +141,23 @@ void compute_forces_bodies(bodies *b) {
     \end{align*}
     Anders ausgedrückt wollen wir die Matrix $(F)_{x,y} := f(x,y)$ durch eine $\mathcal{H}^2$-Matrix $\tilde F$ approximieren. Für einen streng zulässigen Blockbaum $T_{\Omega \times \Omega}$ 
     und jeden zulässigen Block $b = \tau \times \sigma \in \mathcal{L}^+(T_{\Omega \times \Omega})$ konstruieren wir die nötigen Matrizen, mit $\mu,\nu \in M$, wie folgt:
-    \begin{align*}
+    \begin{align}
       E_{\tilde \tau} &:=
-	(E_{\tilde \tau})_{\mu \nu} := \lag_\indt{\nu}(\xi_{\tilde \tau, \mu}) \ \ \ \, \text{ für alle } \tilde \tau \in sons(\tau) \text{ falls } \tau \notin \mathcal{L}(T_\Omega),\\
+	(E_{\tilde \tau})_{\mu \nu} := \lag_\indt{\nu}(\xi_{\tilde \tau, \mu}) \ \ \ \, \text{ für alle } \tilde \tau \in sons(\tau) \text{ falls } \tau \notin \mathcal{L}(T_\Omega), \nonumber\\
       V_\tau &:=
       \begin{cases}
 	(V_\tau)_{x \nu}   := \lag_\indt{\nu}(x) & \ \text{ für alle } x \in \tau \text{ falls } \tau \in \mathcal{L}(T_\Omega),\\
 	\sum_{\tilde \tau \in sons(\tau)} E_{\tilde \tau} V_{\tilde \tau}  & \ \text{ falls } \tau \notin \mathcal{L}(T_\Omega),\\
-      \end{cases}\\
-      S_b &:= (S_b)_{\mu \nu} := P( \xi_\indt{\nu} , \xi_\inds{\mu} )\\
+      \end{cases}\label{eq:vtau}\\
+      S_b &:= (S_b)_{\mu \nu} := P( \xi_\indt{\nu} , \xi_\inds{\mu} ), \nonumber\\
       E_{\tilde \sigma} &:=
-	(E_{\tilde \sigma})_{\mu \nu} := \lag_\inds{\nu}(\xi_{\tilde \sigma, \mu}) \ \ \ \; \text{ für alle } \tilde \sigma \in sons(\sigma) \text{ falls } \tau \notin \mathcal{L}(T_\Omega),\\
+	(E_{\tilde \sigma})_{\mu \nu} := \lag_\inds{\nu}(\xi_{\tilde \sigma, \mu}) \ \ \ \; \text{ für alle } \tilde \sigma \in sons(\sigma) \text{ falls } \tau \notin \mathcal{L}(T_\Omega), \nonumber\\
       W_\sigma &:=
       \begin{cases}
 	(W_\sigma)_{y \nu}   := \lag_\inds{\nu}(y) & \ \text{ für alle } y \in \sigma \text{ falls } \sigma \in \mathcal{L}(T_\Omega),\\
 	\sum_{\tilde \sigma \in sons(\sigma)} E_{\tilde \sigma} W_{\tilde \sigma}  & \ \text{ falls } \sigma \notin \mathcal{L}(T_\Omega).\\
-      \end{cases}      
-    \end{align*}\todo{Spalten linksbündig}
+      \end{cases}\label{eq:wsigma}      
+    \end{align}\todo{Spalten linksbündig}
     Für die unzulässigen Blöcke $b = \tau \times \sigma \in \mathcal{L}^-(T_{\Omega \times \Omega})$ müssen wir weiterhin vollbesetzte Matrizen
     \[
       N_b := (N_b)_{xy} := \gamma m_x  m_y P(x, y)
