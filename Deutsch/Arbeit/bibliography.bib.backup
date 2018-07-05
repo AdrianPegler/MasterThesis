@@ -1,0 +1,279 @@
+@book{newton,
+  title={Philosophiae naturalis principia mathematica},
+  author={Newton, Isaac},
+  volume={1},
+  year={1833},
+  publisher={G. Brookman}
+}
+
+@book{memoirs,
+  title={Memoirs of Sir Isaac Newton's Life},
+  author={Stukeley, William},
+  year={1936},
+  publisher={Taylor and Francis}
+}
+
+@misc{nasa,
+  title={World Book at NASA},
+  organisation={National Aeronautics and Space Administration (NASA)},
+  month=nov,
+  year=2007,
+  url={https://web.archive.org/web/20090412172631/http://mynasa.nasa.gov/worldbook/galaxy_worldbook.html}
+}
+//note={Archivierte url: http://mynasa.nasa.gov/worldbook/galaxy_worldbook.html vom 12. April 2009. Abgerufen am 1. Mai 2018.}
+
+@misc{wissrech,
+  title={Wissenschaftliches Rechnen},
+  author={Steffen Börm},
+  month=feb,
+  year=2016,
+  url={https://www.math.uni-kiel.de/scicom/de/lehre/wissenschaftliches-rechnen}
+}
+
+@misc{hpcskript,
+  title={Hochleistungsrechnen},
+  author={Steffen Börm},
+  month=jan,
+  year=2017,
+  url={https://www.math.uni-kiel.de/scicom/de/lehre/hpc}
+}
+
+@misc{nichtlokop,
+  title={Numerik nicht-lokaler Operatoren},
+  author={Steffen Börm},
+  month=feb,
+  year=2018,
+  url={https://www.math.uni-kiel.de/scicom/de/lehre/nichtlokal}
+}
+
+@misc{mpitut,
+  title={A Comprehensive MPI Tutorial Resource},
+  author={Wes Kendall},
+  organisation={MPI Tutorial},
+  year=2017,
+  url={http://mpitutorial.com/}
+}
+
+@techreport{workshop,
+  title={Standards for message-passing in a distributed memory environment},
+  author={Walker, David W},
+  year={1992},
+  institution={Oak Ridge National Lab., TN (United States)}
+}
+
+@techreport{mpiv31,
+  title={MPI: A Message-Passing Interface Standard Version 3.1},
+  author={MPI-Forum},
+  institution={Message Passing Interface Forum},
+  month=jun,
+  year=2015
+}
+
+@techreport{mpi1,
+  title={A proposal for a user-level, message passing interface in a distributed memory environment},
+  author={Dongarra, Jack J and Hempel, Rolf and Hey, Anthony JG and Walker, David W},
+  year={1993},
+  institution={Oak Ridge National Lab., TN (United States)}
+}
+
+@article{flynn,
+  title={Some computer organizations and their effectiveness},
+  author={Flynn, Michael J},
+  journal={IEEE transactions on computers},
+  volume={100},
+  number={9},
+  pages={948--960},
+  year={1972},
+  publisher={IEEE}
+}
+
+@misc{multicore,
+  title={Multi-core architectures},
+  author={Jernej Barbic},
+  organisation={Carnegie Mellon University},
+  month=may,
+  year=2006,
+  url={https://www.cs.cmu.edu/~fp/courses/15213-s06/lectures/27-multicore.pdf }
+}
+
+@article{hyper,
+  title={Hyper-threading technology architecture and microarchitecture},
+  author={Marr, Deborah T},
+  journal={Intel Technology Journal},
+  volume={6},
+  number={1},
+  year={2001}
+}
+
+@misc{light,
+  title={Resolution 2 of the 15th CGPM},
+  author={BIPM},
+  organisation={Bureau International des Poids et Mesures},
+  year=1975,
+  url={https://www.bipm.org/en/CGPM/db/15/2/}
+}
+
+@article{climate,
+  title={Towards ultra-high resolution models of climate and weather},
+  author={Wehner, Michael and Oliker, Leonid and Shalf, John},
+  journal={The International Journal of High Performance Computing Applications},
+  volume={22},
+  number={2},
+  pages={149--165},
+  year={2008},
+  publisher={SAGE Publications Sage UK: London, England}
+}
+
+@misc{ibm_mpm,
+  title={The message passing model},
+  author={IBM},
+  organisation={International Business Machines Corporation},
+  year={2017},
+  url={https://www.ibm.com/support/knowledgecenter/en/SSF4ZA_9.1.3/pmpi_guide/mesage_passing_model.html}
+}
+
+@misc{anl_mpm,
+  title={1.3 A Parallel Programming Model},
+  author={Ian Foster},
+  organisation={argonne national laboratory},
+  year={1995},
+  url={http://www.mcs.anl.gov/~itf/dbpp/text/node9.html}
+}
+
+@misc{fsu_mpm,
+  title={Parallel Programming Models},
+  author={van Engelen, Robert},
+  organisation={Florida State University, Department of Computer Science},
+  year={2017},
+  url={https://www.cs.fsu.edu/~engelen/courses/HPC/Models.pdf}
+}
+
+@article{graviconst,
+  title={CODATA recommended values of the fundamental physical constants: 2014},
+  author={Mohr, Peter J and Newell, David B and Taylor, Barry N},
+  journal={Journal of Physical and Chemical Reference Data},
+  volume={45},
+  number={4},
+  pages={043102},
+  year={2016},
+  publisher={NIST}
+}
+
+@misc{dartmouth,
+  title={Intro to MPI},
+  author={Susan Schwarz},
+  organisation={Dartmouth College},
+  year=2011,
+  month=feb,
+  url={http://www.dartmouth.edu/~rc/classes/intro_mpi/print_pages.shtml}
+}
+
+@article{korbler,
+  title={Parallel Computing-Systemarchitekturen und Methoden der Programmierung},
+  author={K{\"o}rbler, Sigrid},
+  year={2007},
+  publisher={Fachhochschule St. P{\"o}lten St. P{\"o}lten, {\"O}sterreich}
+}
+
+@phdthesis{h2diss,
+  title={Theorie und Anwendungen hierarchischer Matrizen},
+  author={Grasedyck, Lars},
+  year={2001},
+  school={Christian-Albrechts Universit{\"a}t Kiel}
+}
+
+@article{hackbusch1999sparse,
+  title={A Sparse Matrix Arithmetic Based on $\mathcal{H}$-Matrices. Part I: Introduction to $\mathcal{H}$-Matrices},
+  author={Hackbusch, Wolfgang},
+  journal={Computing},
+  volume={62},
+  number={2},
+  pages={89--108},
+  year={1999},
+  publisher={Springer}
+}
+
+@misc{mpi_p2p,
+  title={MPI - Point to Point Communication},
+  author={Özden Akinci},
+  organisation={uhem - National High Performance Computing Center},
+  year={2012},
+  month=jun,
+  url={http://training.uhem.itu.edu.tr/docs/14haziranmpi/01.1_14Haz2012_MPI_P2P_III_Block-NonBlock-Comm_e2.pdf}
+}
+
+@article{h2approxint,
+  title={$\mathcal{H}^2$-matrix approximation of integral operators by interpolation},
+  author={Hackbusch, Wolfgang and Börm, Steffen},
+  journal={Applied Numerical Mathematics},
+  volume={43},
+  pages={129--143},
+  year=2002,
+  publisher={ Elsevier Science B.V}  
+}
+
+@article{datasparse,
+  title={Data-sparse approximation of non-local operators by $\mathcal{H}^2$-matrices}
+
+}
+  
+//Tutorial:
+
+@misc{AspectJ,
+     sorttitle = {AspectJ},
+         label = {AspectJ},
+         title = {{AspectJ} language extension},
+  organization = {Eclipse Foundation},
+           url = {http://www.eclipse.org/aspectj/},
+}
+
+@inproceedings{Shaw2003,
+        author = {Mary Shaw},
+         title = {Writing good software engineering research papers: minitutorial},
+     booktitle = {Proceedings of the 25th International Conference on Software Engineering (ICSE 2003)},
+          year = {2003},
+         month = may,
+         pages = {726--736},
+     publisher = {IEEE Computer Society},
+}
+
+@INPROCEEDINGS{Hoorn2012,
+          author = {van Hoorn, Andr{\'e} and Waller, Jan and Hasselbring, Wilhelm},
+           title = {Kieker: {A} Framework for Application Performance Monitoring and Dynamic Software Analysis},
+       booktitle = {Proceedings of the 3rd ACM/SPEC International Conference on Performance Engineering (ICPE~2012)},
+            year = {2012},
+           pages = {247--248},
+           month = apr,
+       publisher = {ACM}
+}
+
+@TECHREPORT{Hoorn2009,
+  author = {van Hoorn, Andr{\'e} and Rohr, Matthias and Hasselbring, Wilhelm and Waller, Jan and Ehlers, Jens and Frey, S{\"o}ren and Kieselhorst, Dennis},
+  title = {Continuous Monitoring of Software Services: {D}esign and Application of the {K}ieker Framework},
+  institution = {Department of Computer Science, Kiel University, Germany},
+  year = {2009},
+  number = {TR-0921},
+  month = nov,
+}
+
+
+@inproceedings{Rohr2008,
+          author = {Rohr, Matthias and van Hoorn, Andr{\'e} and Matevska, Jasminka and Sommer, Nils and Stoever, Lena and Giesecke, Simon and Hasselbring, Wilhelm},
+       booktitle = {Proceedings of the IASTED International Conference on Software Engineering 2008 (SE'08)},
+           title = {Kieker: {C}ontinuous Monitoring and on demand Visualization of {J}ava Software Behavior},
+       publisher = {ACTA Press},
+            year = {2008},
+           pages = {80--85},
+		   month = feb,
+}
+
+@ARTICLE{Frey2011,
+  author = {Frey, S{\"o}ren and Hasselbring, Wilhelm},
+  title = {The {CloudMIG} Approach: {M}odel-Based Migration of Software Systems to Cloud-Optimized Applications},
+  journal = {International Journal on Advances in Software},
+  year = {2011},
+  volume = {4},
+  pages = {342--353},
+  number = {3},
+  month = apr,
+}

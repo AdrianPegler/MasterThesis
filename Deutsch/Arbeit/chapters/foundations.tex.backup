@@ -1,0 +1,229 @@
+\chapter{Grundlagen}
+  \label{chp:foundations}
+  \section{Paralleles Rechnen}
+  \label{sec:parrech}
+    Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationellen Wechselwirkungen in unserer Galaxie mit einem aktuellen Computer nicht ohne 
+    weiteres lösbar ist. 
+    Konnten sich früher Programmierer darauf verlassen, dass in einigen Jahren eine deutlich schnellere Prozessorgeneration erscheinen würde, so dass Probleme ohne 
+    weitere Änderungen schneller gelöst werden könnten, ist dies heute leider nicht mehr der Fall. 
+    
+    Grund hierfür ist die Physik. Dazu ein kleines Rechenexperiment: Nehmen wir einen Prozessorchip von etwa einem Zentimeter Durchmesser an und vergegenwärtigen wir 
+    uns die Lichtgeschwindigkeit $c \approx 3\cdot10^{10}$ \citep{light}. Licht könnte diesen Chip also etwa 30 Milliarden mal pro Sekunde durchqueren, was 30 Gigahertz
+    entspräche. Bedenkt man, dass man in Prozessoren mit Elektrizität arbeitet und somit beispielsweise mit kapizitären Effekten und proportional zur Taktfrequenz steigender
+    Verlustleistung zu kämpfen hat, sind die 3 Gigahertz aktueller Mittelklasseprozessoren durchaus nicht zu verachten.
+    
+    Zwar wäre eine Möglichkeit die Chips weiter zu verkleinern, jedoch machen dem Fortschritt hier quantenmechanische Phänomene aktuell noch einen Strich durch die Rechnung.
+    Ein gängiger und gangbarer Lösungsweg besteht in der Parallelisierung von Soft- und Hardware. So haben heute die meisten Prozessoren nicht mehr nur einen Rechenkern,
+    sondern mehrere und für die Berechnung großer mathematischer Probleme arbeiten oft viele Rechner zusammen an der Lösung.\citep{hpcskript}
+    
+    Ein weiterer Grund für parallele, beziehungsweise verteilte Rechnersysteme ist die Diskrepanz zwischen vorhandenem und benötigtem Speicher. Beispielsweise hat der größte
+    Knoten im Rechenzentrum der Christian-Albrecht-Universität Kiel einen Hauptspeicher von 768 GB. Ein aktuelles, speicherintensives Problem ist ein engmaschiges 
+    Klimamodell der Erde. Bei einer Dichte von einer Masche alle 1,56 km in Äquatornähe wird der Gesamtspeicherbedarf auf etwa 24000 GB geschätzt \citep{climate}. Ein Problem
+    dieser Größe passt nicht mehr in den Hauptspeicher eines Computers.
+    Hinzu kommt die Skalierbarkeit solcher Probleme. Angenommen ein Hauptspeicher von 24000 GB stünde auf einem Computer zur Verfügung. Warum bei einer Maschendichte von 
+    1,56 km stehen bleiben und nicht noch feiner auflösen um noch genauere Berechnungen durchzuführen?
+    Warum bei der Berechnung der gravitationellen Wechselwirkungen bei den Sonnen unserer Galaxie stehen bleiben und nicht die Planeten oder sogar Monde mit einbeziehen? Diese
+    Probleme, und damit auch der Speicherbedarf, lassen sich also nahezu beliebig vergrößern.
+    
+    Im folgenden Kapitel wird genauer beleuchtet, wie parallel arbeitende Hardware gestalten ist und welche Vor- und Nachteile und welche Herausforderungen damit einhergehen.
+    
+    \subsection{Parallele Hardware}
+    \label{sec:parhard}
+      \citet{flynn} klassifiziert 4 unterschiedliche Architekturen von Rechner. Dabei unterteilt er nach der Möglichkeit des Prozessors zu einem Zeitpunkt einzelne oder mehrere
+      Instruktionen beziehungsweise Datensätze zu verarbeiten (vgl. \autoref{tab:flynn}).
+      \begin{table}[tb]
+	\centering
+	\begin{tabular}{|p{3.5cm}|p{4cm}|p{4cm}|}
+	  \hline
+			                             & eine Instruktion \newline (single instruction)       & mehrere Instruktionen \newline (multiple instruction) \\
+	  \hline
+	  ein Datensatz \newline (single data)       & SISD: konventioneller \newline einkerniger Prozessor & MISD: Spezialrechner                                  \\
+	  \hline
+	  mehrere Datensätze \newline (multiple data)& SIMD: Vektorrechner                                  & MIMD: Multicore; \newline Clustersystem               \\
+	  \hline
+	\end{tabular}
+	\caption{Flynnsche Klassifikation mit Beispielen.}
+	\label{tab:flynn}
+      \end{table}
+      
+      
+      
+      \subsubsection{Prozessor}
+      \TODO{zusammenfassen der Prozessorspezialisierungen}
+      Vor einigen Jahrzehnten waren die meisten Prozessoren in PCs noch SISD-Architekturen. Sie hatten einen Prozessor mit einem einzelnen Kern; 
+      konnten also zu jedem Zeitpunkt nur eine Instruktion auf einem Datensatz ausführen. Heute sind Multicore-Prozessoren gängig. Auf einem Prozessorchip finden sich hierbei
+      mehrere Rechenkerne. Wie in \autoref{fig:multicoreproc} zu erkennen, sind die einzelnen Kerne unabhängig voneinander. Jeder Kern verwaltet seine eigenen Register und 
+      führt eigene Instruktionen aus. Daher zählen Multicore-Prozessoren zu den MIMD-Architekturen.\citep{flynn, multicore}
+      
+      \TODO{Ein Wort zu Vektorrechnern}
+      
+      
+	\begin{figure}[t]%
+	  \centering%
+	  \includegraphics[width=0.9\textwidth]{img/multicore.eps}%
+	  \caption{Modell eines Multicore-Prozessors. Zu sehen: Vier Kerne mit jeweils eigenen Registern und Recheneinheiten.\citep{multicore}}%
+	  \label{fig:multicoreproc}%
+	\end{figure}%
+	
+	
+      \subsubsection{Speicherverwaltung}\todo{genauer ausarbeiten}
+      \label{sec:speicher}
+	In \autoref{sec:parrech} wurde bereits kurz erwähnt, dass bei Multicore-Prozessoren jeder Kern seine eigenen Register hat (vgl. auch \autoref{fig:multicoreproc}).
+	Genau genommen verfügen die Kerne meist auch über privaten L1-, seltener über L2- oder L3-Cache. Diese sind meist \textit{shared} (dt.: gemeinsam genutzt).
+	
+	Grundsätzlich können die heute üblichen MIMD Architekturen weiter anhand ihrer Speicherverwaltung unterteilt werden. Beim Shared Memory Modell wird ein globaler
+	Speichergemeinsam genutzt. Sie teilen sich also einen gemeinsamen Adressraum. Anders ist dies beim Distributed Memory Modell. Hier besitzt jeder Priozessor seinen
+	eigenen Speicher. \citep{korbler}
+	
+	Der Vorteil von shared memory ist, dass die Ergebnisse eines Kerns den anderen automatisch auch zur Verfügung stehen. Jedoch ist privater Cache allein durch die
+	größere Nähe zum zugehörigen Kern meist performanter, als gänzlich gemeinsam genutzter Cache und wird daher auch oft verwendet. 
+	
+	Bei privaten Caches in Kombination mit gemeinsam genutztem Hauptspeicher könnte folgende Situation auftreten:
+	\begin{enumerate}
+	  \item Kern 0 cached eine Variable $x = 42$.
+	  \item Kern 1 cached ebenfalls Variable $x = 42$
+	  \item Kern 0 führt eine Berechnung auf Variable $x$ durch, sodass ab sofort $x = 52$ gilt.
+	\end{enumerate}
+	Im privaten Cache von Kern 1 verbleibt nun aber $x = 42$. Dies ein Beispiel einer sogenannten \textit{Race-Condintion}, also eines ``kritischen Wettlaufs''. Anschaulich wird
+	dies, wenn wir das Beispiel etwas weiter spinnen. Angenommen Kern 1 berechnet nun sein neues $x = 32$. Nun werden beide Ergebnisse in den Hauptspeicher zurück geschrieben.
+	Je nach dem welcher Kern zuerst schreiben darf, ist das Ergebnis der Berechnung entweder $32$ oder $52$. Bei parallelen Programmen kann also das Ergebnis von der Reihenfolge
+	der Ausführung abhängen. Dies ist natürlich üblicherweise nicht erwünscht.
+	Glücklicherweise übernimmt in der Regel das Betriebssystem die Aufgabe, die Daten in allen Caches konsistent zu halten, beispielsweise über Validitätsflags oder über 
+	Updates.\citep{multicore} Auf Softwareebene muss dieser Effekt aber durchaus beachtet werden. 
+	
+	Bei schreiben von parallelen Programmen ist also besondere Vorsicht geboten. Es muss klar sein welche Daten sich wo befinden, und ob sie gemeinsam genutzt werden, oder nicht.
+	Dies ist gegebenenfalls eine noch größere Herausforderung, wenn der Hauptspeicher innerhalb eines parallelen Programmes teilweise gemeinsam genutzt wird und teilweise nicht.
+	
+	\TODO{lokale Nähe von Daten}
+	
+      \subsubsection{Netzwerk}
+      \TODO{nextstep: Vernetzung}
+	\begin{figure}[t]%
+	  \centering%
+	  \includegraphics[width=0.9\textwidth]{img/multicorecluster.eps}%
+	  \caption{Modell eines Clustersystems, dessen Knoten jeweils mit Multicore-Prozessoren bestückt sind.\TODO{Clustersystem}}%
+	  \label{fig:multicorecluster}%
+	\end{figure}%
+    
+    \subsection{Das Message-Passing-Modell}
+    \label{sec:mpm}
+      \TODO{In den vergangenen Kapiteln wurde zunächst die Notwendigkeit von paralleler Programmierung und anschließend mit dem Speicher zusammenhängende Herausforderungen aufgezeigt.
+      \textit{Parallel-Programming-Modelle} versuchen ein Konzept für die Speichernutzung bei parallelen Programmen aufzustellen. Auch wurde bereits angesprochen,
+      dass eine reine Shared-Memory-Lösung für Probleme, wie die gravitationellen Wechselwirkungen unserer Galaxie, nicht adäquat ist.
+      Server-Client-Systeme sind auch parallele Programme, jedoch benötigen beispielsweise der Webserver einer Internetseite und der Browser eines Clientcomputers keine
+      Synchronisation und in der Regel auch keine Kommunikation (außer das Senden der Seiten). Bei großen Problemen liegen die Daten aber gegebenenfalls verteilt vor, jedoch muss
+      nicht jeder Rechnerknoten alle nötigen Daten lokal vorliegen haben. In der \nameref{ch:einl} wurde beispielsweise schon gezeigt, dass für die Berechnung der Gravitationskräfte
+      die Kräfte \textit{aller} Körper auf jeden einzelnen zu berechnen sind. Für die Lösung dieses Problems ist also die Möglichkeit zur Kommunikation erforderlich.}
+      \TODO{Da auf einem Computer in der Regel nicht nur ein einzelnes Programm läuft, sondern zumindest noch ein Betriebssystem und meist auch noch einige weitere Programme, ist bis dato
+      keine Änderung an der Software notwendig um auf einem Multicore-Prozessor lauffähig zu sein. Der Prozessor kann nun lediglich mehrere Programme echt parallel verarbeiten.
+      Allerdings profitiert ein Programm bis dato auch wenig von parallel arbeitender Technologie, da es nun lediglich gegebenenfalls seltener von anderen Programmen unterbrochen 
+      wird. Soll sich das Potential der Parallelität für ein Programm voll entfalten, so muss das Programm selbst parallel arbeiten und so mehrere Kern beziehungsweise mehrere 
+      Computer belegen. Das Programm muss sich also in mehrere Threads oder Prozesse aufteilen. Dazu stellt jede Programmiersprache ihre Möglichkeiten zur Verfügung, die an dieser 
+      Stelle nicht näher erläutert werden sollen. In \autoref{sec:mpi} wird eine Bibliothek vorgestellt mit der parallele Programme geschrieben und ausgeführt werden können.}
+      
+      Ein Parallel-Programming-Modell, das eben dies einbezieht, ist das sogenannte Messege-Passing-Modell. Das Message-Passing-Modell geht von einer Menge von \textit{autonomen}
+      und \textit{eindeutig benannten} Prozessen aus, die jeweils über \textit{privaten Speicher} verfügen. Um nun Daten von Prozess $P_i$ zu Prozess $P_j$ zu transportieren, muss
+      $P_i$ explizit im Programmlauf seine Daten senden, und respektive $P_j$ diese Daten in Empfang nehmen. \autoref{fig:message-passing} veranschaulicht dies. $P_0,\dots,P_n$ 
+      bezeichnen die Prozesse, $D_0,\dots,D_2$ Daten im Hauptspeicher. 
+      \begin{figure}[b]%
+	\centering%
+	\includegraphics[width=0.9\textwidth]{img/multicorecluster_com.eps}%
+	\caption{Eine Veranschaulichung des Message-Passings. In rot die Kommunikation zwischen zwei Knoten eines Clustersystems, in blau die Kommunikation innerhalb eines Knotens.}%
+	\label{fig:message-passing}%
+      \end{figure}%
+      
+      Betrachtet man Kommunikation innerhalb eines Knotens fällt auch sofort ein Nachteil des Message-Passing-Modells auf: Es nutzt nicht die Vorteile von gemeinsam genutztem Speicher.
+      Jeder Prozess hat seine eigenen Kopien der Daten und Ergebnisse müssen explizit durch Nachrichten mitgeteilt und in die Speicherbereiche der anderen Prozesse kopiert werden. Dies
+      macht das Programm aber auch weniger anfällig für Race-Conditions. Weitere Vorteile des Message-Passing-Modells sind:
+      \begin{labeling}{Universalität}
+	\item[Portabilität] Message-Passing ist spätestens seid \nameref{sec:mpi} auf den meisten parallelen Plattformen einheitlich implementiert.
+	\item[Universalität] Das Messege-Passing-Modell stellt nur minimale Anforderungen an die zugrundeliegende Hardware. Es funktioniert einheitlich für vernetzte Systeme mit verteiltem 
+			     Speicher ebenso, wie für Shared-Memory-Systeme.
+	\item[Einfachheit] Das Modell unterstützt explizite Kontrolle über Referenzen zu Speicherzellen und erleichtert so auch Debugging.
+      \end{labeling}
+      Diese Vorteile machen das Message-Passing-Modell zu einem der Standard-Modelle im High-Performance-Computing.\citep{ibm_mpm, anl_mpm, fsu_mpm}
+    
+  \section{MPI}
+  \label{sec:mpi}
+    MPI (\textit{Message Passing Interface}) ist eine Spezifikation für den Nachrichtenaustausch eines verteilten Systems. MPI richtet sich hauptsächlich nach dem 
+    \textit{Message-Passing-Modell} (siehe \autoref{sec:mpm}).
+    Erweitert wird das ``klassische'' Message-Passing-Modell unter anderem durch kollektive Kommunikationsmöglichkeiten, Remote-Speicherzugriff und parallele I/O-Operationen.
+    Als Interface bietet MPI selbst keine Implementierung des Standards, sondern beschreibt Methoden und ihre Semantik.
+    
+    Das Ziel von MPI ist es, einen Standard für Programme zu liefern, die sich des Message-Passing-Modells bedienen und somit zu Effizienz, Portabilität und Flexibilität
+    beizutragen. \citep{mpiv31}
+    
+    \subsection{Geschichte}
+      Bereits vor 1992 gab es Bibliotheken für paralleles Rechnen. Jedoch gab es keinen einheitlichen Standard und die meisten Bibliotheken waren systemspezifisch,
+      sodass das Portieren von Programmen auf ein anderes System zumindest eine aufwendige Aufgabe war. Auch die Ansätze der Bibliotheken unterschieden sich teilweise
+      stark. Ein weit verbreiteter Ansatz war allerdings das Message-Passing-Model, bei dem die verteilten Prozessteile über Nachrichten austauschen um eine gemeinsame
+      Aufgabe zu erfüllen.\citep{mpitut}
+      
+      Am 29. und 30. April 1992 begann mit dem \textit{Workshop on Standards for Message-Passing in a Distributed Memory Environment} am \textit{Center for Research on Parallel 
+      Computing} in Williamsburg (Virginia) ein Prozess zur Standardisierung des Message-Passing-Ansatzes \citep{workshop}. Hier wurden die essentiellen Bestandteile eines 
+      standardisierten Message-Passing-Interfaces diskutiert. An diesem Prozess waren rund 60 Personen von 40 verschiedenen Organisationen beteiligt, darunter die bedeutendsten
+      Anbieter von Parallelrechnern, sowie Forscher aus Universitäten, staatlichen Laboren und der Industrie. Die Ergebnisse wurden zunächst in einem vorläufigen Entwurf im
+      November 1992 und schließlich in revidierter Fassung in einem Proposal, bekannt als MPI-1, veröffentlicht. \citep{mpi1}
+      
+      Eine Hauptabsicht von MPI-1 war es, erst einmal den ``Ball in's Rollen zu bringen'' und eine Diskussion anzuregen. Daher beschäftigte es sich noch hauptsächlich
+      mit Point-to-Point-Kommunikation. Zu diesem Zeitpunkt war MPI weder Thread-Safe, noch bot es Methoden zur kollektiven Kommunikation. Aktuell liegt MPI in der Version 3.1
+      vor und bietet neben der Point-to-Point-Kommunikation auch kollektive Routinen, nicht-blockierende Methoden, automatische Puffer-Verwaltung und vieles mehr.\cite{mpiv31}
+      
+      \TODO{Umsetzung in C und Fortran \\* später auch bindings für c++}
+      
+    \subsection{Point-to-Point-Kommunikation}
+    \label{sek:ptpkom}
+    Die Point-to-Point-Kommunikation ist das, durch das Message-Passing-Model beschriebene, Herzstück von MPI. Auch die später erläuterte \nameref{sek:kolkom} basiert im Grunde auf 
+    dieser Ebene der Kommunikation.    
+    Die Standardmethoden in C-Syntax sind:
+    \begin{lstlisting}[language=C, label=lst:mpi_send, caption={\TODO{Markante Bezeichung}}, numbers=none]
+	MPI_Send(
+	  void* data,
+	  int count,
+	  MPI_Datatype datatype,
+	  int destination,
+	  int tag,
+	  MPI_Comm communicator)
+
+	MPI_Recv(
+	  void* data,
+	  int count,
+	  MPI_Datatype datatype,
+	  int source,
+	  int tag,
+	  MPI_Comm communicator,
+	  MPI_Status* status)
+
+    \end{lstlisting}
+    
+    Jede Nachricht besteht aus einem Daten-Teil sowie einem \textit{Umschlag}. Der Daten-Teil beinhaltet die Startadresse des Sendepuffers, den Datentyp der zu sendenden Elemente,
+    sowie deren Anzahl.
+    \TODO{Datenteil fertig?}
+    \TODO{Umschlagteil}
+    \TODO{Init – eigenes Kapitel??}
+    \TODO{Blocking/Unblocking}
+    
+      
+    \subsection{Kollektive Kommunikation}
+    \label{sek:kolkom}
+      Zusätzlich zur klassischen Point-to-Point-Kommuniklation bietet MPI Möglichkeiten für kollektive Kommunikation. Ein Unterschied zur direkten Kommunikation zwischen zwei
+      Knoten ist, dass hier keine getrennten Send- und Receive-Operationen durchgeführt werden. Bei der Kollektiven Kommunikation rufen alle Prozesse eines Kommunikators die
+      selbe Methode auf. Wie auch bei der Point-to-Point-Kommunikation besteht bei diesen Methoden jeweils eine blockierende und eine nichtblockierende Variante.
+      Der Einfachheit halber werden hier die blockierenden Methoden vorgestellt. 
+      \TODO{In TODO:REF wurden bereits die Vor/Nachteile/Funktionsweise der nichtblockierenden Varianten erläutert}
+      Die einfachste kollektive Methode ist \code{MPI\_Barrier}. Diese dient der Synchronisation der Prozesse eines Kommunikators. Weitere Methoden und deren Funktionsweisen
+      sind in \autoref{fig:kolkom} abgebildet.
+      \input{chapters/fig_kolkom}%
+      Außer diesen gibt es noch
+      
+%       \begin{description}
+%        \item[]
+%       \end{description}
+
+      
+      
+      
+      
+      
+      
+      
