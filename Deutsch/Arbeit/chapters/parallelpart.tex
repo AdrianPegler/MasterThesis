@@ -84,5 +84,16 @@ void _setup(Cluster *c, int depth){
   
   \subsection{Datenverteilung}
   \label{sec:data}
-    \TODO{Eine der ersten und grundlegenden Fragen, die bei parallel arbeitenden Programmen geklärt werden muss, ist, wo welche Daten vorhanden sind. Ein Möglicher Ansatz wäre, dass jeder Prozess
-    eine Kopie aller Daten hat.}
+    \input{chapters/datvertcode}
+    Eine weitere grundlegenden Frage ist, wo welche Daten vorhanden sind. Ein Möglicher Ansatz wäre, dass jeder Prozess eine Kopie aller Daten hat. Selbst wenn das Gravitationsproblem kein all
+    zu speicherhungriges ist, würde der Hauptspeicher bei 32 Prozessen auf einem Knoten sehr schnell knapp werden. Daher müssen die Daten über die Prozesse verteilt werden. 
+    
+    Da wir im vorigen Kapitel bereits beschrieben haben, wie die Arbeit effektiv verteilt werden kann, ist es nur naheliegend die Daten auf die gleiche Weise zu verteilen. Jeder Prozess soll also 
+    genau die, zu seinen aktiven Clustern gehörenden, Teile der \code{bodies}-Struktur. Dies entspricht den hellblau gekennzeichneten Teilen des Clusterbaumes links in \autoref{fig:vertblock}.
+    
+    Weder bei reellen Daten, noch bei unseren zufällig generierten Testdaten, können wir davon ausgehen, dass diese nach Clustern sortiert vorliegen. Da ferner bei reellen Daten davon auszugehen
+    ist, dass diese aus Platzgründen auch verteilt eingelesen werden müssen, generieren in unserem Programm auch alle Prozesse jeweils zufällige Testdaten. Es wäre möglich die Daten so verteilt
+    zu belassen, wie sie generiert beziehungsweise eingelesen wurden. Jedoch wäre dann während der \vorruck  eine große Menge an Kommunikation notwendig um diese entsprechend der Arbeitsverteilung
+    durchzuführen. Daher ist es sinnvoll diese Daten einmal nach Prozesszugehörigkeit auszutauschen.
+    
+    Diese Kommunikation wird während der Konstruktion des Clusterbaumes vorgenommen. Der zugehörige Quellcode ist in \autoref{lst:parconsttree} und \autoref{lst:presort} aufgeführt. 

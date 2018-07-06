@@ -1,0 +1,51 @@
+\begin{figure}[b]
+  \begin{subfigure}{0.9\textwidth}
+    \begin{lstlisting}[label=lst:parconsttree, caption={Ausschnitt aus der parallelen Konstruktion des Clusterbaumes.}]
+Cluster *constructClusterTree(bodies *b){
+  [...]
+  ////////////////////////////////////////////////////////
+  // Sort the bodies; first locally, then globally.
+  new_n  = preSort(root, 0);
+  new_bs = new_bodies(new_n);
+  alltoall_bodies(my_bs, send_count, send_displ, new_bs, recv_count, recv_displ);
+  del_bodies(my_bs);
+  my_bs = new_bs;
+  //reset roots bodies*
+  root->bodies = my_bs;
+  root->n      = my_bs->n;
+  
+  //clean up
+  
+  [...]
+}
+    \end{lstlisting}
+  \end{subfigure}
+\end{figure}
+
+\begin{figure}[t]
+  \begin{subfigure}{0.9\textwidth}
+    \begin{lstlisting}[label=lst:presort, caption={Diese Methode sortiert die lokalen \code{bodies} nach Prozesszugehörigkeit.}]
+void preSort(Cluster *c, int depth){
+    if(depth == SPLIT_DEPTH){
+        c->active = ++split_count;
+    
+        //get count and start index of data to send to process #split_count
+        send_count[split_count] = c->n;
+        send_displ[split_count] = split_count == 0 ? 0 : send_displ[split_count - 1] + send_count[split_count - 1];
+    
+        //if the current knot is the active one: gather counts and displs from the other knots:
+        MPI_Gather(&send_count[split_count], 1, MPI_INT, recv_count, 1, MPI_INT, split_count, MPI_COMM_WORLD);
+        if(world.rank == c->active){
+            new_n = 0;
+            for(int i = 0; i < world.size; i++){
+                recv_displ[i] = new_n;
+                new_n        += recv_count[i];
+            }
+        }
+        
+    } 
+    [...}] // Sortierung und rekursiver Aufruf
+}
+    \end{lstlisting}
+  \end{subfigure}
+\end{figure}
