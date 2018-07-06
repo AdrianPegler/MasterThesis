@@ -71,12 +71,16 @@ void _setup(Cluster *c, int depth){
     Unter der Voraussetzung, dass alle notwendigen Information für jeden Prozess vorhanden sind, ist die einzige Anpassung der \koppl, dass sich die Auswertung auf (semi-)aktive
     Targetcluster beschränkt. Auch die \ruckw braucht sich lediglich auf (semi-)aktive Cluster beschränken.
     
-    Letztlich verteilt sich die Arbeit durch diesen Ansatz sehr natürlich auf die Prozesse. In \todo Ref ist dies veranschaulicht. 
+    Letztlich verteilt sich die Arbeit durch diesen Ansatz sehr natürlich auf die Prozesse. In \autoref{fig:vertblock} ist dies veranschaulicht. Hier ist dies für einen Prozess $P$ mit $id_P = 1$ 
+    und $p = 4$ dargestellt, welche Zuständigkeiten sich für die Blöcke des Blockbaumes aus der Aufteilung der Targetcluster ergeben.
     
-%     sind bei der Auswertung der Kopplungsmatrizen und bei der Rückwärtstranformation keine Änderungen vonnöten, außer sich auf die (semi-)aktiven Cluster zu beschränken.
-    
-%     Bei der Rückwärtstranformation wird wie gehabt das 
-    
+    \begin{figure}[b]
+      \includegraphics[width=0.8\textwidth]{img/verteilter_blockbaum.png}
+      \caption{Für einen Prozess $P$ mit $id_P = 1$ und die Anzahl Prozesse $p = 4$ ist hier die Zuständigkeit des Prozesses $P$ für Blöcke eines Blockbaumes farbig dargestellt.}
+      \label{fig:vertblock}
+    \end{figure}
+
+    \clearpage
   
   \subsection{Datenverteilung}
   \label{sec:data}
