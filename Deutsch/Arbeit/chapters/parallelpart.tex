@@ -13,18 +13,54 @@
   \label{sec:work}
     Damit wir von parallel arbeitenden Prozessen profitieren können, muss die Arbeit möglichst gleichmäßig auf diese Prozesse verteilt werden. Wir folgen, in modifizierter Variante, dem von 
     \citet{distrh2} vorgestellten Cluster-zentrierten Ansatz. 
-    Dieser basiert auf dem Grundgedanken, dass für \vorruck ausschließlich Daten zwischen Vater- und Sohnclustern ausgetauscht werden müssen. Daher ist es besonders 
-    effektiv, wenn möglichst viele Söhne durch den selben Prozess verarbeitet werden, wie der Vater. Besonders einfach wird das Verteilen der Cluster und das Loadbalancing, wenn wir $p$ als 
+    Dieser basiert auf dem Grundgedanken, dass für \vorruck ausschließlich Daten zwischen Vater- und Sohnclustern ausgetauscht werden müssen. Um möglichst viel Kommunikation zu sparen, ist es daher
+    besonders effektiv, wenn möglichst viele Söhne durch den selben Prozess verarbeitet werden, wie der Vater. Besonders einfach wird das Verteilen der Cluster und das Loadbalancing, wenn wir $p$ als 
     Zweierpotenz $p = 2^q$ wählen. Da dann die Anzahl von Clustern in $T_\Omega^{(q)}$ gerade $p$ entspricht, können wir diese Ebene, zuzüglich der Sohncluster, optimal auf die Prozesse verteilen.
     Wir gehen im Folgenden immer von einer so gewählten Anzahl Prozesse aus.
     
     Um diesen Ansatz auf den Algorithmus zu übertragen, wird in der in \autoref{lst:init} aufgeführten init-Methode die globale Variable $\tcode{SPLIT_DEPTH} = log_2(p) = q$ gesetzt. 
-    Außerdem bekommt die Datenstruktur \code Cluster einen weiteren Member: \code{int activ}. In diesem  wird die $id$ des für dieses Cluster zuständigen Prozesses gespeichert.
+    Außerdem bekommt die Datenstruktur \code{Cluster} einen weiteren Member: \code{int active}. In diesem  wird die $id$ des für dieses Cluster zuständigen Prozesses gespeichert.
     
     Zudem gibt es aber noch Cluster auf den Ebenen $T_\Omega^{<q} := T_\Omega^{(0)},\dots,T_\Omega^{(q-1)}$. Um ein Cluster $C \in T_\Omega^{<q}$ zu klassifizieren nutzt jeder Prozess $P \in \Proc$
-    mit $id_P$ zwei Konstanten. Gilt für alle Nachfahren $\tilde C \in sons*(C)$ $C.\tcode{activ} \neq id_P$  , wird der Member $C.\tcode {activ}$ auf die \code{int}-Konstante \code inactiv gesetzt. 
-    Gibt es aber Nachfahren $\tilde C \in sons*(C)$ mit $C.\tcode{activ} = id_P$, so wird der Member $C.\tcode {activ}$ statt dessen auf die \code{int}-Konstante \code{semi_activ} gesetzt. Inaktive
+    mit $id_P$ zwei Konstanten. Gilt für alle Nachfahren $\tilde C \in sons*(C)$ $C.\tcode{active} \neq id_P$  , wird der Member $C.\tcode{active}$ auf die \code{int}-Konstante \code{inactive} gesetzt. 
+    Gibt es aber Nachfahren $\tilde C \in sons*(C)$ mit $C.\tcode{active} = id_P$, so wird der Member $C.\tcode{active}$ statt dessen auf die \code{int}-Konstante \code{semi_active} gesetzt. Inaktive
     Cluster werden während der \vorruck nicht weiter beachtet. 
+    
+    \begin{figure}[t]
+    \begin{subfigure}{0.9\textwidth}
+    \begin{lstlisting}[label=lst:parsetup, caption={Für die Verteilung der Cluster auf die Prozesse angepasste \code{_setup}-Methode.}]
+void _setup(Cluster *c, int depth){
+  if(depth == SPLIT_DEPTH){
+    c->active = ++split_count;
+  }
+
+  if(depth < MAX_DEPTH){
+    _setup_nonLeafCluster(c, depth);
+  }
+
+  if(c->active == semi_active){
+    if(c->son[0]->active == inactive && c->son[1]->active == inactive){
+      c->active = inactive;
+    } else{
+      if(c->son[0]->active != world.rank && c->son[0]->active != semi_active &&
+	 c->son[1]->active != world.rank && c->son[1]->active != semi_active) {
+	c->active = inactive;
+      }
+    }
+  }
+}
+    \end{lstlisting}
+    \end{subfigure}
+    \end{figure}
+    Um diese Einteilung vorzunehmen, wird vorrangig der Code der Methode \code{_setup(...)} (vgl. \autoref{lst:setup}) angepasst. 
+    Zudem bekommt der Konstruktor \code{_new_bound_Cluster} einen neuen Parameter um den Member \code{active} aller Cluster zu initialisieren. Für die Konstruktion der Wurzel ist dieser auf
+    \code{semi_active} gesetzt. Danach wird durch die Methode \code{_setup_nonLeafCluster(...)} immer der Wert des Vaters an die Söhne weitergegeben.
+    Der angepasste Code der \code{_setup}-Methode ist in \autoref{lst:parsetup} aufgeführt.
+    
+    Zunächst wird überprüft, ob die \code{SPLIT_DEPTH} erreicht wurde. Ist dies der Fall wird der Member \code{active} auf 
+    die $id$ des zuständigen Prozesses gesetzt. Dies geschieht einfach durch abzählen. Als nächstes folgt der bereits aus \autoref{lst:setup} bekannte Aufruf, der das Teilen in Sohncluster, das 
+    Sortieren der \code{bodies} und die Rekursion beinhaltet. Der letzte Teil wird beim Abbau der Rekursion durchgeführt. Hier wird für eben die Cluster in $T_\Omega^{(<q)}$ überprüft ob diese 
+    auf \code{semi-active} bleiben, oder, falls kein Nachfahre aktiv ist, der Member \code{active} auf \code{inactive} gesetzt wird.
     
     Die Idee der semi-aktiven Cluster beruht darauf, die Gestalt der Spalten- bzw. Zeilenmatrizen $V_\tau$ und $W_\sigma$ auszunutzen. Diese werden für Nicht-Blattcluster durch die Transfermatrizen 
     aus den Söhnen konstruiert (vgl. \autoref{sec:approxf}). Während der \vorw werden für ein solches Cluster $C_{semi} \in T_\Omega^{<q}$ die Ersatzmassen nur aus (semi-)aktiven Söhnen
