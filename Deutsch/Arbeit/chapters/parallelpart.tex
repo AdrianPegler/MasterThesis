@@ -75,8 +75,9 @@ void _setup(Cluster *c, int depth){
     und $p = 4$ dargestellt, welche Zuständigkeiten sich für die Blöcke des Blockbaumes aus der Aufteilung der Targetcluster ergeben.
     
     \begin{figure}[b]
-      \includegraphics[width=0.8\textwidth]{img/verteilter_blockbaum.png}
-      \caption{Für einen Prozess $P$ mit $id_P = 1$ und die Anzahl Prozesse $p = 4$ ist hier die Zuständigkeit des Prozesses $P$ für Blöcke eines Blockbaumes farbig dargestellt.}
+      \includegraphics[width=0.77\textwidth]{img/verteilter_blockbaum.png}
+      \caption{Für einen Prozess $P$ mit $id_P = 1$ und die Anzahl Prozesse $p = 4$ ist hier die Zuständigkeit des Prozesses $P$ für Blöcke eines Blockbaumes farbig dargestellt.
+	       (Quelle: \citet{h2slides})}
       \label{fig:vertblock}
     \end{figure}
 
@@ -97,4 +98,19 @@ void _setup(Cluster *c, int depth){
     zu belassen, wie sie generiert beziehungsweise eingelesen wurden. Jedoch wäre dann während der \vorruck eine große Menge an Kommunikation notwendig um diese entsprechend der Arbeitsverteilung
     durchzuführen. Daher ist es sinnvoll diese Daten einmal nach Prozesszugehörigkeit auszutauschen.
     
-    Diese Kommunikation wird während der Konstruktion des Clusterbaumes vorgenommen. Der zugehörige Quellcode ist in \autoref{lst:parconsttree} und \autoref{lst:presort} aufgeführt. 
+    Diese Kommunikation wird während der Konstruktion des Clusterbaumes vorgenommen. Der zugehörige Quellcode ist in \autoref{lst:parconsttree} und \autoref{lst:presort} aufgeführt.
+    
+    Die Methode \code{preSort(...)} sortiert die \code{bodies}, indem sie den Clusterbaum bis zur Ebene \code{SPLIT_DEPTH} konstruiert. In den Arrays \code{send_count[]} und \code{send_displ[]}
+    merkt sich jeder Prozess, wie viele Elemente seiner \code{bodies} und ab welcher Position er an welchen anderen Prozess zu senden hat. Respektive werden in den Arrays \code{recv_count[]} 
+    und \code{recv_displ[]} die Anzahlen und Pufferpositionen für die zu empfangenden Daten gespeichert. Diese werden über die Methode \code{MPI_Gather(...)} (vgl. \autoref{fig:kolkom} zwischen 
+    den Prozessen ausgetauscht. So bekommt jeder Prozess von den anderen mitgeteilt, wie viele Elemente er von ihnen gesendet bekommen wird. Die Gesamtgröße der künftigen \code{bodies}-Memberarrays
+    wird in \code{new_n} gespeichert.
+    
+    Der Datenaustausch findet über die Methode \code{MPI_Alltoallv(..)} (vgl. \autoref{fig:kolkom} und \autoref{lst:a2a}) statt. Diese führt mit Hilfe der zuvor konstruierten \code{count}- und 
+    \code{displ}-Arrays gerade eine Transformation der ``Prozess-Daten-Matrix'' aus, wodurch jeder Prozess jedem anderen die zugehörigen Daten schickt und respektive von diesen erhält.
+    Danach werden noch einige Variablen aktualisiert. 
+    
+    Schließlich wird der Clusterbaum wie gehabt vollständig bis zur Ebene \code{MAX_DEPTH} konstruiert. Hierfür sind die ausgetauschten Daten kaum notwendig, da die Konstruktion des Clusterbaumes
+    durch mittige Teilung der Nicht-Blattcluster durchgeführt wird und zu diesem Zeitpunkt lediglich die Interpolationspunkte erstellt werden. Jedoch werden so gleich die korrekten Startindizes und
+    Anzahlen in den Clustern gespeichert.
+    
