@@ -226,7 +226,7 @@ typedef struct _Cluster Cluster;
     
     Nun beginnen wir, indem wir ein Wurzelcluster mit $\tcode{id}=0$ konstruieren. Per Definition enthält es alle in \code{bodies} gegebenen Sonnen, womit die Member \code{*bodies}, \code{start} und 
     \code{n} bereits festgelegt sind. Als nächstes erzeugen wir für die gegebenen Sonnen eine bounding box mit minimalen Ausmaßen. Dazu fassen wir für jede Koordinatenrichtung die kleinsten 
-    (beziehungsweise größten) Positionswerte der \code{bodies} in \code{a} (beziehungsweise \code {b}) zusammen. Alternativ könnte man, wegen der zufälligen Konstruktion der Sonnen, auch dessen 
+    (beziehungsweise größten) Positionswerte der \code{bodies} in \code{a} (beziehungsweise \code{b}) zusammen. Alternativ könnte man, wegen der zufälligen Konstruktion der Sonnen, auch dessen 
     Grenzen als bounding box wählen. Zu dieser bounding box werden nun die Werte \mbox{\code{center[3]}} und \code{diam} berechnet. Die Member \code{double *m} und \code{double *F} bleiben mit $0$ 
     inizialisiert. Die Interpolationspunkte \code{xs} werden allerdings ebenfalls jetzt berechnet. Dazu wurden beim Start des Programmes bereits Tschebyscheff-Interpolationspunkte auf dem Intervall 
     $[-1,1]$ berechnet. Diese werden jetzt für jede Koordinatenrichtung $\iota$ auf das entsprechende Intervall $[a_\iota, b_\iota]$ des Quaders der bounding box transformiert.
@@ -362,7 +362,7 @@ void _eval(Cluster *ct, Cluster *cs){
     werden. Wir rufen dazu, wieder mit $root(T_\Omega)$ , die Methode \code{backward(Cluster *c)} auf. Wie bereits bei der \vorw unterscheidet diese Methode, ob es sich bei
     dem aktuellen Cluster um ein Blatt- oder ein Nicht-Blattcluster handelt und delegiert die Arbeit entsprechend an die Methoden \code{\_backward\_Leaf(Cluster *c)} und 
     \code{\_backward\_nonLeaf(Cluster *c)}. Anders als bei der \vorw müssen bei der Rückwärtstransformation die Ergebnisse des Vaterclusters für die Söhne vorliegen. Daher gibt die
-    Methode \code{_backward_nonLeaf(Cluster *c)} die approximierten Quasi-Kräfte, gewichtet über die Lagrange-Polynome, an die Sohncluster weiter. Für alle Söhne $\tilde{\tcode{c}} \in sons(\tcode c)$
+    Methode \code{_backward_nonLeaf(Cluster *c)} die approximierten Quasi-Kräfte, gewichtet über die Lagrange-Polynome, an die Sohncluster weiter. Für alle Söhne $\tilde{\tcode{c}} \in sons(\tcode{c})$
     und alle $\mu \in M$ wird
     \[
       \tcode{F}_{\tcode{c},\tilde{\tcode{c}},\mu} = \sum_{\nu \in M} \lag_{\tcode{c},\nu}(\xi_{\tilde{\tcode{c}},\mu} \tcode{F}_{\tcode{c},\nu}
