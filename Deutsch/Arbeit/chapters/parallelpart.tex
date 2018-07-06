@@ -85,8 +85,9 @@ void _setup(Cluster *c, int depth){
   \subsection{Datenverteilung}
   \label{sec:data}
     \input{chapters/datvertcode}
-    Eine weitere grundlegenden Frage ist, wo welche Daten vorhanden sind. Ein Möglicher Ansatz wäre, dass jeder Prozess eine Kopie aller Daten hat. Selbst wenn das Gravitationsproblem kein all
-    zu speicherhungriges ist, würde der Hauptspeicher bei 32 Prozessen auf einem Knoten sehr schnell knapp werden. Daher müssen die Daten über die Prozesse verteilt werden. 
+    Eine weitere grundlegenden Frage ist, wo welche Daten vorhanden sind. Ein Möglicher Ansatz wäre, dass jeder Prozess eine Kopie aller Daten hat. Doch selbst wenn das Gravitationsproblem kein all
+    zu speicherhungriges ist, würde der Hauptspeicher bei 32 Prozessen auf einem Knoten\footnote{Dies entspricht den Spezifikationen der meisten Knoten des RZ-Clusters der Uni Kiel.}  sehr schnell 
+    knapp werden. Außerdem sei an dieser Stelle an die weitere Skalierbarkeit des Problems erinnert (vgl. \autoref{sec:parrech}). Daher müssen die Daten über die Prozesse verteilt werden. 
     
     Da wir im vorigen Kapitel bereits beschrieben haben, wie die Arbeit effektiv verteilt werden kann, ist es nur naheliegend die Daten auf die gleiche Weise zu verteilen. Jeder Prozess soll also 
     genau die, zu seinen aktiven Clustern gehörenden, Teile der \code{bodies}-Struktur. Dies entspricht den hellblau gekennzeichneten Teilen des Clusterbaumes links in \autoref{fig:vertblock}.
