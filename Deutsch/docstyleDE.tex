@@ -64,9 +64,9 @@
 \newcommand{\tcode}[1]{\text{\code{#1}}}
 \newcommand{\trans}[1]{#1^T}
 \newcommand{\Proc}{\mathfrak{P}}
-\newcommand{\vorw}{\nameref{sec:vorw}}
-\newcommand{\ruckw}{\nameref{sec:rückw}}
-\newcommand{\koppl}{\nameref{sec:kopplung}}
+\newcommand{\vorw}{\nameref{sec:vorw} }
+\newcommand{\ruckw}{\nameref{sec:rückw} }
+\newcommand{\koppl}{\nameref{sec:kopplung} }
 \newcommand{\vorruck}{\hyperref[sec:vorw]{Vorwärts-} und \nameref{sec:rückw} }
 
 \makeatletter
@@ -74,6 +74,27 @@
   \phantomsection
   #1\def\@currentlabel{\unexpanded{#1}}\label{#2}%
 }
+\makeatother
+
+\makeatletter
+\newsavebox\myboxA
+\newsavebox\myboxB
+\newlength\mylenA
+
+\newcommand*\xoverline[2][0.75]{%
+    \sbox{\myboxA}{$\m@th#2$}%
+    \setbox\myboxB\null% Phantom box
+    \ht\myboxB=\ht\myboxA%
+    \dp\myboxB=\dp\myboxA%
+    \wd\myboxB=#1\wd\myboxA% Scale phantom
+    \sbox\myboxB{$\m@th\overline{\copy\myboxB}$}%  Overlined phantom
+    \setlength\mylenA{\the\wd\myboxA}%   calc width diff
+    \addtolength\mylenA{-\the\wd\myboxB}%
+    \ifdim\wd\myboxB<\wd\myboxA%
+       \rlap{\hskip 0.5\mylenA\usebox\myboxB}{\usebox\myboxA}%
+    \else
+        \hskip -0.5\mylenA\rlap{\usebox\myboxA}{\hskip 0.5\mylenA\usebox\myboxB}%
+    \fi}
 \makeatother
 
 \def \haken#1{\underline{#1}{\raise -0.3ex\hbox{\vphantom{$#1$}\vrule height 0.7ex}}}
