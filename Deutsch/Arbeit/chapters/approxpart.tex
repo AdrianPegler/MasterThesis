@@ -221,10 +221,11 @@ typedef struct _Cluster Cluster;
     ist es durchaus möglich, dass Cluster unterschiedlich viele Sohncluster haben. Beispielweise hat der zugehörige Blockbaum $T_{\Omega \times \Omega}$ vier Sohnblöcke pro Nicht-Blattblock. 
     
     \subsubsection{Die Konstruktion}
+    \label{sec:konstr}
     \input{chapters/clustercode}
     Nun, da wir eine Datenstruktur für Clusterbäume definiert haben, müssen wir diesen noch erzeugen. Sei dazu eine \code{bodies} Struktur mit zufällig generierten Sonnen gegeben.
     
-    Nun beginnen wir, indem wir ein Wurzelcluster mit $\tcode{id}=0$ konstruieren. Per Definition enthält es alle in \code{bodies} gegebenen Sonnen, womit die Member \code{*bodies}, \code{start} und 
+    Nun beginnen wir, indem wir ein Wurzelcluster $root$ mit $\tcode{id}_root = 0$ konstruieren. Per Definition enthält es alle in \code{bodies} gegebenen Sonnen, womit die Member \code{*bodies}, \code{start} und 
     \code{n} bereits festgelegt sind. Als nächstes erzeugen wir für die gegebenen Sonnen eine bounding box mit minimalen Ausmaßen. Dazu fassen wir für jede Koordinatenrichtung die kleinsten 
     (beziehungsweise größten) Positionswerte der \code{bodies} in \code{a} (beziehungsweise \code{b}) zusammen. Alternativ könnte man, wegen der zufälligen Konstruktion der Sonnen, auch dessen 
     Grenzen als bounding box wählen. Zu dieser bounding box werden nun die Werte \mbox{\code{center[3]}} und \code{diam} berechnet. Die Member \code{double *m} und \code{double *F} bleiben mit $0$ 

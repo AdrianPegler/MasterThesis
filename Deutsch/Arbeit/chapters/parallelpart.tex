@@ -107,10 +107,18 @@ void _setup(Cluster *c, int depth){
     wird in \code{new_n} gespeichert.
     
     Der Datenaustausch findet über die Methode \code{MPI_Alltoallv(..)} (vgl. \autoref{fig:kolkom} und \autoref{lst:a2a}) statt. Diese führt mit Hilfe der zuvor konstruierten \code{count}- und 
-    \code{displ}-Arrays gerade eine Transformation der ``Prozess-Daten-Matrix'' aus, wodurch jeder Prozess jedem anderen die zugehörigen Daten schickt und respektive von diesen erhält.
+    \code{displ}-Arrays gerade eine Transformation der ``Prozess-Daten-Matrix'' aus, wodurch jeder Prozess jedem anderen die zugehörigen Daten schickt und respektive von diesem erhält.
     Danach werden noch einige Variablen aktualisiert. 
     
     Schließlich wird der Clusterbaum wie gehabt vollständig bis zur Ebene \code{MAX_DEPTH} konstruiert. Hierfür sind die ausgetauschten Daten kaum notwendig, da die Konstruktion des Clusterbaumes
     durch mittige Teilung der Nicht-Blattcluster durchgeführt wird und zu diesem Zeitpunkt lediglich die Interpolationspunkte erstellt werden. Jedoch werden so gleich die korrekten Startindizes und
     Anzahlen in den Clustern gespeichert.
+    
+    In \autoref{sec:konstr} wurde der Programmparameter $\tcode{pot}$ vorgestellt, der die Anzahl an Testsonnen bestimmt. Bei der parallelen Variante generiert jeder Prozess gerade $2^{\tcode{pot}}$
+    Sonnen. Die globale Menge $\Omega$ hat also $|\Omega| = 2^q 2^\tcode{pot} = 2^{q+\tcode{pot}}$ Elemente. Daher wird die maximale Baumtiefe $\tcode{MAX_DEPTH} = q + \tcode{pot} - \mathfrak{l}$ 
+    gesetzt. Dadurch wird die durchschnittliche Blattgröße von $2^\mathfrak{l}$ Elementen beibehalten.
+    
+  \subsection{Kommunikation}
+  \label{sec:komm}
+    
     
