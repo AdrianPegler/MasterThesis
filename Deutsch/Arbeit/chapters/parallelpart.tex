@@ -93,7 +93,7 @@ void _setup(Cluster *c, int depth){
     
     Weder bei reellen Daten, noch bei unseren zufällig generierten Testdaten, können wir davon ausgehen, dass diese nach Clustern sortiert vorliegen. Da ferner bei reellen Daten davon auszugehen
     ist, dass diese aus Platzgründen auch verteilt eingelesen werden müssen, generieren in unserem Programm auch alle Prozesse jeweils zufällige Testdaten. Es wäre möglich die Daten so verteilt
-    zu belassen, wie sie generiert beziehungsweise eingelesen wurden. Jedoch wäre dann während der \vorruck  eine große Menge an Kommunikation notwendig um diese entsprechend der Arbeitsverteilung
+    zu belassen, wie sie generiert beziehungsweise eingelesen wurden. Jedoch wäre dann während der \vorruck eine große Menge an Kommunikation notwendig um diese entsprechend der Arbeitsverteilung
     durchzuführen. Daher ist es sinnvoll diese Daten einmal nach Prozesszugehörigkeit auszutauschen.
     
     Diese Kommunikation wird während der Konstruktion des Clusterbaumes vorgenommen. Der zugehörige Quellcode ist in \autoref{lst:parconsttree} und \autoref{lst:presort} aufgeführt. 
