@@ -30,7 +30,7 @@
 \newtheorem{bem}[thm]{Bemerkung}
 \newtheorem{lemdef}[thm]{Lemma und Definition}
 
-
+\usepackage[bottom]{footmisc}
 \usepackage[format=hang]{caption}[2008/08/24]
 \usepackage{textcomp}
 \usepackage{todonotes}
@@ -64,6 +64,10 @@
 \newcommand{\tcode}[1]{\text{\code{#1}}}
 \newcommand{\trans}[1]{#1^T}
 \newcommand{\Proc}{\mathfrak{P}}
+\newcommand{\vorw}{\nameref{sec:vorw}}
+\newcommand{\ruckw}{\nameref{sec:rückw}}
+\newcommand{\koppl}{\nameref{sec:kopplung}}
+\newcommand{\vorruck}{\hyperref[sec:vorw]{Vorwärts-} und \nameref{sec:rückw} }
 
 \makeatletter
 \newcommand{\wlabel}[2]{%
@@ -106,7 +110,7 @@
 	numbers=left,
 	numbersep=6pt,
 	tabsize=3,
-	%language=C,
+	language=C,
 }
 
 \endinput
