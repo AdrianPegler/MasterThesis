@@ -1,7 +1,7 @@
   \section{Ausgangssituation}
    \label{sec:ausgang}
     Zur Erinnerung: Wir wollen für $n \in \N_{\geq 2}$ die wechselseitigen Gravitationskräfte von $n$ Himmelskörpern berechnen. Da die größten davon die Sonnen sind und es davon bereits mehr als
-    genug in unserer Galaxie gibt beschränken wir uns zunächst auf diese. Die Menge unserer $n$ Sonnen ist im Folgenden mit der Menge $\Omega$ dargestellt. Für jede Sonne
+    genug in unserer Galaxie gibt, beschränken wir uns zunächst auf diese. Die Menge unserer $n$ Sonnen ist im Folgenden mit der Menge $\Omega$ dargestellt. Für jede Sonne
     $x \in \Omega$ muss die Gleichung
     \begin{equation}
       f_x = \sum_{\substack{y \in \Omega \\ y \neq x}} \gamma m_x  m_y \frac{y - x}{\norm{y - x}^3_2}
@@ -14,7 +14,7 @@
     \begin{figure}[tb]
     \centering
     \begin{subfigure}{0.9 \textwidth}
-    \begin{lstlisting}[language=C, label=lst:bodies, caption={Die Struktur \code{bodies} dient der Speicherung aller mit den einzelnen Sonnen zusammenhängenden Daten}, numbers=none]
+    \begin{lstlisting}[language=C, label=lst:bodies, caption={Die Struktur \code{bodies} dient der Speicherung aller mit den einzelnen Sonnen zusammenhängenden Daten.}, numbers=none]
 /* Struct that holds coordinates x, masses m and forces F for all particles. */
 struct _bodies {
   int    *id; // id to identify each single body
@@ -48,24 +48,23 @@ typedef struct _bodies bodies;
      \item die Werte \code{int n} und \code{double th}, die die Anzahl an Sonnen und die Länge eines Zeitschritts in Sekunden enthalten.
     \end{enumerate}
     
-    Die Körper entsprechen noch keinen reellen Himmelkörpern, zu denen uns keine Daten vorliegen, sondern werden zufällig generiert. Die Sonnen werden in einem Gebiet von $\pm 1$ Lichtjahr in
+    Die Körper entsprechen keinen reellen Himmelkörpern, zu denen uns keine Daten vorliegen, sondern werden zufällig generiert. Die Sonnen werden in einem Gebiet von $\pm 1$ Lichtjahr in
     jeder Koordinatenrichtung um einen angenommenen Ursprung mit Massen zwischen einer und $15$ Sonnenmassen verteilt.\todo{echte Werte nachlesen!}
 
     Um nun alle gravitationellen Wechselwirkungen zu berechnen wird die Methode \code{compute_forces_bodies(...)} (vgl. \autoref{lst:compfbodies}) ausgeführt.
-    Gut zu erkennen ist die matrixähnliche Struktur: Die beiden \code{for}-Schleifen entsprechen dem zeilen- und spaltenweisen durchgehen der zugehörigen $\Omega \times \Omega$-Matrix. 
+    Gut zu erkennen ist die matrixähnliche Struktur: Die beiden \code{for}-Schleifen entsprechen dem zeilen- und spaltenweisen Durchgehen der zugehörigen $\Omega \times \Omega$-Matrix. 
     Explizit aufgestellt wird diese Matrix allerdings nicht, da dies in Bezug auf den Speicherplatz äußerst ineffizient wäre. Statt dessen wird direkt, wie in \autoref{eq:sum_grav2}
     angegeben, die kumulative Kraftwirkung für jede Sonne berechnet und in der \code{bodies}-Struktur gespeichert. Ein Teil der Kernfunktion ist in den Aufruf von \code{calc\_potential(...)}
     in Zeile 19 ausgegliedert. 
-    %Der zugehörige Code ist in \autoref{lst:calcpot} zu finden. 
-    Diese Methode berechnet das rein auf der Entfernung der beiden Sonnen beruhende Gravitationspotential $P(x,y)$, sodass die Formel aus \autoref{eq:sum_grav2} wie folgt dargestellt werden kann
+    Diese Methode berechnet das rein auf der Entfernung der beiden Sonnen beruhende Gravitationspotential $P(x,y)$, sodass die Formel aus \autoref{eq:sum_grav2} wie folgt dargestellt werden kann:
     \[
       f_x = \sum_{\substack{y \in \Omega \\ y \neq x}} \gamma m_x  m_y P(x, y), \ \ \ \ P(x, y) := \frac{y - x}{\norm{y - x}^3_2}.
     \]
     
     Wie bereits in der Einleitung beschrieben ist das Problem mit diesem Algorithmus, dass er in Bezug auf die Laufzeit quadratisch skaliert. Läuft dieser Algorithmus mit $n = 2^{13} \approx 8.000$
-    Sonnen noch in $1,097$ Sekunden durch, so braucht er bereits für $n = 2^{15} \approx 32.000$ Sonnen $17,531$ Sekunden und für $n = 2^{16} \approx 64.000$ Sonnen bereits über $70$ Sekunden.
-    \footnote{Ausgeführt aufeinem Computer mit 16 Gb Arbeitsspeicher und einem Intel Core i7 mit 2,4 GHz pro Kern.} 
-    Und diese Größenordnung ist weit entfernt von dem reellen Problem die Gravitationskräfte in unserer Galaxie mit etwa $100.000.000.000$ Sonnen zu berechnen.
+    Sonnen noch in $1,097$ Sekunden durch, so braucht er bereits für $n = 2^{15} \approx 32.000$ Sonnen $17,531$ Sekunden und für $n = 2^{16} \approx 64.000$ Sonnen bereits über $70$ 
+    Sekunden.\footnote{Ausgeführt auf einem Computer mit 16 Gb Arbeitsspeicher und einem Intel Core i7-4710HQ.} 
+    Und diese Größenordnung ist weit entfernt von dem reellen Problem, die Gravitationskräfte in unserer Galaxie mit etwa $100.000.000.000$ Sonnen zu berechnen.
     
     \begin{figure}[b]
     \centering
@@ -103,24 +102,6 @@ void compute_forces_bodies(bodies *b) {
     \end{subfigure}
     \end{figure}
     
-%     \begin{subfigure}{0.9\textwidth}
-%     \begin{lstlisting}[language=C, label=lst:calcpot, caption={Diese Methode berechnet für zwei Sonnen das abstandsabhängige Gravitationspotential.}]
-% void calc_potential(double xi, double yi, double zi, double xj, double yj, double zj, double *P){
-%   double d[3], norm, norm3;
-%   d[0] = xj - xi;
-%   d[1] = yj - yi;
-%   d[2] = zj - zi;
-%   norm = sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
-%   norm = 1.0 / norm;
-%   norm3 = norm * norm * norm;
-%   P[0] = d[0] * norm3;
-%   P[1] = d[1] * norm3;
-%   P[2] = d[2] * norm3;
-% }
-%     \end{lstlisting}
-%     \end{subfigure}
-%     \end{figure}
-    
     \clearpage
     
   \section{$\mathcal{H}^2$-Matrixstruktur und Approximation}
@@ -140,7 +121,7 @@ void compute_forces_bodies(bodies *b) {
       &= \gamma \sum_{\nu \in M} \lag_\indt{\nu}(x) m_x \sum_{\mu \in M} P( \xi_\indt{\nu} , \xi_\inds{\mu} ) \lag_\inds{\mu}(y) m_y.
     \end{align*}
     Anders ausgedrückt wollen wir die Matrix $(F)_{x,y} := f(x,y)$ durch eine $\mathcal{H}^2$-Matrix $\tilde F$ approximieren. Für einen streng zulässigen Blockbaum $T_{\Omega \times \Omega}$ 
-    und jeden zulässigen Block $b = \tau \times \sigma \in \mathcal{L}^+(T_{\Omega \times \Omega})$ konstruieren wir die nötigen Matrizen, mit $\mu,\nu \in M$, wie folgt:
+    und jeden zulässigen Block $b = \tau \times \sigma \in \mathcal{L}^+(T_{\Omega \times \Omega})$ konstruieren wir die nötigen Matrizen mit $\mu,\nu \in M$ wie folgt:
     \begin{align}
       E_{\tilde \tau} &:=
 	(E_{\tilde \tau})_{\mu \nu} := \lag_\indt{\nu}(\xi_{\tilde \tau, \mu}) \ \ \ \, \text{ für alle } \tilde \tau \in sons(\tau) \text{ falls } \tau \notin \mathcal{L}(T_\Omega), \nonumber\\
@@ -157,7 +138,7 @@ void compute_forces_bodies(bodies *b) {
 	(W_\sigma)_{y \nu}   := \lag_\inds{\nu}(y) & \ \text{ für alle } y \in \sigma \text{ falls } \sigma \in \mathcal{L}(T_\Omega),\\
 	\sum_{\tilde \sigma \in sons(\sigma)} E_{\tilde \sigma} W_{\tilde \sigma}  & \ \text{ falls } \sigma \notin \mathcal{L}(T_\Omega).\\
       \end{cases}\label{eq:wsigma}      
-    \end{align}\todo{Spalten linksbündig}
+    \end{align}
     Für die unzulässigen Blöcke $b = \tau \times \sigma \in \mathcal{L}^-(T_{\Omega \times \Omega})$ müssen wir weiterhin vollbesetzte Matrizen
     \[
       N_b := (N_b)_{xy} := \gamma m_x  m_y P(x, y)
@@ -172,7 +153,7 @@ void compute_forces_bodies(bodies *b) {
     
     \subsection{Clusterung}
     Für die oben beschriebene Approximation müssen wir einen Clusterbaum und einen streng zulässigen Blockbaum konstruieren.
-    Dazu benötigen wir zunächst eine Datenstruktur für Clusterbäume. Diese finden Sie in \autoref{lst:cluster}.
+    Dazu benötigen wir zunächst eine Datenstruktur für Clusterbäume. Diese sind in \autoref{lst:cluster} zu finden.
     \begin{figure}[tb]
     \begin{subfigure}{0.9\textwidth}
     \begin{lstlisting}[language=C, label=lst:cluster, caption={Die Struktur \code{Cluster} vereint die Definition eines Clusters mit der eines Clusterbaumes.}, numbers=none]
@@ -201,9 +182,9 @@ typedef struct _Cluster Cluster;
     \code{bodies *bodies}, und nutzt einen Startindex \code{int start} sowie die Anzahl \code{int n}, um auf die zum Cluster gehörigen Sonnen zu verweisen und zuzugreifen. Auch denkbar wäre es,
     nicht getrennt das \code{bodies}-Array und den Startindex zu speichern, sondern direkt auf das erste Element des zum Cluster gehörenden Teilarrays zu zeigen. Für jedes Cluster ein eigenes
     Array anzulegen würde hingegen zu Redundanz und somit unnötigem Speicherbedarf führen, da jede Ebene des Clusterbaumes eine Partition von $\Omega$ erzeugt. Die hier vorgestellte Variante
-    erscheint mir am vielseitigsten ohne nennenswert unnötig Speicher zu belegen.
+    erscheint mir am vielseitigsten, ohne nennenswert unnötig Speicher zu belegen.
     
-    Außerdem enthält das Cluster die, die Elemente des Clusters umschließende, bounding box (vgl. \hyperref[w:bbox]{Seite} \pageref{w:bbox}). Diese wird durch zwei Punkte in der Gestalt 
+    Außerdem enthält das Cluster die die Elemente des Clusters umschließende bounding box (vgl. \hyperref[w:bbox]{Seite} \pageref{w:bbox}). Diese wird durch zwei Punkte in der Gestalt 
     von \code{double a[3]} und \code{double b[3]} aufgespannt. 
     Da das Zentrum mehrfach bei der Konstruktion und Teilung auftaucht ist dieses zur Laufzeitoptimierung in \code{double center[3]} abgespeichert.
     Ebenso ist der Durchmesser der bounding box in \code{double diam} hinterlegt, um ihn nur einmal bei der Konstruktion und nicht bei jeder Abfrage erneut berechnen zu müssen.
@@ -214,8 +195,8 @@ typedef struct _Cluster Cluster;
     Da \code{*F} ein Array von dreidimensionalen Vektoren ist, enthält es $3 k^3$ Einträge. Zwar sind \code{*xs} ebenfalls dreidimensionale Punkte, jedoch bilden diese ein regelmäßiges Raster. Indem
     wir die Koordinatenprojektionen der Punkte speichern, reichen $3 k$ Einträge. Die Interpolationspunkte können dann durch 
     $\{\tcode{xs}_0, \dots ,\tcode{xs}_{k-1}\} \times \{\tcode{xs}_0, \dots ,\tcode{xs}_{k-1}\} \times \{\tcode{xs}_0, \dots ,\tcode{xs}_{k-1}\}$ rekonstruiert werden.
-    Die Einträge sind jeweils nach Koordinatenrichtung zusammengefasst, also erst alle x-Koordinaten, dann die y-Koordinaten usw., um auch wieder eine ``\hyperref[w:aos]{struct of arrays}``-Struktur 
-    zu bilden, um eine einfach Vektorisierung zu ermöglichen.
+    Die Einträge sind jeweils nach Koordinatenrichtung zusammengefasst, also erst alle x-Koordinaten, dann die y-Koordinaten usw.. Dies bildet wieder eine 
+    ``\hyperref[w:aos]{struct of arrays}``-Struktur, um eine einfache Vektorisierung zu ermöglichen.
     
     Die Membervariable \code{int num\_sons} dient in diesem Fall der einfacheren Abfrage, ob es sich bei dem Cluster um ein Blatt oder einen inneren Knoten handelt. In allgemeineren Kontexten 
     ist es durchaus möglich, dass Cluster unterschiedlich viele Sohncluster haben. Beispielweise hat der zugehörige Blockbaum $T_{\Omega \times \Omega}$ vier Sohnblöcke pro Nicht-Blattblock. 
@@ -233,9 +214,9 @@ typedef struct _Cluster Cluster;
     $[-1,1]$ berechnet. Diese werden jetzt für jede Koordinatenrichtung $\iota$ auf das entsprechende Intervall $[a_\iota, b_\iota]$ des Quaders der bounding box transformiert.
     
     Um nun mit dieser Wurzel einen Clusterbaum zu konstruieren, unterteilen wir ein Cluster jeweils in Sohncluster bis eine Abbruchbedingung erfüllt ist. 
-    Die wichtigsten Auszüge aus dem Code zur rekursiven Konstruktion des Clusterbaumes sind in \autoref{lst:setup}, \autoref{lst:sort} und \autoref{lst:init} aufgeführt.
+    Die wichtigsten Auszüge aus dem Code zur rekursiven Konstruktion des Clusterbaumes sind in \autoref{lst:setup}, \autoref{lst:init} und \autoref{lst:sort} aufgeführt.
     
-    Da wir mit zufällig generierten und recht großen Datenmengen arbeiten, ist es nicht notwendig die Unterteilung eines Clusters in Sohncluster kardinalitätsgesteuert vorzunehmen um ein gutes load 
+    Da wir mit zufällig generierten und recht großen Datenmengen arbeiten, ist es nicht notwendig, die Unterteilung eines Clusters in Sohncluster kardinalitätsgesteuert vorzunehmen, um ein gutes load 
     balancing zu erhalten. Dies könnte bei reellen Daten möglicherweise notwendig werden, wenn es in der betrachteten Menge $\Omega$ große Bereiche mit sehr wenigen Körpern gibt. 
     Der hier vorgestellte Algorithmus unterteilt die Cluster auf jeder Stufe des Baumes rein geometrisch durch eine Mittelebene. Dazu wird zunächst die Richtung der größten Ausdehnung der bounding
     box bestimmt und dann in dieser Koordinatenrichtung mittig unterteilt. Während dieser Unterteilung werden die zunächst ungeordneten \code{bodies} gemäß ihrer Zugehörigkeit zu einem der beiden
@@ -249,7 +230,7 @@ typedef struct _Cluster Cluster;
     Nach \hyperref[def:clusterbaum]{Definition}\autoref{def:clusterbaum} wurden zwei Beispiele für Abbruchbedingungen erwähnt. Wegen der zufälligen Generierung lässt sich die ungefähre Anzahl Elemente
     in den Blattclustern anhand der Tiefe des Baumes schätzen. Indem wir als Abbruchbedingung eine maximale Tiefe für den Clusterbaum festlegen, stellen wir gleichzeitig sicher, dass der Clusterbaum
     ein vollständiger Binärbaum wird.
-    Der Wert \code{MAX\_DEPTH} für die Abbruchbedingung wird gleich zu Beginn des Programmlaufs auf Basis der Anzahl an Sonnen ($|\Omega| = 2^{\tcode{pot}}$), und der Interpolationsordnung $k$ 
+    Der Wert \code{MAX\_DEPTH} für die Abbruchbedingung wird gleich zu Beginn des Programmlaufs auf Basis der Anzahl an Sonnen ($|\Omega| = 2^{\tcode{pot}}$) und der Interpolationsordnung $k$ 
     berechnet. Dabei gilt:
     \begin{equation*}
       \tcode{MAX\_DEPTH} := \tcode{pot} - \mathfrak{l}, \ \ \ \ \ \ \ \ \ \ \ \ 
@@ -259,13 +240,13 @@ typedef struct _Cluster Cluster;
 	4			    & \text{falls } k = 1
       \end{cases}
     \end{equation*}
-    Bei einer Baumtiefe von \code{pot} wären die Blattcluster um Schnitt gerade einelementig. Indem die Abbruchbedingung die Tiefe des Clusterbaumes auf $\tcode{pot} - \mathfrak{l}$ begrenzt,
+    Bei einer Baumtiefe von \code{pot} wären die Blattcluster im Schnitt gerade einelementig. Indem die Abbruchbedingung die Tiefe des Clusterbaumes auf $\tcode{pot} - \mathfrak{l}$ begrenzt,
     enthalten die Blattknoten im Schnitt gerade $2^\mathfrak{l}$ Elemente.
-    Durch diese Baumtiefenreglierung wird für $k > 1$ die nächsthöhere Zweierpotenz zur doppelten Anzahl an Interpolationspunkten als durchschnittliche Anzahl Sonnen pro Blattcluster festgelegt. 
+    Durch diese Baumtiefenregulierung wird für $k > 1$ die nächsthöhere Zweierpotenz zur doppelten Anzahl an Interpolationspunkten als durchschnittliche Anzahl Sonnen pro Blattcluster festgelegt. 
     Für die Interpolationsordnung $k = 1$ wäre dies eine zu feine Zerlegung. Daher wird hier $\mathfrak{l}$  auf den Wert $4$ und damit die durchschnittliche Blattgröße auf $2^4 = 8$ gesetzt.
     Indem die Blattgröße im Schnitt auf ungefähr das Doppelte der Anzahl an Interpolationspunkten festgelegt wird, soll eine gute Balance zwischen Genauigkeit und Laufzeit erreicht werden.
         
-    Für die Blattcluster ist keine eigne setup-Methode notwendig, da der Konstruktor \mbox{\code{\_new\_bound\_Cluster(...)}} zunächst alle Werte für ein Blattcluster setzt. Die Methode \linebreak
+    Für die Blattcluster ist keine eigene setup-Methode notwendig, da der Konstruktor \mbox{\code{\_new\_bound\_Cluster(...)}} zunächst alle Werte für ein Blattcluster setzt. Die Methode \linebreak
     \mbox{\code{\_setup(...)}} entscheidet also anhand der Stufe ob ein Cluster ein Blattcluster bleibt, oder durch Unterteilung zu einem Nicht-Blattcluster wird.
 
     \subsection{Vorwärtstransformation}
@@ -288,7 +269,7 @@ typedef struct _Cluster Cluster;
     \[
       \tcode{m}_{\xi_{\tcode{c}\mu}} = \tcode{m}_\mu := \sum_{y \in \tcode{c}} \lag_{\tcode{c},\mu}(y) m_y
     \]
-    die Ersatzmassen in der Clusterbasis berechnet und gespeichert. Die Methode \code{\_forward\_nonLeaf(Cluster *c)} berechnet ebenfalls Ersatzmassen, jedoch nicht aus allen Sonnen des Clusters,
+    die Ersatzmassen in der Clusterbasis berechnet und gespeichert. Die Methode \code{_forward\-_nonLeaf(Cluster *c)} berechnet ebenfalls Ersatzmassen, jedoch nicht aus allen Sonnen des Clusters,
     sondern aus den Interpolationspunkten und Ersatzmassen der Sohncluster (vgl. \autoref{sec:transmat}).
     
     Stellt man sich den Baum von der Wurzel aus nach unten hängend vor, werden also die Massen der Sonnen in den Baum hochgezogen. Je höher die Stufe des Baumes, um so gröber ist die Approximation.
@@ -303,7 +284,7 @@ typedef struct _Cluster Cluster;
     Den Blockbaum haben wir nicht explizit aufgestellt. Das ist auch nicht notwendig, da wir ihn implizit konstruieren können und somit keinen Speicherplatz benötigen.
     Wir durchlaufen unseren impliziten Blockbaum, indem wir, beginnend mit dem Wurzelblock $b_{root} = root(T_\Omega) \times root(T_\Omega)$, für jeden Block $b = \tau \times \sigma$ prüfen, ob
     \begin{enumerate}
-      \item $\mathcal{Z}_\eta(\tau,\sigma) = \ttit{zulässig}$ erfüllt ist. Ist dies der Fall haben wir, unabhängig davon, ob $\tau \in \mathcal{L}(T_\Omega)$ oder 
+      \item $\mathcal{Z}_\eta(\tau,\sigma) = \ttit{zulässig}$ erfüllt ist. Ist dies der Fall, haben wir, unabhängig davon, ob $\tau \in \mathcal{L}(T_\Omega)$ oder 
       $\sigma \in \mathcal{L}(T_\Omega)$ gilt, einen Blattblock erreicht und können $S_b$ auswerten. 
       \item Ist $\mathcal{Z}_\eta(\tau,\sigma) = \ttit{unzulässig}$, prüfen wir, ob 
       \begin{enumerate}
@@ -360,7 +341,7 @@ void _eval(Cluster *ct, Cluster *cs){
     Der letzte Schritt der Berechnung ist die Auswertung der Matrizen $V_\tau$. Diesen Schritt nennt man auch \textit{Rückwärtstranformation}.
     
     Auch dieser Schritt hängt wieder ausschließlich von den Clustern ab. Daher kann die Rückwärtstranformation wieder unabhängig von den Blöcken für den gesamten Clusterbaum $T_\Omega$ ausgeführt
-    werden. Wir rufen dazu, wieder mit $root(T_\Omega)$ , die Methode \code{backward(Cluster *c)} auf. Wie bereits bei der \vorw unterscheidet diese Methode, ob es sich bei
+    werden. Wir rufen dazu wieder mit $root(T_\Omega)$ die Methode \code{backward(Cluster *c)} auf. Wie bereits bei der \vorw unterscheidet diese Methode, ob es sich bei
     dem aktuellen Cluster um ein Blatt- oder ein Nicht-Blattcluster handelt und delegiert die Arbeit entsprechend an die Methoden \code{\_backward\_Leaf(Cluster *c)} und 
     \code{\_backward\_nonLeaf(Cluster *c)}. Anders als bei der \vorw müssen bei der Rückwärtstransformation die Ergebnisse des Vaterclusters für die Söhne vorliegen. Daher gibt die
     Methode \code{_backward_nonLeaf(Cluster *c)} die approximierten Quasi-Kräfte, gewichtet über die Lagrange-Polynome, an die Sohncluster weiter. Für alle Söhne $\tilde{\tcode{c}} \in sons(\tcode{c})$
@@ -370,10 +351,10 @@ void _eval(Cluster *ct, Cluster *cs){
     \]
     zu den dort eventuell bereits aus der \koppl vorhandenen Quasi-Ersatzkräfte addiert.
     
-    Schließlich werden in der Methode \code{_backward_Leaf(Cluser *c)} die Quasi-Ersatzkräfte $\tcode{F}_{\tcode{c},\nu}$, $\nu \in M$, über die Lagrange-Polynome gewichtet auf alle Sonnen 
+    Schließlich werden in der Methode \code{_backward_Leaf(Cluser *c)} die Quasi-Ersatzkräfte $\tcode{F}_{\tcode{c},\nu}$, $\nu \in M$ über die Lagrange-Polynome gewichtet auf alle Sonnen 
     $x \in \tcode{c}$ verteilt und mit deren Masse $m_x$ multipliziert. Da auch hier bereits aus der Nahfeldauswertung Kräfte vorhanden sind, müssen diese approximierten Kräfte\footnote{Durch die
     Multiplikation mit $m_x$ werden die Quasi-Kräfte im physikalischen Sinne zu Kräften vervollständigt.} zu den vorhandenen addiert werden.
     
-    \TODO{Da diese Methoden analog zu denjenigen der Vorwärtstransformation funktionieren sind diese hier nicht (oder nur im Anhang) aufgeführt.} 
+    Da diese Methoden analog zu denjenigen der Vorwärtstransformation funktionieren sind diese hier nicht aufgeführt.
 
   \clearpage
