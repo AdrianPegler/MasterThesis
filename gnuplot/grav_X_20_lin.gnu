@@ -16,7 +16,7 @@
    nobackground \
    palfuncparam 2000,0.003 \
    "Helvetica" 16  fontscale 1.0 
-# set output 'grav1_lin.eps'
+# set output 'grav_X20_lin.eps'
 unset clip points
 set clip one
 unset clip two
@@ -126,17 +126,17 @@ set rrange [ * : * ] noreverse nowriteback
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "# Elemente" 
+set xlabel "#Prozesse" 
 set xlabel  font "" textcolor lt -1 norotate
 set x2label "" 
 set x2label  font "" textcolor lt -1 norotate
-set xrange [ 0.00000 : 3.50000e+07 ] noreverse nowriteback
+set xrange [ 0.00000 : 150.000 ] noreverse nowriteback
 set x2range [ 1024.00 : 3.35544e+07 ] noreverse nowriteback
 set ylabel "Gesamtlaufzeit [s]" 
 set ylabel  font "" textcolor lt -1 rotate by -270
 set y2label "" 
 set y2label  font "" textcolor lt -1 rotate by -270
-set yrange [ 0.00000 : 1400.00 ] noreverse nowriteback
+set yrange [ 20.0000 : 100.000 ] noreverse nowriteback
 set y2range [ 0.00000 : 1270.00 ] noreverse nowriteback
 set zlabel "" 
 set zlabel  font "" textcolor lt -1 norotate
@@ -173,19 +173,20 @@ f(x)=a*x+b
 g(x)=m*x+b
 GNUTERM = "wxt"
 a = 3.65609448721398e-05
-b = 0.999623442685091
+b = 40.1947153553841
 GPFUN_f = "f(x)=a*x+b"
+m = 0.0844862780541558
+GPFUN_g = "g(x)=m*x+b"
 x = 0.0
 FIT_CONVERGED = 1
-m = 3.65162583944504e-05
-GPFUN_g = "g(x)=m*x+b"
-FIT_NDF = 14
-FIT_STDFIT = 48.2768229011031
-FIT_WSSR = 32629.1228119427
+FIT_NDF = 7
+FIT_STDFIT = 11.4078837399705
+FIT_WSSR = 910.978679972783
 FIT_P = 0.0
-FIT_NITER = 1
-m_err = 1.38231241162012e-06
-b_err = 13.389534420901
-## Last datafile plotted: "results/grav_1_X_raw.dat"
-plot 'results/grav_1_X_raw.dat' using 1:2 with points title "Laufzeitmessung", g(x) title "lineare Approximation"
+FIT_NITER = 6
+m_err = 0.0974041085899638
+b_err = 4.90997870674525
+## Last datafile plotted: "results/grav_X_20_raw.dat"
+plot 'results/grav_X_20_raw.dat' using 1:2 title "Laufzeitmessung", g(x) title "lineare Approximation"
+## fit g(x) 'results/grav_X_20_raw.dat' using 1:2 via m,b
 #    EOF
