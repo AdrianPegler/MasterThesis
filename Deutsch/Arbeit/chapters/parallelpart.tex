@@ -1,20 +1,20 @@
 \section{Parallelisierung}
 \label{sec:parallelpart}
-  Im vorherigen Kapitel haben wir die Berechnung der Gravitationskräfte durch Interpolation approximiert. Dadurch konnten wir die Technik der \hquad nutzen um den Rechenaufwand des Algorithmus zu 
+  Im vorherigen Kapitel haben wir die Berechnung der Gravitationskräfte durch Interpolation approximiert. Dadurch konnten wir die Technik der \hquad nutzen, um den Rechenaufwand des Algorithmus zu 
   optimieren.
-  Um die absolute Laufzeit aber noch weiter zu reduzieren sind wir an einer parallel arbeitende Variante dieses Algorithmus interessiert. In diesem Kapitel wird ein Ansatz vorgestellt.
+  Um die absolute Laufzeit aber noch weiter zu reduzieren, sind wir an einer parallel arbeitenden Variante dieses Algorithmus interessiert. In diesem Kapitel wird ein Ansatz dazu vorgestellt.
   
   Ziel ist es, zunächst einen einfachen Algorithmus zu entwerfen. Daher beschränken wir uns auf Parallelisierung nach dem Message-Passing-Modell unter Verwendung von MPI. Wir können also 
   $p \in \N$ Prozesse starten, von denen jeder eine eindeutige $id \in \nullhaken{p-1}$ und seinen privaten Speicherbereich besitzt. Insbesondere ist in diesem Modell Shared-Memory ausgeschlossen. 
-  Außerdem können die Prozesse miteinander kommunizieren um Daten auszutauschen. Die Menge der Prozesse wird im Folgen mit $\Proc$ bezeichnet.
+  Außerdem können die Prozesse miteinander kommunizieren, um Daten auszutauschen. Die Menge der Prozesse wird im Folgenden mit $\Proc$ bezeichnet.
 
   
   \subsection{Arbeitsverteilung}
   \label{sec:work}
     Damit wir von parallel arbeitenden Prozessen profitieren können, muss die Arbeit möglichst gleichmäßig auf diese Prozesse verteilt werden. Wir folgen, in modifizierter Variante, dem von 
     \citet{distrh2} vorgestellten Cluster-zentrierten Ansatz. 
-    Dieser basiert auf dem Grundgedanken, dass für \vorruck ausschließlich Daten zwischen Vater- und Sohnclustern ausgetauscht werden müssen. Um möglichst viel Kommunikation zu sparen ist es daher
-    besonders effektiv, wenn möglichst viele Söhne durch den selben Prozess verarbeitet werden, wie der Vater. Besonders einfach wird das Verteilen der Cluster und das Loadbalancing, wenn wir $p$ als 
+    Dieser basiert auf dem Grundgedanken, dass für \vorruck ausschließlich Daten zwischen Vater- und Sohnclustern ausgetauscht werden müssen. Um möglichst viel Kommunikation zu sparen, ist es daher
+    besonders effektiv, wenn möglichst viele Söhne durch denselben Prozess verarbeitet werden wie der Vater. Besonders einfach wird das Verteilen der Cluster und das Loadbalancing, wenn wir $p$ als 
     Zweierpotenz $p = 2^q$ wählen. Da dann die Anzahl von Clustern in $T_\Omega^{(q)}$ gerade $p$ entspricht, können wir diese Ebene, zuzüglich der Sohncluster, optimal auf die Prozesse verteilen.
     Wir gehen im Folgenden immer von einer so gewählten Anzahl Prozesse aus.
     
@@ -24,7 +24,7 @@
     Zudem gibt es aber noch Cluster auf den Ebenen $T_\Omega^{<q} := T_\Omega^{(0)},\dots,T_\Omega^{(q-1)}$. Um ein Cluster $C \in T_\Omega^{<q}$ zu klassifizieren nutzt jeder Prozess $P \in \Proc$
     mit $id_P$ zwei Konstanten. Gilt für alle Nachfahren $\xoverline{C} \in sons^*(C) \colon$ $\xoverline{C}.\tcode{active} \neq id_P$, so wird der Member $C.\tcode{active}$ auf die \code{int}-Konstante 
     \code{inactive} gesetzt. 
-    Gibt es aber Nachfahren $\xoverline{C} \in sons^*(C)$ mit $\xoverline{C}.\tcode{active} = id_P$, so wird der Member $C.\tcode{active}$ statt dessen auf die \code{int}-Konstante \code{semi_active} 
+    Gibt es aber Nachfahren $\xoverline{C} \in sons^*(C)$ mit $\xoverline{C}.\tcode{active} = id_P$, so wird der Member $C.\tcode{active}$ stattdessen auf die \code{int}-Konstante \code{semi_active} 
     gesetzt. 
     Inaktive Cluster werden während der \vorruck nicht weiter beachtet. Semi-aktive Cluster berechnen zwar Ersatzmassen, aber nur aus den Ersatzmassen des (semi-)aktiven und nicht des inaktiven 
     Sohnclusters.
@@ -66,13 +66,13 @@ void _setup(Cluster *c, int depth){
     \end{figure}
     
     Um diese Einteilung vorzunehmen, wird vorrangig der Code der Methode \code{_setup(...)} (vgl. \autoref{lst:setup}) angepasst. 
-    Zudem bekommt der Konstruktor \code{_new_bound_Cluster} einen neuen Parameter um den Member \code{active} aller Cluster zu initialisieren. Für die Konstruktion der Wurzel ist dieser auf
+    Zudem bekommt der Konstruktor \code{_new_bound_Cluster} einen neuen Parameter, um den Member \code{active} aller Cluster zu initialisieren. Für die Konstruktion der Wurzel ist dieser auf
     \code{semi_active} gesetzt. Danach wird durch die Methode \code{_setup_nonLeafCluster(...)} immer der Wert des Vaters an die Söhne weitergegeben.
     Der angepasste Code der \code{_setup}-Methode ist in \autoref{lst:parsetup} aufgeführt.
     
-    Zunächst wird überprüft, ob die \code{SPLIT_DEPTH} erreicht wurde. Ist dies der Fall wird der Member \code{active} auf 
-    die $id$ des zuständigen Prozesses gesetzt. Dies geschieht einfach durch abzählen. Als nächstes folgt der bereits aus \autoref{lst:setup} bekannte Aufruf, der das Teilen in Sohncluster, das 
-    Sortieren der \code{bodies} und die Rekursion beinhaltet. Der letzte Teil wird beim Abbau der Rekursion durchgeführt. Hier wird für eben die Cluster in $T_\Omega^{(<q)}$ überprüft ob diese 
+    Zunächst wird überprüft, ob die \code{SPLIT_DEPTH} erreicht wurde. Ist dies der Fall, wird der Member \code{active} auf 
+    die $id$ des zuständigen Prozesses gesetzt. Dies geschieht einfach durch Abzählen. Als nächstes folgt der bereits aus \autoref{lst:setup} bekannte Aufruf, der das Teilen in Sohncluster, das 
+    Sortieren der \code{bodies} und die Rekursion beinhaltet. Der letzte Teil wird beim Abbau der Rekursion durchgeführt. Hier wird für eben die Cluster in $T_\Omega^{(<q)}$ überprüft, ob diese 
     auf \code{semi-active} bleiben, oder, falls kein Nachfahre aktiv ist, der Member \code{active} auf \code{inactive} gesetzt wird.
     
     Die Idee der semi-aktiven Cluster beruht darauf, die Gestalt der Spalten- bzw. Zeilenmatrizen $V_\tau$ und $W_\sigma$ auszunutzen. Diese werden für Nicht-Blattcluster durch die Transfermatrizen 
@@ -81,7 +81,7 @@ void _setup(Cluster *c, int depth){
     eines zulässigen Blockes $b_0 = C_{semi} \times C$ oder $b_1 = C \times C_{semi}$, so können die Prozesse ihre Berechnungen untereinander austauschen. Somit werden die Definitionen der Matrizen
     $V_\tau$ und $W_\sigma$ aus \autoref{eq:vtau} beziehungsweise \autoref{eq:wsigma} lediglich auf mehrere Prozesse verteilt und die Summation bei Bedarf aus den Teilergebnissen gebildet.
     
-    Unter der Voraussetzung, dass alle notwendigen Information für jeden Prozess vorhanden sind, ist die einzige Anpassung der \koppl, dass sich die Auswertung auf (semi-)aktive
+    Unter der Voraussetzung, dass alle notwendigen Informationen für jeden Prozess vorhanden sind, ist die einzige Anpassung der \koppl \kern-0.29em, dass sich die Auswertung auf (semi-)aktive
     Targetcluster beschränkt. Auch die \ruckw braucht sich lediglich auf (semi-)aktive Cluster beschränken.
     
     Letztlich verteilt sich die Arbeit durch diesen Ansatz sehr natürlich auf die Prozesse. In \autoref{fig:vertblock} ist dies veranschaulicht. Hier ist dies für einen Prozess $P$ mit $id_P = 1$ 
@@ -91,15 +91,15 @@ void _setup(Cluster *c, int depth){
   \subsection{Datenverteilung}
   \label{sec:data}
     \input{chapters/datvertcode}
-    Eine weitere grundlegenden Frage ist, wo welche Daten vorhanden sein sollten. Ein Möglicher Ansatz wäre, dass jeder Prozess eine Kopie aller Daten hat. Doch obwohl das Gravitationsproblem kein all
+    Eine weitere grundlegende Frage ist, wo welche Daten vorhanden sein sollten. Ein möglicher Ansatz wäre, dass jeder Prozess eine Kopie aller Daten hat. Doch obwohl das Gravitationsproblem kein all
     zu speicherhungriges ist, würde der Hauptspeicher bei 32 Prozessen auf einem Knoten\footnote{Dies entspricht den Spezifikationen der meisten Knoten des RZ-Clusters der Uni Kiel.}  sehr schnell 
     knapp werden. Außerdem sei an dieser Stelle an die weitere Skalierbarkeit des Problems erinnert (vgl. \autoref{sec:parrech}). Daher müssen die Daten über die Prozesse verteilt werden. 
     
     Da wir im vorigen Kapitel bereits beschrieben haben, wie die Arbeit effektiv verteilt werden kann, ist es nur naheliegend die Daten auf die gleiche Weise zu verteilen. Jeder Prozess soll also 
     genau die Teile der \code{bodies}-Struktur beinhalten, die zu seinen aktiven Clustern gehören. Dies entspricht den hellblau gekennzeichneten Teilen des Clusterbaumes links in \autoref{fig:vertblock}.
     
-    Weder bei reellen Daten, noch bei unseren zufällig generierten Testdaten, können wir davon ausgehen, dass diese nach Clustern sortiert vorliegen. Da ferner bei reellen Daten davon auszugehen
-    ist, dass diese aus Gründen des Speicherbedarfs auch verteilt eingelesen werden müssen, generieren in unserem Programm auch alle Prozesse jeweils zufällige Testdaten. Es wäre möglich die Daten 
+    Weder bei reellen Daten noch bei unseren zufällig generierten Testdaten können wir davon ausgehen, dass diese nach Clustern sortiert vorliegen. Da ferner bei reellen Daten davon auszugehen
+    ist, dass diese aus Gründen des Speicherbedarfs auch verteilt eingelesen werden müssen, generiert in unserem Programm jeder Prozesse selbst zufällige Testdaten. Es wäre möglich die Daten 
     so verteilt zu belassen, wie sie generiert beziehungsweise eingelesen wurden. Jedoch wäre dann während der \vorruck eine große Menge an Kommunikation notwendig um diese entsprechend der 
     Arbeitsverteilung durchzuführen. Daher ist es sinnvoll diese Daten einmal nach Prozesszugehörigkeit auszutauschen. Dies bedeutet zwar einen erheblichen Kommunikationsaufwand, dafür kann aber im
     Anschluss die \vorruck komplett lokal und ohne weitere Kommunikation durchgeführt werden. Außerdem ist nicht davon auszugehen, dass viele Sonnen ihre bounding box während weniger Simulationsschritte
@@ -141,41 +141,42 @@ void _setup(Cluster *c, int depth){
     Als Resultat der Aufteilung der Daten müssen wir uns nun Gedanken machen, welche Daten für die Auswertungen der Matrizen zusätzlich zu den lokal vorhandenen gebraucht und damit kommuniziert werden 
     müssen.
     
-    In \autoref{fig:kommimpl} sind diese Zusammenhänge in Bezug auf einen Prozess $P_1 \in \Proc$ visualisiert. Die dunkel schraffierten Blöcke sind diejenigen, die Daten von $P_1$ benötigen. 
+    In \autoref{fig:kommimpl} sind diese Zusammenhänge in Bezug auf einen Prozess $P_1 \in \Proc$ visualisiert. Die dunkel schraffierten Blöcke sind diejenigen, die Daten von $P_1$ benötigen: 
     Entweder Berechnungen aus der \vorw für zulässige oder die Daten von Sonnen für unzulässige Blöcke. Der Prozess $P_1$ muss die Daten aus den zugehörigen Clustern also an die anderen Prozesse 
-    übermitteln. Umgekehrt benötigt $P_1$ die Daten zu den hell schraffierten Blöcken für seine \koppl und \ruckw. Lediglich die nicht schraffierten Blöcke benötigen keine Kommunikation, da alle
+    übermitteln. Umgekehrt benötigt $P_1$ die Daten zu den hell schraffierten Blöcken für seine \koppl und \ruckw \kern-0.29em. Lediglich die nicht schraffierten Blöcke benötigen keine Kommunikation, da alle
     Daten lokal verfügbar sind. Der Datenaustausch kann wie zuvor wieder durch eine Transformation der ``Prozess-Daten-Matrix'' und damit über \code{MPI_Alltoallv(...)} bewerkstelligt werden. 
     
-    Diesmal liegen die Daten allerdings nicht sequentiell hintereinander, sonder sind über den Clusterbaum und die \code{bodies}- Arrays verteilt. Hinzu kommt, dass für zulässige und unzulässige
+    Diesmal liegen die Daten allerdings nicht sequentiell hintereinander, sondern sind über den Clusterbaum und die \code{bodies}- Arrays verteilt. Hinzu kommt, dass für zulässige und unzulässige
     Blöcke unterschiedliche Daten ausgetauscht werden müssen. Für zulässige Blöcke brauchen lediglich die errechneten Ersatzmassen ausgetauscht werden, da die Interpolationspunkte bereits von jedem 
     Prozess berechnet wurden. Dies ist also nur ein \code{double}-Array mit verhältnismäßig wenigen Daten.
-    Für unzulässige Blöcke hingegen müssen alle zugehörigen Daten aus den Memberarrays \code{x}, \code{y}, \code{z} und \code{m}, sowie die Anzahl der zum Cluster gehörenden
+    Für unzulässige Blöcke hingegen müssen alle zugehörigen Daten aus den Memberarrays \code{x}, \code{y}, \code{z} und \code{m} sowie die Anzahl der zum Cluster gehörenden
     Sonnen übertragen werden.
     
-    Diesmal müssen also für die Kommunikation manuell Sende- und Empfangspuffer angelegt werden. Der zugehörige Code ist in der Datei \code{eval.c} zu finden und wird im Folgenden lediglich erläutert.
+    Diesmal müssen also für die Kommunikation manuell Sende- und Empfangspuffer angelegt werden. Der zugehörige Code ist in der Datei \code{eval.c} zu finden und wird im Folgenden erläutert.
     
     Die Methode \code{void _prep_comm(Cluster *ct, Cluster *cs)} durchläuft ebenso wie die in \autoref{lst:eval} dargestellte Methode \code{_eval(...)} den impliziten Blockbaum und sucht nach 
-    zulässigen und unzulässigen Blöcken mit (semi-)aktivem Targetcluster. Pointer zu diesen Source- und Targetclustern werden in Arrays von Vektoren \footnote{Die Implementierung der vector-Struktur
-    sowie zugehörige Methoden wurden von https://\-gist.\-github.com/\-EmilHernvall/953968 übernommen und leicht modifiziert und erweitert.} gespeichert. \footnote{Mit Vektoren sind ist in diesem Fall eine 
-    Struktur gemeint, die ein Array mit flexibler Länge darstellt.} Dabei wird darauf geachtet, dass die Daten aus (semi-)aktiven Clustern, für die mehrere Prozesse zuständig sind, für alle diese 
+    zulässigen und unzulässigen Blöcken mit (semi-)aktivem Targetcluster. Pointer zu diesen Source- und Targetclustern werden in Arrays von Vektoren\footnote{Die Implementierung der vector-Struktur
+    sowie zugehörige Methoden wurden von https://\-gist.\-github.com/\-EmilHernvall/953968 übernommen und leicht modifiziert und erweitert.} gespeichert.\footnote{Mit einem Vektor ist in diesem Fall 
+    eine Struktur gemeint, die ein Array mit flexibler Länge darstellt.} Dabei wird darauf geachtet, dass die Daten aus (semi-)aktiven Clustern, für die mehrere Prozesse zuständig sind, für alle diese 
     Prozesse vermerkt werden.
     
-    Im Anschluss nutzt die Methode \code{void _prep_buffers()} diese gesammelten Daten um die Sende- und Empfangspuffer zu allozieren und mit den zu sendenden Daten zu füllen. Sind diese Puffer bereit,
+    Im Anschluss nutzt die Methode \code{void _prep_buffers()} diese gesammelten Daten, um die Sende- und Empfangspuffer zu allozieren und mit den zu sendenden Daten zu füllen. Sind diese Puffer bereit,
     kann die Kommunikation durchgeführt werden. Dazu wird die Methode \code{void _communicate()} aufgerufen. Dies führt mit den entsprechenden Puffern und den gesammelten Anzahl- und Positionsdaten
-    insgesamt sechs Aufrufe von \code{MPI_\-Alltoallv(...)} durch. Eine für die Ersatzmassen der Cluster, und fünf für die benötigten \code{bodies}-Daten, da die einzelnen Koordinatenrichtungen, die 
+    insgesamt sechs Aufrufe von \code{MPI_\-Alltoallv(...)} durch: Eine für die Ersatzmassen der Cluster, und fünf für die benötigten \code{bodies}-Daten, da die einzelnen Koordinatenrichtungen, die 
     Anzahlen pro Cluster und die Massen in einzelnen Arrays vorliegen.
     
-    Nachdem die Kommunikation vollendet wurde müssen die Daten noch an die richtigen Stellen vermittelt werden. Die Methode \code{void _finalize_comm()} kopiert die empfangenen Ersatzmassen in die 
-    Cluster, in denen diese benötigt werden. Dabei werden die Ersatzmassen von Clustern, die sich aus den Ersatzmassen mehrerer Prozesse zusammensetzen summiert (vgl. \autoref{eq:vtau} bzw. 
+    Nachdem die Kommunikation vollendet wurde, müssen die Daten noch an die richtigen Stellen vermittelt werden. Die Methode \code{void _finalize_comm()} kopiert die empfangenen Ersatzmassen in die 
+    Cluster, in denen diese benötigt werden. Dabei werden die Ersatzmassen von Clustern, die sich aus den Ersatzmassen mehrerer Prozesse zusammensetzen, summiert (vgl. \autoref{eq:vtau} bzw. 
     \autoref{eq:wsigma}). Die empfangenen \code{bodies}-Daten werden nicht kopiert, um Speicherplatz zu sparen. Die zugehörigen Cluster müssen aber angepasst werden. Der Startindex und die 
     Anzahl wird entsprechend der Empfangspuffer gesetzt. Später können so die Daten direkt aus diesen Puffern abgerufen werden. Dies wäre für die Cluster zwar auch möglich, da hier die Ersatzmassen
     aber bereits alloziert wurden, belegen wir durch das Kopieren keinen zusätzlichen Speicher. Außerdem hat dies den Vorteil, dass wir so später nicht zu unterscheiden brauchen, wo welche Ersatzmassen
     zu finden sind.
     
-    Nun kann die \koppl wie gehabt durch aufrufen der Methode \code{_eval(...)} durchgeführt werden. Die einzigen Anpassungen sind das auslassen von Blöcken mit inaktivem Targetcluster und die 
+    Nun kann die \koppl wie gehabt durch Aufrufen der Methode \code{_eval(...)} durchgeführt werden. Die einzigen Anpassungen sind das Auslassen von Blöcken mit inaktivem Targetcluster und die 
     Unterscheidung, ob die \code{bodies}-Daten in der lokalen \code{bodies} Struct oder in den Empfangspuffern zu finden sind.
     
     Abschließend werden die Daten in inaktiven Clustern durch die Methode \code{void _clear_inactive_clusters()} wieder auf $0$ gesetzt, da diese beim nächsten Simulationsschritt nicht überschrieben
-    werden würden. (Semi-)aktive Cluster werden während der \vorw neu berechnet und Cluster für die genau ein andere Prozess zuständig ist werden nach der Kommunikation mit den neuen Daten überschrieben.
-    Diese brauchen also nicht eigens geleert werden um sicherzustellen, dass keine alten Daten verbleiben und zu fehlerhaften Berechnungen führen.
+    werden würden. (Semi-)aktive Cluster werden während der \vorw neu berechnet und Cluster, für die genau ein anderer Prozess zuständig ist, werden nach der Kommunikation mit den neuen Daten 
+    überschrieben. Diese brauchen also nicht eigens geleert werden, um sicherzustellen, dass keine alten Daten verbleiben und zu fehlerhaften Berechnungen führen.
     
+    \TODO{Sbschließender Satz?!}
