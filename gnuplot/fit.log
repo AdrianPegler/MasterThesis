@@ -424,3 +424,272 @@ correlation matrix of the fit parameters:
                 m      b      
 m               1.000 
 b              -0.433  1.000 
+
+
+*******************************************************************************
+Sat Jul  7 15:25:54 2018
+
+
+FIT:    data read from 'results/grav_1_X_raw.dat' using 1:2
+        format = x:z
+        #datapoints = 16
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x)=a*x+b
+fitted parameters initialized with current variable values
+
+Warning: Initial value of parameter 'b' is zero.
+iter      chisq       delta/lim  lambda   a             b            
+   0 3.5703892648e+04   0.00e+00  2.60e+02    3.800000e-05   1.000000e-30
+BREAK: Singular matrix in Invert_RtR
+
+*******************************************************************************
+Sat Jul  7 15:42:07 2018
+
+
+FIT:    data read from 'results/grav_1_X_raw.dat' using 1:2:3
+        format = x:z:s
+
+Current data point
+=========================
+#               = 1 out of 16
+x               = 1024           
+z               = 0              
+s               = 0              
+
+BREAK: Zero error value in data file
+
+*******************************************************************************
+Sat Jul  7 15:42:47 2018
+
+
+FIT:    data read from 'results/grav_1_X_raw.dat' using 1:2:3
+        format = x:z:s
+
+Current data point
+=========================
+#               = 1 out of 16
+x               = 1024           
+z               = 0              
+s               = 0              
+
+BREAK: Zero error value in data file
+
+*******************************************************************************
+Sat Jul  7 15:43:40 2018
+
+
+FIT:    data read from 'results/grav_1_X_raw.dat' using 1:2
+        format = x:z
+        #datapoints = 16
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x)=a*x+b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b            
+   0 3.2595088359e+04   0.00e+00  2.50e+02    3.656094e-05   1.001000e-30
+BREAK: Singular matrix in Invert_RtR
+
+*******************************************************************************
+Sat Jul  7 16:11:20 2018
+
+
+FIT:    data read from 'results/grav_32_X_raw.dat' using 1:2
+        format = x:z
+        #datapoints = 13
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x) = a*x+b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b            
+   0 1.4641518521e+03   0.00e+00  4.27e+01    4.500000e-05   1.000000e-09
+   3 1.1639770347e+03  -5.23e-06  4.27e-02    4.857732e-05   1.000000e-09
+
+After 3 iterations the fit converged.
+final sum of squares of residuals : 1163.98
+rel. change during last iteration : -5.22905e-11
+
+degrees of freedom    (FIT_NDF)                        : 11
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 10.2867
+variance of residuals (reduced chisquare) = WSSR/ndf   : 105.816
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = 4.85773e-05      +/- 2.428e-06    (4.999%)
+b               = 1e-09            +/- 3.257        (3.257e+11%)
+
+correlation matrix of the fit parameters:
+                a      b      
+a               1.000 
+b              -0.485  1.000 
+
+
+*******************************************************************************
+Sat Jul  7 16:13:06 2018
+
+
+FIT:    data read from 'results/grav_32_X_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [0.00000 : 3.50000e+07]
+        #datapoints = 13
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x)=m*x+b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b            
+   0 4.3757760539e+03   0.00e+00  7.07e-01    4.857732e-05   9.996234e-01
+BREAK: Singular matrix in Invert_RtR
+
+*******************************************************************************
+Sat Jul  7 16:17:40 2018
+
+
+FIT:    data read from 'results/grav_32_X_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [1024.00 : 4.19430e+06]
+        #datapoints = 13
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x)=m*x+b
+fitted parameters initialized with current variable values
+
+Warning: Initial value of parameter 'b' is zero.
+iter      chisq       delta/lim  lambda   a             b            
+   0 4.5761391032e+03   0.00e+00  0.00e+00    4.857732e-05   1.000000e-30
+BREAK: Singular matrix in Givens()
+
+*******************************************************************************
+Sat Jul  7 16:18:40 2018
+
+
+FIT:    data read from 'results/grav_32_X_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [1024.00 : 4.19430e+06]
+        #datapoints = 13
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x)=m*x+b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b            
+   0 4.5761391032e+03   0.00e+00  0.00e+00    6.000000e-05   1.001000e-30
+BREAK: Singular matrix in Givens()
+
+*******************************************************************************
+Sat Jul  7 16:19:16 2018
+
+
+FIT:    data read from 'results/grav_32_X_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [1024.00 : 4.19430e+06]
+        #datapoints = 13
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x)=m*x+b
+fitted parameters initialized with current variable values
+
+Warning: Initial value of parameter 'b' is zero.
+iter      chisq       delta/lim  lambda   a             b            
+   0 4.5761391032e+03   0.00e+00  0.00e+00    6.000000e-05   1.000000e-30
+BREAK: Singular matrix in Givens()
+
+*******************************************************************************
+Sat Jul  7 16:19:31 2018
+
+
+FIT:    data read from 'results/grav_32_X_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [1024.00 : 4.19430e+06]
+        #datapoints = 13
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x)=m*x+b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b            
+   0 4.3757054725e+03   0.00e+00  7.07e-01    6.000000e-05   1.000000e+00
+BREAK: Singular matrix in Invert_RtR
+
+*******************************************************************************
+Sat Jul  7 16:20:38 2018
+
+
+FIT:    data read from 'results/grav_32_X_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [1024.00 : 4.19430e+06]
+        #datapoints = 13
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x)=m*x+c
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   m             c            
+   0 4.4180021549e+03   0.00e+00  5.70e+01    6.000000e-05   1.000000e+00
+   4 1.1608929651e+03  -9.74e-02  5.70e-03    4.837874e-05   5.553271e-01
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 1160.89
+rel. change during last iteration : -9.74437e-07
+
+degrees of freedom    (FIT_NDF)                        : 11
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 10.2731
+variance of residuals (reduced chisquare) = WSSR/ndf   : 105.536
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+m               = 4.83787e-05      +/- 2.418e-06    (4.999%)
+c               = 0.555327         +/- 3.249        (585%)
+
+correlation matrix of the fit parameters:
+                m      c      
+m               1.000 
+c              -0.480  1.000 
+
+
+*******************************************************************************
+Sat Jul  7 16:29:55 2018
+
+
+FIT:    data read from 'results/grav_X_20_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [0.00000 : 150.000]
+        #datapoints = 9
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x)=m*x+b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   m             b            
+   0 1.0800468690e+03   0.00e+00  2.83e+01    1.000000e-03   4.000000e+01
+   6 9.1097867997e+02  -7.86e-06  2.83e-05    8.448628e-02   4.019472e+01
+
+After 6 iterations the fit converged.
+final sum of squares of residuals : 910.979
+rel. change during last iteration : -7.86353e-11
+
+degrees of freedom    (FIT_NDF)                        : 7
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 11.4079
+variance of residuals (reduced chisquare) = WSSR/ndf   : 130.14
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+m               = 0.0844863        +/- 0.0974       (115.3%)
+b               = 40.1947          +/- 4.91         (12.22%)
+
+correlation matrix of the fit parameters:
+                m      b      
+m               1.000 
+b              -0.633  1.000 
