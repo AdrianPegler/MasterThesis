@@ -423,7 +423,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     Gerade auch im Zusammenhang mit dieser Arbeit ist aber von noch größerem Interesse, dass auch Operationen wie Matrix-Vektor-Multiplikationen auf \Rk-Matrizen und damit auch auf \hmat wesentlich 
     effektiver implementiert werden können. \citet{h2diss} zeigt, dass die Matrix-Vektor-Multiplikation nur $k\left(n+m\right)$ statt $n \cdot m$ Operationen benötigt.
     
-    \clearpage
+%     \clearpage
     
     \subsection{Optimierung}
     \label{sec:optimierung}
@@ -501,15 +501,24 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\left. V_\sigma \right|_{\tilde \sigma \times k} = V_{\tilde \sigma} E_{\tilde \sigma} \ \ \ \ \ \ \ \ \ \ \ \ \text{für alle } 
 	\sigma \in T_X \backslash \mathcal{L}\left(T_X\right) \text{ und } \tilde \sigma \in sons\left(\sigma\right),
       \end{equation*}
-      so nennen wir $V$ eine \textit{(geschachtelte) Clusterbasis} (von Rang $k$) für den Clusterbaum $T_X$. Die Matrizen der Familie $E$ heißen die korrespondierenden \textit{Tranfermatrizen}.
+      so nennen wir $V$ eine \textit{(geschachtelte) Clusterbasis} (von Rang $k$) für den Clusterbaum $T_X$. Die Matrizen der Familie $E$ heißen die korrespondierenden \textit{Transfermatrizen}.
       \citep{nichtlokop}
     \end{defn}
 
     Mit der \textit{geschachtelten Darstellung} $\left(\left(W_\sigma\right)_{\sigma in \mathcal{L}\left(T_X\right)} , \left(E_\sigma\right)_{\sigma \in T_X \backslash \mathcal{L}\left(T_X\right)}\right)$ der Clusterbasen haben wir nun also eine 
-    noch kompaktere Darstellung der Matrizen $B_b$.
+    noch kompaktere Darstellung der Matrizen $B_b$. Dargestellt ist dies in \autoref{fig:trans}.
     
-    
-    
+    \begin{figure}[t]
+      \begin{tabular}{c}
+	\includegraphics{img/cbaum_full.png}\\
+	
+	\begin{turn}{-90} $\longrightarrow$ \ \ \  \end{turn}\\
+	
+	\includegraphics{img/cbaum_transfer.png}
+      \end{tabular}
+      \caption{Ersetzung der Matrizen $W_\sigma$ durch Transfermatrizen $E_{\tilde \sigma}$ auf Nicht-Blattclustern. (Quelle: \citet{h2slides})}
+      \label{fig:trans}
+    \end{figure}
 
     \subsubsection{Interpolation in beiden Komponenten}
     Auch in diesem Abschnitt folge ich dem Aufbau von \citet{nichtlokop}.
@@ -544,6 +553,14 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     
     \subsection{\hquad}
     \label{sec:hquad}
+    
+    \begin{figure}[b]
+      \includegraphics[width=0.7\textwidth]{img/h2-matrix.png}
+      \caption{Darstellung einer $\mathcal{H}^2$-Matrix: In blau die geschachtelten Clusterbasen, in pink die Kopplungsmatrizen, in rot die verbleibenden Nahfeldmatrizen. (Quelle: \citet{h2slides})}
+      \label{fig:h2}
+    \end{figure}
+
+    
       Die Überlegungen der letzten Abschnitte fließen nun in der Definition der \hquad zusammen.
       
       \begin{defn}
@@ -575,6 +592,12 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
        \right)
       \]
       als $\mathcal{H}^2$-Matrix-Darstellung der Matrix $M$.
+      
+      In \autoref{fig:h2} ist all dies zusammen dargestellt. Die Familien $\left(V_\tau\right)_{\tau in \mathcal{L}\left(T_X\right)}$ und $\left(W_\sigma\right)_{\sigma in \mathcal{L}\left(T_Y\right)}$
+      links und unten sind hellblau gefärbt. Die Familien der Transfermatrizen $\left(E_\tau\right)_{\tau \in T_X \backslash \mathcal{L}\left(T_X\right)}$ und 
+      $\left(F_\sigma\right)_{\sigma \in T_Y \backslash \mathcal{L}\left(T_Y\right)}$ sind in dunkelblau abgebildet. Die Kopplungsmatrizen $\left(S_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)}$
+      sind in pink und die Nahfeldmatrizen $\left(N_b\right)_{b \in \mathcal{L}^-\left(T_{X \times Y}\right)}$ unverändert in rot dargestellt. Die Ersparnis an Speicherplatz gegenüber der vollbesetzten
+      Matrix und selbst gegenüber der Darstellung als $\mathcal{H}$-Matrix ist augenscheinlich.
 
       Von \citet{datasparse} wird eine vollständige Charakterisierung der \hquad vorgenommen. Dadurch wird ein für uns entscheidender Unterschied zwischen \hmat und \hquad deutlich:
       Bei \hmat müssen die zu den zulässigen Blöcken $b =\tau \times \sigma \in \mathcal{L}^+\left(T_{X \times Y}\right)$ gehörige Matrizen $\left. M\right|_{\tau \times \sigma}$ niedrigen Rang besitzen.
