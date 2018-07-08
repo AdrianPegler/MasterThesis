@@ -129,11 +129,11 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\mathfrak{I}_Q := \mathfrak{I}_{Q,1} \after \dots \after \mathfrak{I}_{Q,d}
       \end{equation*}
       einen Interpolationsoperator, der für alle $f \in C\left(Q\right)$ und $x \in Q$ die Gleichung
-      \begin{equation*}
+      \begin{equation}\label{eq:interpol}
 	\mathfrak{I}_Q[f]\left(x\right) = \sum_{\nu_1 \in \nullhaken{k}} \dots \sum_{\nu_d \in \nullhaken{k}} 
 			      f \left( \xi_{[a_1,b_1],\nu_1}, \dots , \xi_{[a_d,b_d],\nu_d} \right) 
 			      \lag_{[a_1,b_1],\nu_1}\left(x_1\right) \dots  \lag_{[a_d,b_d],\nu_d}\left(x_d\right)
-      \end{equation*}
+      \end{equation}
       erfüllt. Mit den Definitionen
       \begin{align*}
 	\xi_{Q ,\nu} &= \left(\xi_{[a_1,b_1],\nu_1} ,    \dots , \xi_{[a_d,b_d],\nu_d}\right),\\
@@ -430,6 +430,14 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     Im Folgenden wollen wir noch einige Überlegungen vorstellen, durch die \hmat noch speicherplatzsparender und noch effizienter in der Berechnung werden.
     
     \subsubsection{Zeilen- und Spaltenmatrizen}
+    
+    \begin{figure}[b]
+      \includegraphics[width=0.7\textwidth]{img/semi-h2-matrix.png}
+      \caption{Darstellung der Ersetzung der Matrizen $B_b$ durch Spaltenmatrizen $W_\sigma$. Letztere sind in hellblau auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen 
+	       Matrizen sind die Matrizen $A_b$. (Quelle: \citet{h2slides})}
+      \label{fig:semi-h2}
+    \end{figure}
+    
     Bisher wurde eine hierarchische Matrix konstruiert, indem die Kernfunktion $g$ auf zulässigen Blöcken $b = \tau \times \sigma \in \mathcal{L}^+\left(T_{X \times Y}\right)$ durch die auf $\sigma$ 
     interpolierte Funktion
     \begin{equation*}
@@ -459,13 +467,6 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       Wir nennen Matrizen $W_\sigma \in \R^{\sigma \times k}$ wie oben \textit{Spaltenmatrizen} einer hierarchischen Matrix $G$. Bei Interpolation in der ersten Komponente nennen wir sie 
       entsprechend \textit{Zeilenmatrizen}.
     \end{defn}
-    
-    \begin{figure}[t]
-      \includegraphics[width=0.7\textwidth]{img/semi-h2-matrix.png}
-      \caption{Darstellung der Ersetzung der Matrizen $B_b$ durch Spaltenmatrizen $W_\sigma$. Letztere sind in hellblau auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen 
-	       Matrizen sind die Matrizen $A_b$. (Quelle: \citet{h2slides})}
-      \label{fig:semi-h2}
-    \end{figure}
 
     Dargestellt ist diese Optimierung in \autoref{fig:semi-h2}. In hellblau wurden die Spaltenmatrizen $W_\sigma$ auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen Matrizen sind
     die nicht optimierten Matrizen $A_b$. Ein Vergleich der Häufigkeit der Matrizen $A_b$ und $W_\sigma$ verdeutlicht die zuvor beschriebene Ersparnis von Redundanz.
@@ -474,29 +475,24 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     \subsubsection{Transfermatrizen und Clusterbasis}
     \label{sec:transmat}
     Von \citet{h2approxint} wird auf folgende Eigenschaft der Interpolationsoperatoren hingewiesen:
-    
-%     Sei $\mathcal{T}_k$ der Polynomraum, der von Tensorprodukten \todo{genauer?} auf Polynomen von höchsten Rang $k$ aufgespannt wird. Dann ist der Interpolationsoperator eine \textit{Projektion}
-%     auf diesen Raum. Wenn wir also für alle Cluster die Interpolationspolynome $\mathcal{T}_k$ verwenden, können wir die Lagrange-Polynome der Vatercluster verlustfrei aus den Lagrange-Polynomen
-%     der zugehörigen Sohncluster konstruieren. 
-\TODO{Polynomraum $\mathcal{T}_k$}
-    
-%     Es gilt wegen der Projektionseigenschaft für $\sigma \in T_X \backslash \mathcal{L}\left(T_X\right)$ und Söhne $\tilde \sigma \in sons\left(\sigma\right)$ für alle 
-%     $\nu \in \haken{k}$:
 
-    Alle Cluster wurden durch Polynome der selben Ordnung interpoliert. Wegen der Projektionseigenschaft des Interpolationsoperators folg damit für $\sigma \in T_X \backslash \mathcal{L}\left(T_X\right)$ 
-    und Söhne $\tilde \sigma \in sons\left(\sigma\right)$ und für alle $\nu \in \haken{k}$:
+    Sei $\mathcal{Q}_k := \{ \prod_{i \in \haken{i_0}} p_i \ | \ p_i \in \Pi_k , \ i_0 \in \N \}$ der durch Tensorprodukte von Polynomen von höchstens Grad $k$ aufgespannte Polynomraum.
+    Da alle Cluster durch Polynome der selben Ordnung interpoliert wurden, zeigt \autoref{eq:interpol}, dass $\mathfrak{I}_Q$ gerade eine Projektion auf diesen Raum $\mathcal{Q}_k$ ist.
+    
+    Wegen dieser Projektionseigenschaft des Interpolationsoperators folg für $\sigma \in T_X \backslash \mathcal{L}\left(T_X\right)$, Söhne $\tilde \sigma \in sons\left(\sigma\right)$ und 
+    für alle $\nu \in \haken{k}$:
     \begin{equation*}
       \lag_\inds{\nu} = \mathfrak{I}_{\tilde \sigma}[\lag_\inds{\nu}] = \sum_{\tilde \nu \in \haken{k}} \lag_\inds{\nu}\left(\xi_{\tilde \sigma,\tilde \nu}\right) \lag_{\tilde \sigma,\tilde \nu}.
     \end{equation*}
     
     Anstatt also auf jeder Ebene des Clusterbaumes eine vollständige Matrix $W_\sigma \in \R^{\sigma \times k}$ aufzustellen, genügt es für jeden Sohncluster $\tilde \sigma \in sons\left(\sigma\right)$
-    Matrizen $E_{\tilde \sigma} \in \R^{k \times k}$ mit $\left(E_{\tilde \sigma}\right)_{\tilde\nu , \nu} := \lag_\inds{\nu}\left(\xi_{\tilde \sigma, \tilde \nu}\right)$ zu speichern. Dies führt zu folgender Definition:
+    Matrizen $E_{\tilde \sigma} \in \R^{k \times k}$ mit $\left(E_{\tilde \sigma}\right)_{\tilde\nu , \nu} := \lag_\inds{\nu}\left(\xi_{\tilde \sigma, \tilde \nu}\right)$ zu speichern. Dies führt zu 
+    folgender Definition:
     
     \begin{defn}
       (Transfermatrix, Clusterbasis)\\
-      Sei $T_X$ ein Clusterbaum mit einer Familie von Spalten- (bzw. Zeilen-)matrizen $W = \left(W_\sigma\right)_{\sigma \in T_X}$. Existiert eine Familie $E = \left(E_\sigma\right)_{\sigma \in T_X}$ von 
-      $\left(k \times k\right)$-Matrizen mit der
-      Eigenschaft
+      Sei $T_X$ ein Clusterbaum mit einer Familie von Spalten- (bzw. Zeilen-)matrizen $W = \left(W_\sigma\right)_{\sigma \in T_X}$. Existiert eine Familie $E = \left(E_\sigma\right)_{\sigma \in T_X}$ 
+      von $\left(k \times k\right)$-Matrizen mit der Eigenschaft
       \begin{equation*}
 	\left. V_\sigma \right|_{\tilde \sigma \times k} = V_{\tilde \sigma} E_{\tilde \sigma} \ \ \ \ \ \ \ \ \ \ \ \ \text{für alle } 
 	\sigma \in T_X \backslash \mathcal{L}\left(T_X\right) \text{ und } \tilde \sigma \in sons\left(\sigma\right),
