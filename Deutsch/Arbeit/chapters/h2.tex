@@ -314,6 +314,12 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       Das Teilen der Cluster kann ebenfalls unterschiedlich motiviert sein. Naheliegend sind kardinalitätsgesteuerte Zerlegungen, um ein optimales Loadbalancing zu erhalten,
       sowie die Zerlegung anhand der zugrundeliegenden geometrischen Struktur. Auch kombinierte Zerlegungen sind denkbar.
       
+      \begin{figure}[b]
+	\includegraphics[width=0.68\textwidth]{img/blockbaum.png}
+	\caption{Schematische Darstellung eines Blockbaumes. In grün sind zulässige, in rot unzulässige Blöcke gekennzeichnet. (Quelle: \citet{h2-slides})}
+	\label{fig:blockbaum}
+      \end{figure}
+      
       \begin{defn}
 	(Blockbaum, (streng) zulässiger Blockbaum)\\
 	Seien Menge $X, Y$ und jeweils zugehörige Clusterbäume $T_X$ und $T_Y$ gegeben.
@@ -357,8 +363,11 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	
       \end{defn}
 
-      Mit Hilfe von Blockbäumen können wir nun also Paare von Teilgebieten hierarchisch strukturieren und auf Zulässigkeit prüfen. Damit haben wir nun alles Notwendige bei der Hand um \hmat 
-      definieren zu können.
+      
+      Mit Hilfe von Blockbäumen können wir nun also Paare von Teilgebieten hierarchisch strukturieren und auf Zulässigkeit prüfen.
+      In \autoref{fig:blockbaum} ist ein Blockbaum, beziehungsweise die Blätter eines Blockbaumes, dargestellt. Zulässige Blattblöcke sind grün, unzulässige rot gekennzeichnet. Zur linken
+      den Blockbaumes ist der Clusterbaum mit den Targetclustern, unten der Clusterbaum mit den Sourceclustern schematisch abgebildet.
+%       Damit haben wir nun alles Notwendige bei der Hand um \hmat definieren zu können.
       
   \subsection{\hmat}
   \label{sec:hmat}
@@ -380,7 +389,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     
     \begin{defn}
     \label{def:hmat}
-      (Hierarchische Matrix)\\
+      (Hierarchische Matrix oder $\mathcal{H}$-Matrix)\\
       Seien $X$, $Y$ zwei Mengen, $T$ ein zugehöriger zulässiger Blockbaum mit Zulässigkeitsbedingung $\mathcal{Z}$ und $k: \mathcal{L}\left(T\right) \to \N_0$ die Rangverteilung der Blätter.
       
       Eine Matrix $M \in \R^{X \times Y}$ heißt \textit{hierarchische Matrix} oder kurz \textit{$\mathcal{H}$-Matrix} bezüglich $T$, $\mathcal{Z}$ und $k$, falls für jeden Blattblock
@@ -391,6 +400,13 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \citep{h2diss, nichtlokop}
       
     \end{defn}
+    
+    \begin{figure}[t]
+      \includegraphics[width=0.7\textwidth]{img/h-matrix.png}
+      \caption{Schematische Darstellung einer $\mathcal{H}$-Matrix. In blau sind die Matrizen $A_b$ und $B_b$, in rot die Matrizen $N_b$ gekennzeichnet. (Quelle: \citet{h2slides})}
+      \label{fig:hmat}
+    \end{figure}
+
 
     Für die Darstellung in Computern sind \hmat von besonderem Interesse, da sie sich durch die Zerlegung in \Rk-Matrizen besonders kompakt speichern lassen. Für eine $\mathcal{H}$-Matrix
     $M$ mit lokalem Rang $k$ existieren nach Definition Familien von Matrizen $\left(A_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)} \text{ und } \left(B_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)}$, mit 
@@ -399,10 +415,15 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     \end{equation*}
     So verbleiben nur noch für unzulässige Blöcke $b \in \mathcal{L}^-\left(T_{X \times Y}\right)$ vollbesetzte Matrizen $N_b = M|_b$, sogenannte \textit{Nahfeldmatrizen}.
     Das Tripel $\left( \left(A_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)} , \left(B_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)} , \left(N_b\right)_{b \in \mathcal{L}^-\left(T_{X \times Y}\right)} \right)$ bezeichnen wir als $\mathcal{H}$-
-    Matrix-Darstellung der Matrix $M$. \citep{nichtlokop}
+    Matrix-Darstellung der Matrix $M$. \citep{nichtlokop} 
     
-    Gerade auch im Zusammenhang mit dieser Arbeit ist aber von noch größerem Interesse, dass auch Operationen wie Matrix-Vektor-Multiplikationen auf \Rk-Matrizen wesentlich effektiver
-    implementiert werden können. \citet{h2diss} zeigt, dass die Matrix-Vektor-Multiplikation nur $k\left(n+m\right)$ statt $n \cdot m$ Operationen benötigt.
+    In \autoref{fig:hmat} ist eine $\mathcal{H}$-Matrix schematisch dargestellt. Für zulässige Blöcke sind die Matrizen $A_b$ und $B_b$ in blau 
+    und die Nahfeldmatrizen $N_b$ in rot gekennzeichnet. Durch die Dicke der Matrizen $A_b$ und $B_b$ ist der lokale Rang $k$ dargestellt. die Speicherplatzersparnis ist dadurch gut zu erkennen.
+    
+    Gerade auch im Zusammenhang mit dieser Arbeit ist aber von noch größerem Interesse, dass auch Operationen wie Matrix-Vektor-Multiplikationen auf \Rk-Matrizen und damit auch auf \hmat wesentlich 
+    effektiver implementiert werden können. \citet{h2diss} zeigt, dass die Matrix-Vektor-Multiplikation nur $k\left(n+m\right)$ statt $n \cdot m$ Operationen benötigt.
+    
+%     \clearpage
     
     \subsection{Optimierung}
     \label{sec:optimierung}
@@ -424,7 +445,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     \end{equation*}
     also durch \Rk-Matrizen darstellen und erhalten so eine Darstellung als hierarchische Matrix. \citep{nichtlokop}
     
-    Ein Blick auf die Definition der Matrix $B_b$ verrät, dass diese nicht von $\tau$ abhängt. Wir können sie also für konstantes $\sigma$ für alle Blöcke 
+    Ein Blick auf die Definition der Matrix $B_b$ verrät, dass diese nicht von $\tau$ sondern ausschließlich von $\sigma$ abhängt. Wir können sie also für konstantes $\sigma$ für alle Blöcke 
     $\tilde b = \tilde \tau \times \sigma \in T_{X \times Y}$ durch eine Matrix
     \begin{equation*}
       \left(W_\sigma\right)_{y\nu} := \lag_\inds{\nu}\left(y\right)
@@ -438,6 +459,16 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       Wir nennen Matrizen $W_\sigma \in \R^{\sigma \times k}$ wie oben \textit{Spaltenmatrizen} einer hierarchischen Matrix $G$. Bei Interpolation in der ersten Komponente nennen wir sie 
       entsprechend \textit{Zeilenmatrizen}.
     \end{defn}
+    
+    \begin{figure}[t]
+      \includegraphics[width=0.7\textwidth]{img/semi-h2-matrix.png}
+      \caption{Darstellung der Ersetzung der Matrizen $B_b$ durch Spaltenmatrizen $W_\sigma$. Letztere sind in hellblau auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen 
+	       Matrizen sind die Matrizen $A_b$. (Quelle: \citet{h2slides})}
+      \label{fig:semi-h2}
+    \end{figure}
+
+    Dargestellt ist diese Optimierung in \autoref{fig:semi-h2}. In hellblau wurden die Spaltenmatrizen $W_\sigma$ auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen Matrizen sind
+    die nicht optimierten Matrizen $A_b$. Ein Vergleich der Häufigkeit der Matrizen $A_b$ und $W_\sigma$ verdeutlicht die zuvor beschriebene Ersparnis von Redundanz.
 
     
     \subsubsection{Transfermatrizen und Clusterbasis}
@@ -470,13 +501,24 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\left. V_\sigma \right|_{\tilde \sigma \times k} = V_{\tilde \sigma} E_{\tilde \sigma} \ \ \ \ \ \ \ \ \ \ \ \ \text{für alle } 
 	\sigma \in T_X \backslash \mathcal{L}\left(T_X\right) \text{ und } \tilde \sigma \in sons\left(\sigma\right),
       \end{equation*}
-      so nennen wir $V$ eine \textit{(geschachtelte) Clusterbasis} (von Rang $k$) für den Clusterbaum $T_X$. Die Matrizen der Familie $E$ heißen die korrespondierenden \textit{Tranfermatrizen}.
+      so nennen wir $V$ eine \textit{(geschachtelte) Clusterbasis} (von Rang $k$) für den Clusterbaum $T_X$. Die Matrizen der Familie $E$ heißen die korrespondierenden \textit{Transfermatrizen}.
       \citep{nichtlokop}
     \end{defn}
 
     Mit der \textit{geschachtelten Darstellung} $\left(\left(W_\sigma\right)_{\sigma in \mathcal{L}\left(T_X\right)} , \left(E_\sigma\right)_{\sigma \in T_X \backslash \mathcal{L}\left(T_X\right)}\right)$ der Clusterbasen haben wir nun also eine 
-    noch kompaktere Darstellung der Matrizen $B_b$.
+    noch kompaktere Darstellung der Matrizen $B_b$. Dargestellt ist dies in \autoref{fig:trans}.
     
+    \begin{figure}[t]
+      \begin{tabular}{c}
+	\includegraphics{img/cbaum_full.png}\\
+	
+	\begin{turn}{-90} $\longrightarrow$ \ \ \  \end{turn}\\
+	
+	\includegraphics{img/cbaum_transfer.png}
+      \end{tabular}
+      \caption{Ersetzung der Matrizen $W_\sigma$ durch Transfermatrizen $E_{\tilde \sigma}$ auf Nicht-Blattclustern. (Quelle: \citet{h2slides})}
+      \label{fig:trans}
+    \end{figure}
 
     \subsubsection{Interpolation in beiden Komponenten}
     Auch in diesem Abschnitt folge ich dem Aufbau von \citet{nichtlokop}.
@@ -511,6 +553,14 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     
     \subsection{\hquad}
     \label{sec:hquad}
+    
+    \begin{figure}[b]
+      \includegraphics[width=0.7\textwidth]{img/h2-matrix.png}
+      \caption{Darstellung einer $\mathcal{H}^2$-Matrix: In blau die geschachtelten Clusterbasen, in pink die Kopplungsmatrizen, in rot die verbleibenden Nahfeldmatrizen. (Quelle: \citet{h2slides})}
+      \label{fig:h2}
+    \end{figure}
+
+    
       Die Überlegungen der letzten Abschnitte fließen nun in der Definition der \hquad zusammen.
       
       \begin{defn}
@@ -542,6 +592,12 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
        \right)
       \]
       als $\mathcal{H}^2$-Matrix-Darstellung der Matrix $M$.
+      
+      In \autoref{fig:h2} ist all dies zusammen dargestellt. Die Familien $\left(V_\tau\right)_{\tau in \mathcal{L}\left(T_X\right)}$ und $\left(W_\sigma\right)_{\sigma in \mathcal{L}\left(T_Y\right)}$
+      links und unten sind hellblau gefärbt. Die Familien der Transfermatrizen $\left(E_\tau\right)_{\tau \in T_X \backslash \mathcal{L}\left(T_X\right)}$ und 
+      $\left(F_\sigma\right)_{\sigma \in T_Y \backslash \mathcal{L}\left(T_Y\right)}$ sind in dunkelblau abgebildet. Die Kopplungsmatrizen $\left(S_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)}$
+      sind in pink und die Nahfeldmatrizen $\left(N_b\right)_{b \in \mathcal{L}^-\left(T_{X \times Y}\right)}$ unverändert in rot dargestellt. Die Ersparnis an Speicherplatz gegenüber der vollbesetzten
+      Matrix und selbst gegenüber der Darstellung als $\mathcal{H}$-Matrix ist augenscheinlich.
 
       Von \citet{datasparse} wird eine vollständige Charakterisierung der \hquad vorgenommen. Dadurch wird ein für uns entscheidender Unterschied zwischen \hmat und \hquad deutlich:
       Bei \hmat müssen die zu den zulässigen Blöcken $b =\tau \times \sigma \in \mathcal{L}^+\left(T_{X \times Y}\right)$ gehörige Matrizen $\left. M\right|_{\tau \times \sigma}$ niedrigen Rang besitzen.
