@@ -459,6 +459,16 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       Wir nennen Matrizen $W_\sigma \in \R^{\sigma \times k}$ wie oben \textit{Spaltenmatrizen} einer hierarchischen Matrix $G$. Bei Interpolation in der ersten Komponente nennen wir sie 
       entsprechend \textit{Zeilenmatrizen}.
     \end{defn}
+    
+    \begin{figure}[t]
+      \includegraphics[width=0.7\textwidth]{img/semi-h2-matrix.png}
+      \caption{Darstellung der Ersetzung der Matrizen $B_b$ durch Spaltenmatrizen $W_\sigma$. Letztere sind in hellblau auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen 
+	       Matrizen sind die Matrizen $A_b$. (Quelle: \citet{h2slides})}
+      \label{fig:semi-h2}
+    \end{figure}
+
+    Dargestellt ist diese Optimierung in \autoref{fig:semi-h2}. In hellblau wurden die Spaltenmatrizen $W_\sigma$ auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen Matrizen sind
+    die nicht optimierten Matrizen $A_b$. Ein Vergleich der Häufigkeit der Matrizen $A_b$ und $W_\sigma$ verdeutlicht die zuvor beschriebene Ersparnis von Redundanz.
 
     
     \subsubsection{Transfermatrizen und Clusterbasis}
@@ -497,6 +507,8 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 
     Mit der \textit{geschachtelten Darstellung} $\left(\left(W_\sigma\right)_{\sigma in \mathcal{L}\left(T_X\right)} , \left(E_\sigma\right)_{\sigma \in T_X \backslash \mathcal{L}\left(T_X\right)}\right)$ der Clusterbasen haben wir nun also eine 
     noch kompaktere Darstellung der Matrizen $B_b$.
+    
+    
     
 
     \subsubsection{Interpolation in beiden Komponenten}
