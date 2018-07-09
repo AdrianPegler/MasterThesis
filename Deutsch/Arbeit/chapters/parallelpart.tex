@@ -123,7 +123,8 @@ void _setup(Cluster *c, int depth){
     
     In \autoref{sec:konstr} wurde der Programmparameter $\tcode{pot}$ vorgestellt, der die Anzahl an Testsonnen bestimmt. Bei der parallelen Variante generiert jeder Prozess gerade $2^{\tcode{pot}}$
     Sonnen. Die globale Menge $\Omega$ hat also $|\Omega| = 2^q 2^\tcode{pot} = 2^{q+\tcode{pot}}$ Elemente. Daher wird die maximale Baumtiefe $\tcode{MAX_DEPTH} = q + \tcode{pot} - \mathfrak{l}$ 
-    gesetzt. Dadurch wird die durchschnittliche Blattgröße von $2^\mathfrak{l}$ Elementen beibehalten.
+    gesetzt. Dadurch wird die durchschnittliche Blattgröße von $2^\mathfrak{l}$ Elementen beibehalten. Im Folgenden wird die Zahl $n := |\Omega| = 2^{q+\tcode{pot}}$ für alle \code{bodies} auf allen 
+    Prozessen und die Zahl $m := 2^\tcode{pot}$ für die durchschnittliche Anzahl \code{bodies} pro Prozess.
     
   \subsection{Kommunikation}
   \label{sec:komm}
