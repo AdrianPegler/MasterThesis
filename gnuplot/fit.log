@@ -693,3 +693,67 @@ correlation matrix of the fit parameters:
                 m      b      
 m               1.000 
 b              -0.633  1.000 
+
+
+*******************************************************************************
+Mon Jul  9 11:24:07 2018
+
+
+FIT:    data read from 'grav_1_X_lin.gnu' using 1:2
+        format = x:z
+        x range restricted to [1024.00 : 4.50000e+06]
+BREAK: No data to fit
+
+*******************************************************************************
+Mon Jul  9 11:24:36 2018
+
+
+FIT:    data read from 'results/grav_1_X_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [1024.00 : 4.50000e+06]
+        #datapoints = 13
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x)=a*x+b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b            
+   0 1.5165612395e+04   0.00e+00  5.70e+01    6.000000e-05   1.000000e-30
+BREAK: Singular matrix in Invert_RtR
+
+*******************************************************************************
+Mon Jul  9 11:25:05 2018
+
+
+FIT:    data read from 'results/grav_32_X_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [1024.00 : 4.50000e+06]
+        #datapoints = 13
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x)=c*x+d
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   c             d            
+   0 7.2323741140e+12   0.00e+00  5.27e+05    5.553271e-01   1.000000e+00
+   4 1.1628703310e+03  -1.22e-02  5.27e+01    4.821974e-05   9.999832e-01
+
+After 4 iterations the fit converged.
+final sum of squares of residuals : 1162.87
+rel. change during last iteration : -1.22267e-07
+
+degrees of freedom    (FIT_NDF)                        : 11
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 10.2818
+variance of residuals (reduced chisquare) = WSSR/ndf   : 105.715
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+c               = 4.82197e-05      +/- 2.42e-06     (5.02%)
+d               = 0.999983         +/- 3.251        (325.1%)
+
+correlation matrix of the fit parameters:
+                c      d      
+c               1.000 
+d              -0.480  1.000 
