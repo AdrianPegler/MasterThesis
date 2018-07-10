@@ -80,14 +80,29 @@
   
   \section{Laufzeitmessung}
   Um Laufzeitdaten des Algorithmus zu sammeln, wurde dieser auf dem NEC HPC-Linux-Cluster der CAU Kiel ausgeführt. Jeder Knoten dieses Clusters ist mir 192 GB Arbeitsspeicher und zwei Intel Xeon Gold 
-  6130 bestückt, die einen Kerntakt von 2,1 GHz aufweisen. Verbunden sind die Knoten über EDR infiniband. Als Compiler wurde der Intel-C-Compiler 17.0.4, sowie der Intel-MPI-Compiler 17.0.4 verwendet.
+  6130 bestückt, die einen Kerntakt von 2,1 GHz aufweisen. Verbunden sind die Knoten über EDR infiniband. Als Compiler wurden der Intel-C-Compiler 17.0.4 sowie der Intel-MPI-Compiler 17.0.4 verwendet.
   
-  Es wurden unterschiedliche Testreihen durchgeführt. Es wurden jeweils entweder die Anzahl Prozesse oder die Anzahl Sonnen verändert, um beide Ansätze unabhängig voneinander testen zu können.
-  In den ersten beiden Testreihen wurde die Anzahl Sonnen bei konstanter Anzahl Prozesse variiert. Die Messergebnisse sind in \autoref{fig:1-32x} sowie in \autoref{tab:1-32x} 
+  Es wurden unterschiedliche Testreihen durchgeführt, bei denen entweder die Anzahl Prozesse oder die Anzahl Sonnen variiert wurde, um beide Ansätze unabhängig voneinander testen zu können.
+  Alle Tests wurden mit Lagrange-Polynomen von Grad $3$ in jeder Richtung approximiert, was zu $3^3 = 27$ Interpolationspunkten führt. Außerdem wurde jeder Testlauf 10 Mal wiederholt um stabile Daten
+  zu ermitteln.
+  
+  \subsubsection{Approximation}
+  
+  In den ersten beiden Testreihen wurde die Anzahl Sonnen pro Prozess bei konstanter Anzahl Prozesse variiert. Die Messergebnisse sind in \autoref{tab:1-32x} sowie in \autoref{fig:1-32x} 
   aufgeführt.
   
   \input{chapters/1-32x_fig}
-  
-  \blindtext
-  
   \input{chapters/1-32x_tab}
+  
+  Abbildung beziehungsweise Tabelle \textbf{(a)} bezieht sich jeweils auf die Testreihe mit einem Prozess, \textbf{(b)} auf die Testreihe mit 32 Prozessen. Trotz einiger Schwankungen, deren Herkunft
+  nicht festgestellt werden konnte, ist der lineare Zuwachs gut zu erkennen. Bei der Geraden handelt es sich um eine von gnuplot berechnete Regressionsgrade. Der Testlauf mit $32$ Prozessen zeigt
+  eine etwas stärkere Steigung, die vermutlich auf den erhöhten Kommunikationsaufwand zurückzuführen ist. Dennoch ist erkennen, dass die Approximation durch Interpolation und die Nutzung der
+  $\mathcal{H}^2$-Struktur den theoretischen Berechnungen auch in reellen Anwendungen gerecht wird und die Komplexität von $\mathcal{O}(n^2)$ auf $\mathcal{O}(k n)$ senken kann. Da $k$ wesentlich 
+  kleiner als $n$ ist, ist damit viel gewonnen. 
+  
+  \subsubsection{Parallelität}
+  Bereits durch die höhere Steigung der Graden in \autoref{fig:1-32x}.\textbf{(b)} gegenüber der in \textbf{(a)} lässt sich erahnen, dass durch die Kommunikation bei der Parallelisierung ein gewisser
+  Overhead verursacht wird. Um dies genauer zu untersuchen wurde die Anzahl Sonnen pro Prozess auf $2^{20}$ fixiert und die Anzahl Prozesse variiert. Die Messdaten sind in \autoref{tab:x20} und
+  \autoref{fig:x20} zu finden.
+  
+  \input{chapters/x20}

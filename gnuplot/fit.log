@@ -757,3 +757,184 @@ correlation matrix of the fit parameters:
                 c      d      
 c               1.000 
 d              -0.480  1.000 
+
+
+*******************************************************************************
+Tue Jul 10 09:45:12 2018
+
+
+FIT:    data read from 'results/grav_X_20_raw.dat' using 1:5
+        format = x:z
+        #datapoints = 9
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = a*x**2+b*x*(log(c*x)/log(2))+d*x + e*(log(g*x)/log(2))+h
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             b             c             d             e             g             h            
+   0 3.2710774500e+08   0.00e+00  2.14e+03    1.000000e+00   1.000000e+00   1.000000e+00   1.000000e+00   1.000000e+00   1.000000e+00   1.000000e+00
+   8 7.6562931308e-04  -1.57e-03  2.14e-05    2.883159e-04  -1.362414e-02   9.203105e-01   6.846783e-02  -6.108810e-02   2.155012e-01  -1.977672e-01
+
+After 8 iterations the fit converged.
+final sum of squares of residuals : 0.000765629
+rel. change during last iteration : -1.56574e-08
+
+degrees of freedom    (FIT_NDF)                        : 2
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.0195656
+variance of residuals (reduced chisquare) = WSSR/ndf   : 0.000382815
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = 0.000288316      +/- 0.0002465    (85.5%)
+b               = -0.0136241       +/- 0.01518      (111.4%)
+c               = 0.92031          +/- 1.298e+11    (1.41e+13%)
+d               = 0.0684678        +/- 2.771e+09    (4.047e+12%)
+e               = -0.0610881       +/- 0.07076      (115.8%)
+g               = 0.215501         +/- 1.075e+11    (4.99e+13%)
+h               = -0.197767        +/- 4.396e+10    (2.223e+13%)
+
+correlation matrix of the fit parameters:
+                a      b      c      d      e      g      h      
+a               1.000 
+b              -0.997  1.000 
+c              -0.986  0.973  1.000 
+d              -0.986  0.973  1.000  1.000 
+e              -0.965  0.981  0.923  0.923  1.000 
+g              -0.533  0.537  0.496  0.496  0.509  1.000 
+h              -0.533  0.537  0.496  0.496  0.509  1.000  1.000 
+
+
+*******************************************************************************
+Tue Jul 10 09:46:18 2018
+
+
+FIT:    data read from 'results/grav_X_20_raw.dat' using 1:5
+        format = x:z
+        #datapoints = 9
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = a*x**2+b*x*(log(c*x)/log(2))+d*x + e*(log(g*x)/log(2))+h
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             c             d             g             h            
+   0 1.9140590038e+02   0.00e+00  1.71e+00    2.883159e-04   9.203105e-01   6.846783e-02   2.155012e-01  -1.977672e-01
+BREAK: Singular matrix in Invert_RtR
+
+*******************************************************************************
+Tue Jul 10 13:54:16 2018
+
+
+FIT:    data read from 'results/grav_X_20_raw.dat' using 1:2
+        format = x:z
+        #datapoints = 9
+        residuals are weighted equally (unit weight)
+
+function used for fitting: g(x)
+	g(x)=m*x+b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   m             b            
+   0 1.3308000000e+04   0.00e+00  3.57e+01    1.000000e+00   1.000000e+00
+   5 9.1097867997e+02  -1.31e-05  3.57e-04    8.448628e-02   4.019472e+01
+
+After 5 iterations the fit converged.
+final sum of squares of residuals : 910.979
+rel. change during last iteration : -1.3051e-10
+
+degrees of freedom    (FIT_NDF)                        : 7
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 11.4079
+variance of residuals (reduced chisquare) = WSSR/ndf   : 130.14
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+m               = 0.0844863        +/- 0.0974       (115.3%)
+b               = 40.1947          +/- 4.91         (12.22%)
+
+correlation matrix of the fit parameters:
+                m      b      
+m               1.000 
+b              -0.633  1.000 
+
+
+*******************************************************************************
+Tue Jul 10 13:55:44 2018
+
+
+FIT:    data read from 'results/grav_X_20_raw.dat' using 1:2
+        format = x:z
+        #datapoints = 9
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x)=a*x*(log(c*x)/log(2)) + d*x + e*(log(h*x)/log(2)) + i
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   a             c             d             e             h             i            
+   0 1.1861050000e+06   0.00e+00  1.41e+02    1.000000e+00   1.000000e+00   1.000000e+00   1.000000e+00   1.000000e+00   1.000000e+00
+   8 5.9078987551e+02  -7.78e-03  1.41e-04   -5.713151e-01   7.501293e-01   4.267535e+00  -8.417619e+00   1.634474e+01   7.182717e+01
+
+After 8 iterations the fit converged.
+final sum of squares of residuals : 590.79
+rel. change during last iteration : -7.78082e-08
+
+degrees of freedom    (FIT_NDF)                        : 3
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 14.0332
+variance of residuals (reduced chisquare) = WSSR/ndf   : 196.93
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+a               = -0.571315        +/- 1.152        (201.7%)
+c               = 0.750129         +/- 8.01e+11     (1.068e+14%)
+d               = 4.26753          +/- 8.797e+11    (2.061e+13%)
+e               = -8.41762         +/- 16.63        (197.5%)
+h               = 16.3447          +/- 2.347e+13    (1.436e+14%)
+i               = 71.8272          +/- 1.743e+13    (2.426e+13%)
+
+correlation matrix of the fit parameters:
+                a      c      d      e      h      i      
+a               1.000 
+c              -0.901  1.000 
+d              -0.901  1.000  1.000 
+e               0.937 -0.765 -0.765  1.000 
+h              -0.085  0.061  0.061 -0.280  1.000 
+i              -0.085  0.061  0.061 -0.280  1.000  1.000 
+
+
+*******************************************************************************
+Tue Jul 10 13:57:08 2018
+
+
+FIT:    data read from 'results/grav_X_20_raw.dat' using 1:2
+        format = x:z
+        #datapoints = 9
+        residuals are weighted equally (unit weight)
+
+function used for fitting: q(x)
+	q(x)=j*x**2+k*x+l
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   j             k             l            
+   0 2.9019112500e+08   0.00e+00  3.26e+03    1.000000e+00   1.000000e+00   1.000000e+00
+   7 6.3773867900e+02  -3.10e-05  3.26e-04   -3.841122e-03   5.606039e-01   3.477214e+01
+
+After 7 iterations the fit converged.
+final sum of squares of residuals : 637.739
+rel. change during last iteration : -3.10246e-10
+
+degrees of freedom    (FIT_NDF)                        : 6
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 10.3097
+variance of residuals (reduced chisquare) = WSSR/ndf   : 106.29
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+j               = -0.00384112      +/- 0.002396     (62.37%)
+k               = 0.560604         +/- 0.3097       (55.25%)
+l               = 34.7721          +/- 5.579        (16.05%)
+
+correlation matrix of the fit parameters:
+                j      k      l      
+j               1.000 
+k              -0.959  1.000 
+l               0.606 -0.724  1.000 
