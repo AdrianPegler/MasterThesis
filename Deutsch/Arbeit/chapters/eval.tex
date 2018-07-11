@@ -182,9 +182,25 @@
   
   Ein gewisser Anstieg der Laufzeit ist zu erwarten, da der Kommunikationsaufwand steigt. Insgesamt zeigt sich aber die fast optimale Ausnutzung der Parallelität.
   
-  Ein Interessanter Effekt kann an den mit Fußnoten \textit{a} und \textit{b} gekennzeichneten Testläufen beobachtet werden. Während bei \textit{a} alle Prozesse auf einem Knoten gearbeitet haben, 
-  wurden diese für den Testlauf \textit{b} auf zwei Knoten verteilt. Eine Vermutung, die man hätte anstellen können, wäre, dass die Testparameter für \textit{a} bessere Laufzeiten ergeben müssten,
-  da die Kommunikation auf einem Rechner und ohne Netzwerk stattfinden kann. In der Realität hat sich aber gezeigt, dass es gerade umgekehrt ist. Vermutlich behindern sich die vielen Speicherzugriffe
-  bei dem Testlauf auf einem Knoten so stark, dass es effektiver ist einen Teil der Kommunikation über das Netzwerk zu führen. Auch dieser Effekt müsste aber an anderer Stelle genauer untersucht werden.
+  Ein interessanter Effekt kann an den mit Fußnoten \textit{a} und \textit{b} gekennzeichneten Testläufen beobachtet werden. Während bei \textit{a} alle Prozesse auf einem Knoten gearbeitet haben, 
+  wurden diese für den Testlauf \textit{b} auf zwei Knoten verteilt. Eine an sich naheliegende Vermutung wäre, dass die Testparameter für \textit{a} bessere Laufzeiten ergeben müssten,
+  da die Kommunikation auf einem Rechner und ohne Netzwerkbeteiligung stattfinden kann. In der Realität hat sich aber gezeigt, dass es gerade umgekehrt ist. Vermutlich behindern sich die vielen 
+  Speicherzugriffe bei dem Testlauf auf einem Knoten so stark, dass es effektiver ist einen Teil der Kommunikation über das Netzwerk zu führen. Auch dieser Effekt müsste aber an anderer Stelle 
+  genauer untersucht werden.
+  
+  \clearpage
+  
+  \subsubsection{Speicherbedarf der Kommunikation}
+  Bei all den positiven Eigenschaften sei auch auf einen Nachteil des vorgestellten Algorithmus hingewiesen: Die verwendete Kommunikation benötigt viel unnötigen Speicher. Mein Hauptaugenmerk lag
+  darauf, die Kommunikation so einfach wie möglich zu gestalten, um die Laufzeit möglichst gering zu halten. Da die \code{MPI_Alltoallv(..)}-Methode exakt das benötigte Kommunikationsmuster liefert
+  und davon auszugehen ist, dass bei der Implementierung dieser Methode mehr Zeit und Know-How eingeflossen ist, als ich im Rahmen dieser Arbeit hätte investieren können, habe ich mich dazu entschieden
+  diese Methode zu nutzen. Das manuelle erstellen der Puffer war auch nicht weiter kompliziert, sodass ich erwartet hatte damit eine optimale Lösung gefunden zu haben. 
+  
+  Es hat sich aber gezeigt, dass bei 32 Prozessen auf einem Knoten mit $2^{22}$ Sonnen pro Prozess bereits $182$ GB Arbeitsspeicher benötigt werden. Das sind $5,68$ GB pro Prozess. Vergleicht man dies
+  mit dem Testlauf mit nur einem Prozess, der lediglich $52.37$ MB Hauptspeicher belegt, ist schnell einzusehen, dass die Kommunikation mit derart riesigem Pufferbedarf nicht tragbar ist.
+  
+  Ganz ohne Puffer wird die Kommunikation nie auskommen. Es wäre aber möglich die Kommunikation durch nicht-blockierende Methoden derart zu verteilen, dass keinerlei Sendepuffer und lediglich 
+  Empfangspuffer für nicht-zulässige Blöcke benötigt werden. Dieser Ansatz wäre näher an dem von \citet{distrh2} vorgestellten Algorithmus, jedoch wäre weiterhin keine Kommunikation für Vorwärts- und 
+  Rückwärtstransformation notwendig. Eine genaue Ausarbeitung eines solchen Ansatzes muss leider aus Zeit- und Umfangsgründen an anderer Stelle fortgesetzt werden.
   
   
