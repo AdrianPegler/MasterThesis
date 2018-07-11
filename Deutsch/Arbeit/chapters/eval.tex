@@ -1,8 +1,8 @@
 \chapter{Evaluierung}
 \label{chp:Evaluation}
   \citet{distrh2} haben gezeigt, dass deren paralleler Ansatz sehr nah an die optimale parallele Effizienz von $\mathcal{O}(\frac{nk}{p})$ herankommt, falls $n$ deutlich größer als $p$ ist.
-  Dabei gilt: $n := |\Omega|$ ist die Anzahl Sonnen, $p := |\Proc|$ ist die Anzahl Prozesse und $k := k_1^3$ ist die Anzahl Interpolationspunkte, mit dem Grad der eindimensionalen Lagrange-Polynomen 
-  $k_1$. Außerdem sei $m := \frac{n}{p}$ die durchschnittliche Anzahl Elemente pro Prozess.
+  Dabei gilt: $n := |\Omega|$ ist die Anzahl Sonnen, $p := |\Proc|$ ist die Anzahl Prozesse und $k := k_0^3$ ist die Anzahl Interpolationspunkte, mit dem Grad der eindimensionalen Lagrange-Polynomen 
+  $k_0$. Außerdem sei $m := \frac{n}{p}$ die durchschnittliche Anzahl Elemente pro Prozess.
   
   Im folgenden gilt es diese Argumentation auf den vorliegenden Algorithmus zu übertragen und durch Daten aus praktischen Laufzeitmessungen zu unterstützen. Da unser Algorithmus mit impliziten
   Blockbäumen und \hquad arbeitet, wird die Konstruktion nicht weiter behandelt. Statt dessen konzentrieren wir uns auf eine Abschätzung für die Laufzeit.
@@ -16,7 +16,7 @@
     \[ p = 2^q \]
   \end{ann}
   
-  Außerdem wollen wir einige Eigenschaften des Clusterbaumes annehmen:
+  Zusätzlich zu der sichergestellten vollständigen Binärbaumstruktur benötigt der Clusterbaum für einige Abschätzungen weitere Eigenschaften:
   
   \begin{ann} \ \\
   \label{ann:tree}
@@ -33,7 +33,7 @@
   Diese Annahme wurde durch die Wahl der Abbruchbedingung bei der Konstruktion des Clusterbaumes sichergestellt. Es gilt $|T_{sub}| = \frac{1}{2} \frac{n}{kp}$ (vgl. \autoref{eq:l}),
   da jeder Prozess gerade einen Teilbaum konstruiert, wie er zuvor vom gesamten nicht-parallelisierten Algorithmus vorgenommen wurde (vgl. letzter Absatz in \autoref{sec:data}). Zwar lässt sich die
   Anzahl Elemente der Cluster $\tau \in T_\Omega^{(q)}$ nicht exakt angeben, da die Unterteilung in Sohncluster nicht nach Kardinalität vorgenommen wird, jedoch beträgt diese im Schnitt gerade 
-  $\frac{n}{p}$. Die Konstante $C_{st}$ kann also als $\approx 1$ angenommen werden.
+  $m = \frac{n}{p}$. Die Konstante $C_{st}$ kann also als $\approx 1$ angenommen werden.
   
   Die Methode \code{_setup(Cluster *c, int depth)}, die in unserem Algorithmus die Verteilung der Cluster auf Prozesse vornimmt, gewährleistet folgende Eigenschaften:
   
@@ -54,11 +54,11 @@
   \end{bem}
 
   Da wir einen parallel arbeitenden Algorithmus haben ist es für die Abschätzung des Rechenaufwandes nicht ausreichend die Anzahl an Operationen zu zählen. Da die Prozesse kommunizieren müssen ist 
-  regelmäßig eine Synchronisation der Prozesse notwendig. So wird vorkommen, dass ein Prozess $P_i$ schneller seine Berechnungen durchführt als ein Prozess $P_j$ und dann auf diesen warten muss bevor
+  regelmäßig eine Synchronisation der Prozesse notwendig. So wird es vorkommen, dass ein Prozess $P_i$ schneller seine Berechnungen durchführt als ein Prozess $P_j$ und dann auf diesen warten muss bevor
   die Kommunikation stattfinden kann. 
   
   Daher verwenden wir einen ähnlichen Ansatz, wie er auch beim BSP-Modell \citep{bsp} verwendet wurde: Die gesamte Berechnung wird in eine Sequenz von $s \in \N_0$ \textit{Superschritten} eingeteilt,
-  die jeweils unabhängig von den anderen Prozessen von einem Prozess durchgeführt werden können. Der $i$-te Superschritt startet simultan, sobald alle Prozesse den $i-1$-ten Superschritt abgeschlossen
+  die jeweils unabhängig von den anderen Prozessen von einem Prozess durchgeführt werden können. Der $i$-te Superschritt startet simultan, sobald alle Prozesse den $(i-1)$-ten Superschritt abgeschlossen
   haben, $i \in \haken{s}$. Als Zeiteinheit verwenden wir die abstrahierte Einheit \textit{Zyklus}. Ein Zyklus sei dabei lang genug um eine arithmetische Operation, einen Speicherzugriff oder eine Sende-
   oder Empfangsoperation für einen \code{double}-Wert durchzuführen.
   
@@ -73,7 +73,7 @@
   
   Zunächst werden alle aktiven Cluster ausgewertet. Seien also $P \in \Proc$ und $T_\Omega^P$ der aktive Teilbaum dieses Prozesses. Für ein Blattcluster $\sigma \in \mathcal{L}(T_\Omega^P)$ müssen 
   für alle $k$ Ersatzmassen $|\sigma|$ Berechnungen durchgeführt werden.  
-  Dann gilt  mit \autoref{ann:tree}, dass insgesamt
+  Dann gilt  mit \hyperref[ann:tree]{Annahme }\ref{ann:tree}, dass insgesamt
   \begin{align*}
     \sum_{\sigma \in \mathcal{L}(T_\Omega^P)} k|\sigma| &= k\sum_{\sigma \in \mathcal{L}(T_\Omega^P)} |\sigma| \approx k m\\
     &\leq C_{st}\frac{nk}{p}
@@ -97,8 +97,7 @@
   \end{lem}
   
   \textit{Beweis:}
-  Der Beweis läuft analog zu dem von \autoref{lem:vorw}. Der Algorithmus ist im Prinzip der selbe, die Berechnung verläuft lediglich von der Wurzel zu den Blättern statt wie bei der 
-  Vorwärtstransformation umgekehrt. \qed
+  Der Beweis läuft analog zu dem von \autoref{lem:vorw}, die Berechnung verläuft lediglich von der Wurzel zu den Blättern statt wie bei der Vorwärtstransformation umgekehrt. \qed
   
   \begin{lem}
   \label{lem:koppl}
@@ -111,34 +110,42 @@
   $N_b$ nicht mehr als zwei Auswertungen vornimmt, liegt auch die benötigte Anzahl Zyklen in $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$. Auch in diesem Schritt ist keine Kommunikation notwendig, sodass 
   auch diese Auswertung in einem Superschritt stattfinden kann. \qed
   
-  Bleibt noch die Kommunikation. Diese gliedert sich in zwei Superschritte: Das Vorbereiten mit dem anschließenden Senden der Daten und das Empfangen der Daten. Da die Vorbereitung der Kommunikation 
-  nach der selben Struktur wie die Kopplungs- und Nahfeldmatrizen arbeitet, fallen dafür ebenfalls $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen an.
-  Da ebenso viele Elemente gesendet und empfangen werden müssen liegt der Gesamtaufwand für die Kommunikation in eben dieser Komplexitätsklasse. Für jeden Superschritt wurde also gezeigt, dass dieser
-  $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen benötigt. Damit folgt für den gesamten Algorithmus:
+  Bleibt noch die Kommunikation. Diese gliedert sich in zwei Superschritte: Das Vorbereiten mit dem anschließenden Senden der Daten und das Empfangen der Daten. 
+  
+  \begin{lem}
+    (Kommunikation)
+    Die Kommunikation benötigt $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen.
+  \end{lem}
+
+  \textit{Beweis:}
+  Da die Vorbereitung der Kommunikation nach der selben Struktur wie die Auswertung der Kopplungs- und Nahfeldmatrizen arbeitet, fallen dafür ebenfalls $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen 
+  an. Da ebenso viele Elemente gesendet und empfangen werden müssen liegt der Gesamtaufwand für die Kommunikation in eben dieser Komplexitätsklasse. \qed
+  
+  Für jeden Superschritt wurde also gezeigt, dass dieser $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen benötigt. Damit folgt für den gesamten Algorithmus:
   
   \begin{thm}
     Die Berechnung des Algorithmus benötigt $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen.
   \end{thm}
   
-  \citet{distrh2} merken noch an, dass der Faktor $k^2 log_2p$ für genügend große Probleme verschwindend geringen Einfluss haben wird.
+  \citet{distrh2} merken noch an, dass  für genügend große Probleme, also $n \geq k^2 log_2p$, die optimale Komplexitätsordnung von $\mathcal{O}(\frac{nk}{p})$ erreicht wird.
   
   \section{Laufzeitmessung}
   Die theoretischen Argumente des letzten Abschnitts wollen wir nun durch die Messung von Laufzeitdaten des Algorithmus untermauern.
   
-  Um diese Daten zu sammeln, wurde das vorliegende auf dem NEC HPC-Linux-Cluster der CAU Kiel ausgeführt. Jeder Knoten dieses Clusters ist mir 192 GB Arbeitsspeicher und zwei Intel Xeon Gold 
+  Um diese Daten zu sammeln, wurde das vorliegende auf dem NEC HPC-Linux-Cluster der CAU Kiel ausgeführt. Jeder Knoten dieses Clusters ist mit 192 GB Arbeitsspeicher und zwei Intel Xeon Gold 
   6130 bestückt, die einen Kerntakt von 2,1 GHz aufweisen. Verbunden sind die Knoten über EDR infiniband. Als Compiler wurden der Intel-C-Compiler 17.0.4 sowie der Intel-MPI-Compiler 17.0.4 verwendet.
   
   Es wurden unterschiedliche Testreihen durchgeführt, bei denen entweder die Anzahl Prozesse oder die Anzahl Sonnen variiert wurde, um beide Ansätze unabhängig voneinander testen zu können.
   Alle Tests wurden mit Lagrange-Polynomen von Grad $3$ in jeder Richtung approximiert, was zu $3^3 = 27$ Interpolationspunkten führt. Außerdem wurde jeder Testlauf 10 Mal wiederholt und immer 
-  vollständige Knoten im Cluster angefordert, um stabile Daten zu ermitteln.
+  vollständige Knoten im Clustersystem angefordert, um stabile Daten zu ermitteln.
   
   \subsubsection{Approximation}
   \input{chapters/1-32x_fig}
   \input{chapters/1-32x_tab}
   \begin{table}[b]
     \begin{tabular}{|l|c c c c c c c|}
-    \hline
-    $k_0$ & 1 & 2 & 3 & 4 & 5 & 6 & 7\\
+%     \hline
+%     $k_0$ & 1 & 2 & 3 & 4 & 5 & 6 & 7\\
     \hline
     $k$ & 1 & 8 & 27 & 64 & 125 & 216 & 343\\
     \hline
@@ -147,7 +154,7 @@
     Laufzeit [s] & 0,0486 & 0,0967 & 0,259 & 0,454 & 0,864 & 1,09 & 1,3\\
     \hline
     \end{tabular}
-    \caption{Approximationsfehler und Laufzeit in Abhängigkeit zur gewählten Interpolationsordnung.}
+    \caption{Approximationsfehler und Laufzeit in Abhängigkeit zur Interpolationsordnung.}
     \label{tab:error}
   \end{table}
   
@@ -155,20 +162,20 @@
   aufgeführt.
   
   Abbildung beziehungsweise Tabelle \textbf{(a)} bezieht sich jeweils auf die Testreihe mit einem Prozess, \textbf{(b)} auf die Testreihe mit 32 Prozessen. Trotz einiger Schwankungen, deren Herkunft
-  nicht festgestellt werden konnte, ist der lineare Zuwachs gut zu erkennen. Bei der Geraden handelt es sich um eine von gnuplot berechnete Regressionsgrade. Der Testlauf mit $32$ Prozessen zeigt
-  eine etwas stärkere Steigung, die vermutlich auf den erhöhten Kommunikationsaufwand zurückzuführen ist. Dennoch ist erkennen, dass die Approximation durch Interpolation und die Nutzung der
-  $\mathcal{H}^2$-Struktur den theoretischen Berechnungen auch in reellen Anwendungen gerecht wird und die Komplexität von $\mathcal{O}(n^2)$ auf $\mathcal{O}(k n)$ senken kann. Da $k$ wesentlich 
-  kleiner als $n$ ist, ist damit viel gewonnen.
+  nicht festgestellt werden konnte, ist der lineare Zuwachs gut zu erkennen. Bei der eingezeichneten Geraden handelt es sich um eine von gnuplot berechnete Regressionsgrade. Der Testlauf mit $32$ 
+  Prozessen zeigt eine etwas stärkere Steigung, die vermutlich auf den erhöhten Kommunikationsaufwand zurückzuführen ist. Dennoch ist zu erkennen, dass die Approximation durch Interpolation und die 
+  Nutzung der $\mathcal{H}^2$-Struktur den theoretischen Berechnungen auch in reellen Anwendungen gerecht wird und die Komplexität von $\mathcal{O}(n^2)$ auf $\mathcal{O}(k n)$ senken kann. Da $k$ 
+  wesentlich kleiner als $n$ ist, ist damit viel gewonnen.
   
   Wir haben nun, ohne weiter Gedanken an die Auswirkungen zu verschwenden, eine Approximation durchgeführt. Zwar haben wir über eine Zulässigkeitsbedingung sichergestellt, dass die Ergebnisse
-  ``vernünftig'' sind, aber wie ungenau wird die Berechnung durch die Approximation? Dazu wurden im kleineren Maßstab\footnote{} einige Testläufe durchgeführt, die ebenfalls sehr stabile Resultate
-  gezeigt haben. Die Ergebnisse sind in \autoref{tab:error} zu finden.
+  ``vernünftig'' sind, aber wie ungenau wird die Berechnung durch die Approximation? Dazu wurden im kleineren Maßstab\footnote{Ausgeführt auf einem Computer mit 16 Gb Arbeitsspeicher und einem Intel 
+  Core i7-4710HQ.} einige Testläufe durchgeführt, die ebenfalls sehr stabile Resultate gezeigt haben. Die Ergebnisse sind in \autoref{tab:error} zu finden.
   
-  Wie an den Daten zu erkennen ist, nimmt der Fehler bei jeder Erhöhung der Interpolationsordnung $k_0$ um etwa Faktor $8$ ab. Wir erreichen also schnell eine sehr gute Approximation. Natürlich
+  Wie an den Daten zu erkennen ist, nimmt der Fehler bei jeder Erhöhung der Interpolationsordnung $k_0$ um etwa Faktor $8$ ab. Unsere Approximation konvergiert also wie vorgesehen exponentiell. Natürlich
   dauert die Berechnung für mehr Interpolationspunkte länger. Zu erkennen ist außerdem, dass bei diesem Testlauf bei $k_0=7$ eine Art Plateau erreicht wurde. Weitere Erhöhung hat keine Signifikante
-  Änderung der Fehlerwerte mehr ergeben. Die scheint mit den Ebenen des Clusterbaumes zusammenzuhängen. Wird die Interpolationsordnung gegenüber der Anzahl Sonnen groß genug, werden durch den
+  Änderung der Fehlerwerte mehr ergeben. Dies scheint mit den Ebenen des Clusterbaumes zusammenzuhängen. Wird die Interpolationsordnung gegenüber der Anzahl Sonnen groß genug, werden durch den
   vorliegenden Algorithmus zu wenig Ebenen im Clusterbaum erzeugt, sodass entsprechend wenig zulässige Blöcke gefunden werden können. Dies erklärt sowohl den plötzlichen Anstieg an Genauigkeit und
-  die Anschließende Stagnation.
+  die anschließende Stagnation.
   
   \subsubsection{Parallelität}
   \input{chapters/x20}
@@ -194,13 +201,13 @@
   Bei all den positiven Eigenschaften sei auch auf einen Nachteil des vorgestellten Algorithmus hingewiesen: Die verwendete Kommunikation benötigt viel unnötigen Speicher. Mein Hauptaugenmerk lag
   darauf, die Kommunikation so einfach wie möglich zu gestalten, um die Laufzeit möglichst gering zu halten. Da die \code{MPI_Alltoallv(..)}-Methode exakt das benötigte Kommunikationsmuster liefert
   und davon auszugehen ist, dass bei der Implementierung dieser Methode mehr Zeit und Know-How eingeflossen ist, als ich im Rahmen dieser Arbeit hätte investieren können, habe ich mich dazu entschieden
-  diese Methode zu nutzen. Das manuelle erstellen der Puffer war auch nicht weiter kompliziert, sodass ich erwartet hatte damit eine optimale Lösung gefunden zu haben. 
+  diese Methode zu nutzen. Die dafür notwendigen Puffer waren recht schnell konstruiert und wurden von mir zunächst nicht weiter beachtet. 
   
   Es hat sich aber gezeigt, dass bei 32 Prozessen auf einem Knoten mit $2^{22}$ Sonnen pro Prozess bereits $182$ GB Arbeitsspeicher benötigt werden. Das sind $5,68$ GB pro Prozess. Vergleicht man dies
   mit dem Testlauf mit nur einem Prozess, der lediglich $52.37$ MB Hauptspeicher belegt, ist schnell einzusehen, dass die Kommunikation mit derart riesigem Pufferbedarf nicht tragbar ist.
   
   Ganz ohne Puffer wird die Kommunikation nie auskommen. Es wäre aber möglich die Kommunikation durch nicht-blockierende Methoden derart zu verteilen, dass keinerlei Sendepuffer und lediglich 
-  Empfangspuffer für nicht-zulässige Blöcke benötigt werden. Dieser Ansatz wäre näher an dem von \citet{distrh2} vorgestellten Algorithmus, jedoch wäre weiterhin keine Kommunikation für Vorwärts- und 
+  Empfangspuffer für nicht-zulässige Blöcke benötigt würden. Dieser Ansatz ähnelt stärker dem von \citet{distrh2} vorgestellten Algorithmus, jedoch wäre weiterhin keine Kommunikation für Vorwärts- und 
   Rückwärtstransformation notwendig. Eine genaue Ausarbeitung eines solchen Ansatzes muss leider aus Zeit- und Umfangsgründen an anderer Stelle fortgesetzt werden.
   
   
