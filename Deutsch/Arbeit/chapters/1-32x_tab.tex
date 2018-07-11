@@ -1,0 +1,64 @@
+\begin{table}[t]
+ \begin{subtable}{0.45\textwidth}
+  \begin{tabular}{c c c}
+    \ \ \ \ 
+    &
+    \begin{tabular}{|c|c|}
+      \hline
+      \#Elemente & Laufzeit [s] \\
+      \hline
+      $2^{10}$ & 0,008324 \\
+      $2^{11}$ & 0,02569 \\
+      $2^{12}$ & 0,04406 \\
+      $2^{13}$ & 0,1348 \\
+      $2^{14}$ & 0,503 \\
+      $2^{15}$ & 0,6866 \\
+      $2^{16}$ & 1,905 \\
+      $2^{17}$ & 5,271 \\
+      $2^{18}$ & 6,454 \\
+      $2^{19}$ & 17,52 \\
+      $2^{20}$ & 46,63 \\
+      $2^{21}$ & 55,57 \\
+      $2^{22}$ & 154,5 \\
+      $2^{23}$ & 413,1 \\
+      $2^{24}$ & 476 \\
+      $2^{25}$ & 1270 \\
+      \hline
+    \end{tabular}
+    &
+    \ \ \ \ 
+  \end{tabular}
+ \subcaption{Dieser Testlauf wurde mit $p = 1$ durchgeführt und entspricht damit der nicht-parallelen Variante.}
+ \end{subtable} \ \ 
+ \begin{subtable}{0.45\textwidth}
+  \begin{tabular}{c c c}
+    \ \ \ \ 
+    &
+    \begin{tabular}{|c|c|}
+      \hline
+      \#Elemente & Laufzeit [s] \\
+      \hline
+      $2^{10}$ & 0,02034 \\
+      $2^{11}$ & 0,04135 \\
+      $2^{12}$ & 0,1327 \\
+      $2^{13}$ & 0,1744 \\
+      $2^{14}$ & 0,4502 \\
+      $2^{15}$ & 1,87 \\
+      $2^{16}$ & 2,235 \\
+      $2^{17}$ & 6,181 \\
+      $2^{18}$ & 15,54 \\
+      $2^{19}$ & 18,61 \\
+      $2^{20}$ & 49,45 \\
+      $2^{21}$ & 132,111 \\
+      $2^{22}$ & 190,8 \\
+      & \\
+      & \\
+      & \\
+      \hline
+    \end{tabular}
+  \end{tabular}
+ \subcaption{Dieser Testlauf wurde mit $p = 32$ durchgeführt, genau ein Knoten des Rechenclusters auszulasten.}
+ \end{subtable}
+\caption{In dieser Tabelle sind die Laufzeitmessungen der ersten beiden Testläufe aufgeführt.}
+\label{tab:1-32x}
+\end{table}

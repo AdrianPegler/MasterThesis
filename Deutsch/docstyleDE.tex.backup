@@ -8,15 +8,36 @@
 \usepackage[%
   language=german,paper=a4paper,largepaper=true,%
   algorithm=false,%
-  biblatexstyle=authoryear-square,biblatexOptions={natbib=true,backend=biber},%
+  biblatexstyle=authoryear-square,
+  biblatexOptions={natbib=true,backend=biber},%
   acronymOptions={smaller,printonlyused},%,withpage
 ]{ifiseries}
 
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{mathtools}
+\usepackage{array}
+\usepackage{scrextend}
+
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{exmp}[thm]{Beispiel} % same for example numbers
+\newtheorem{bem}[thm]{Bemerkung}
+\newtheorem{lemdef}[thm]{Lemma und Definition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{ann}{Annahme}
+
+\usepackage[bottom]{footmisc}
 \usepackage[format=hang]{caption}[2008/08/24]
 \usepackage{textcomp}
 \usepackage{todonotes}
 \newcommand{\thesistitlepage}[5]{\gentitlepage{#1}{#2}{#3\\\Large\vspace{5ex}#4}{\Large\textsc{Christian-Albrechts-Universit\"{a}t zu Kiel\\Institut f\"{u}r Informatik\\ Arbeitsgruppe Scientific Computing }\\\vspace{10ex}\begin{tabular}{rl}Betreut durch: & Prof. Dr. Steffen B\"{o}rm \\ & #5 \\\end{tabular}}}
-\ExecuteBibliographyOptions{sortcase=false,babel=other,backref=true,abbreviate=false}
+\ExecuteBibliographyOptions{sortcase=false,autolang=other,backref=true,abbreviate=false}
 \ExecuteBibliographyOptions{isbn=false,url=true,doi=false,eprint=false}
 \addbibresource{bibliography.bib}
 
@@ -27,21 +48,85 @@
 
 \newcommand{\TODO}[1]{\todo[inline]{#1}}
 
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\code}[1]{\lstinline!#1!}
+\newcommand{\hmat}{$\mathcal{H}$-Matrizen }
+\newcommand{\hquad}{$\mathcal{H}^2$-Matrizen }
+\newcommand{\Rk}{\textbf{R}k}
+\newcommand{\lag}{\mathcal{L}}
+\newcommand{\inds}[1]{{\sigma, #1}}
+\newcommand{\indt}[1]{{\tau, #1}}
+\newcommand{\ttit}[1]{\text{\textit{#1}}}
+\newcommand{\pot}[1]{\mathcal{P}(#1)}
+\newcommand{\after}{\circ}
+\newcommand{\cstyle}[2]{[language=C, label=lst:#1, caption={#2}, numbers=none]}
+\newcommand{\cnumberstyle}[2]{[language=C, label=lst:#1, caption={#2}]}
+\newcommand{\tcode}[1]{\text{\code{#1}}}
+\newcommand{\trans}[1]{#1^T}
+\newcommand{\Proc}{\mathfrak{P}}
+\newcommand{\vorw}{\nameref{sec:vorw} }
+\newcommand{\ruckw}{\nameref{sec:rückw} }
+\newcommand{\koppl}{\nameref{sec:kopplung} }
+\newcommand{\vorruck}{\hyperref[sec:vorw]{Vorwärts-} und \nameref{sec:rückw} }
+\newcommand{\qed}{\hfill $\Box$}
+
+\makeatletter
+\newcommand{\wlabel}[2]{%
+  \phantomsection
+  #1\def\@currentlabel{\unexpanded{#1}}\label{#2}%
+}
+\makeatother
+
+\makeatletter
+\newsavebox\myboxA
+\newsavebox\myboxB
+\newlength\mylenA
+
+\newcommand*\xoverline[2][0.75]{%
+    \sbox{\myboxA}{$\m@th#2$}%
+    \setbox\myboxB\null% Phantom box
+    \ht\myboxB=\ht\myboxA%
+    \dp\myboxB=\dp\myboxA%
+    \wd\myboxB=#1\wd\myboxA% Scale phantom
+    \sbox\myboxB{$\m@th\overline{\copy\myboxB}$}%  Overlined phantom
+    \setlength\mylenA{\the\wd\myboxA}%   calc width diff
+    \addtolength\mylenA{-\the\wd\myboxB}%
+    \ifdim\wd\myboxB<\wd\myboxA%
+       \rlap{\hskip 0.5\mylenA\usebox\myboxB}{\usebox\myboxA}%
+    \else
+        \hskip -0.5\mylenA\rlap{\usebox\myboxA}{\hskip 0.5\mylenA\usebox\myboxB}%
+    \fi}
+\makeatother
+
+\def \haken#1{\underline{#1}{\raise -0.3ex\hbox{\vphantom{$#1$}\vrule height 0.7ex}}}
+\def \nullhaken#1{\underline{#1}{\raise -0.3ex\hbox{\vphantom{$#1$}\vrule height 0.7ex}}_{_0}}
+
+\hyphenation{In-ter-po-la-tions-punk-te}
+\hyphenation{Spei-cher-platz-inef-fi-zienz}
+
+\renewcommand{\arraystretch}{1.1}
+
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelitemiii}{$\cdot$}
+
 \renewcommand*{\eidesstatt}{%
-\newpage\thispagestyle{empty}~\newpage
-\thispagestyle{plain}
-\hskip 0mm
-\vfill
-\noindent
-\begin{otherlanguage}{ngerman}
-	\textbf{Eidesstattliche Erkl{\"a}rung}\par
-	\bigskip\noindent Hiermit erkl{\"a}re ich an Eides statt, dass
-	ich die vorliegende Arbeit selbst\-st{\"a}n\-dig verfasst und keine
-	anderen als die angegebenen Quellen und Hilfsmittel verwendet habe.\par
-	\bigskip\noindent Kiel, \today
-	\vskip 10mm
-	\hfill\rule{18em}{.3pt}%
-\end{otherlanguage}}
+  \newpage\thispagestyle{empty}~\newpage
+  \thispagestyle{plain}
+  \hskip 0mm
+  \vfill
+  \noindent
+  \begin{otherlanguage}{ngerman}
+	  \textbf{Eidesstattliche Erkl{\"a}rung}\par
+	  \bigskip\noindent Hiermit erkl{\"a}re ich an Eides statt, dass
+	  ich die vorliegende Arbeit selbst\-st{\"a}n\-dig verfasst und keine
+	  anderen als die angegebenen Quellen und Hilfsmittel verwendet habe.\par
+	  \bigskip\noindent Kiel, \today
+	  \vskip 10mm
+	  \hfill\rule{18em}{.3pt}%
+  \end{otherlanguage}}
 
 \lstset{
 	frame=single,
@@ -49,6 +134,7 @@
 	numbers=left,
 	numbersep=6pt,
 	tabsize=3,
+	language=C,
 }
 
 \endinput

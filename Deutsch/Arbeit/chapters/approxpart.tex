@@ -232,14 +232,15 @@ typedef struct _Cluster Cluster;
     ein vollständiger Binärbaum wird.
     Der Wert \code{MAX\_DEPTH} für die Abbruchbedingung wird gleich zu Beginn des Programmlaufs auf Basis der Anzahl an Sonnen ($|\Omega| = 2^{\tcode{pot}}$) und der Interpolationsordnung $k$ 
     berechnet. Dabei gilt:
-    \begin{equation*}
+    \begin{equation}
       \tcode{MAX\_DEPTH} := \tcode{pot} - \mathfrak{l}, \ \ \ \ \ \ \ \ \ \ \ \ 
       \mathfrak{l} :=
       \begin{cases}
 	\lceil \log_2(2 k^3) \rceil & \text{falls } k > 1\\
 	4			    & \text{falls } k = 1
       \end{cases}
-    \end{equation*}
+      \label{eq:l}
+    \end{equation}
     Bei einer Baumtiefe von \code{pot} wären die Blattcluster im Schnitt gerade einelementig. Indem die Abbruchbedingung die Tiefe des Clusterbaumes auf $\tcode{pot} - \mathfrak{l}$ begrenzt,
     enthalten die Blattknoten im Schnitt gerade $2^\mathfrak{l}$ Elemente.
     Durch diese Baumtiefenregulierung wird für $k > 1$ die nächsthöhere Zweierpotenz zur doppelten Anzahl an Interpolationspunkten als durchschnittliche Anzahl Sonnen pro Blattcluster festgelegt. 

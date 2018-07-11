@@ -600,13 +600,13 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       Bei \hquad hingegen müssen die deutlich größeren Matrizen $\left. M\right|_{\tau \times R_\tau}$ und $\left. M\right|_{C_\sigma \times \sigma}$ für alle Cluster $\tau \in T_X$ und $\sigma\in T_Y$
       niedrigen Rang besitzen. Dabei sind für alle $\tau \in T_X$ und $\sigma \in T_Y$ definiert:
       \[
-	R_\tau := \bigcup_{r \in row(\tau)} r , \ \ \ \ \ \ \ \ C_\sigma := \bigcup_{c \in col(\sigma)} c,
+	R_\tau := \bigcup_{r \in row*(\tau)} r , \ \ \ \ \ \ \ \ C_\sigma := \bigcup_{c \in col(\sigma)} c,
       \]
       \[
-       row(\tau) := \{ s \in T_Y \ | \ \exists \tilde \tau \in T_X \colon \ \tilde \tau \times s \in \mathcal{L}^+\left(T_{X \times Y}\right) \wedge \tau \in sons^*(\tilde \tau) \},
+       row*(\tau) := \{ s \in T_Y \ | \ \exists \tilde \tau \in T_X \colon \ \tilde \tau \times s \in \mathcal{L}^+\left(T_{X \times Y}\right) \wedge \tau \in sons^*(\tilde \tau) \},
       \]
       \[
-       \ col(\sigma) := \{ t \in T_X \ | \ \exists \tilde \sigma \in T_Y \colon \ t \times \tilde \sigma \in \mathcal{L}^+\left(T_{X \times Y}\right) \wedge \sigma \in sons^*(\tilde \sigma) \}.
+       \ col*(\sigma) := \{ t \in T_X \ | \ \exists \tilde \sigma \in T_Y \colon \ t \times \tilde \sigma \in \mathcal{L}^+\left(T_{X \times Y}\right) \wedge \sigma \in sons^*(\tilde \sigma) \}.
       \]
       Dieser Unterschied ist in \autoref{fig:hh2diff} bildlich dargestellt:
       
