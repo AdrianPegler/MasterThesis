@@ -37,7 +37,10 @@
     Für die Simulation aller auftretenden Gravitationskräfte, müssen also für alle $n$ Körper jeweils $(n-1)$ Therme berechnet werden. Das Problem hat also eine Komplexität von
     $\mathcal{O}(n^2)$.
     
-    Problematisch wird dies, wenn man sich beispielsweise die Dimensionen unseres Sonnensystems vergegenwärtigt. Laut \citet{nasa} besteht die Milchstraße aus etwa 100 Milliarden
+    Problematisch wird dies, wenn man sich beispielsweise die Dimensionen unseres Sonnensystems vergegenwärtigt. Laut NASA\footnote{
+    World Book at NASA [2007]: 
+    https://web.archive.org/\-web/\-20090412172631/\-http://mynasa.nasa.gov/\-worldbook/\-galaxy\_worldbook.html\\
+    Archivierte url: http://mynasa.nasa.gov/worldbook/galaxy\_worldbook.html vom 12. April 2009. Abgerufen am 1. Mai 2018.} besteht die Milchstraße aus etwa 100 Milliarden
     (also $10^{11}$) Sonnen. Für sämtliche gravitationelle Wechselwirkungen müssten also ungefähr $(10^{11})^2 = 10^{22}$ Terme gelöst werden. Geht man davon aus, dass ein aktueller 
     Prozessor nicht mehr als eine Milliarde Terme pro Sekunde ausrechnen kann, so benötigt er etwa $10^{13}$ Sekunden, also mehr als 300.000 Jahre für einen einzigen Simulationsschritt.
     Ein Problem dieser Größenordnung könnte also nicht in annehmbarer Zeit gelöst werden.\citep{wissrech} 

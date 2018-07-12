@@ -1,0 +1,25 @@
+\chapter{Fazit und Ausblick}
+\label{chp:Conclusions}
+  \section{Fazit}
+    Wir haben gesehen, dass sich die Berechnung der Gravitationskräfte gut durch Interpolation approximieren und die zu berechnende vollbesetzte Matrix damit auch gut durch hierarchische Matrizen
+    darstellen lässt. Dadurch kann dieses Problem, das an sich quadratische Komplexität besitzt, mit linearem Zeitaufwand gelöst werden.
+    
+    Außerdem wurde gezeigt, dass sich der entstandene Algorithmus gut auf viele Rechner verteilen lässt. Hat hat der hier vorgestellte Ansatz einen zu hohen Speicherbedarf um Praxistauglich zu sein. 
+    Dennoch konnte gezeigt werden, dass durch die Parallelisierung des Algorithmus nahezu optimale Komplexität erreicht werden kann. Kann der Kommunikationsaufwand weiter reduziert werden, so besteht
+    Grund zur Annahme, dass schwache Skalierbarkeit erreicht werden. Das heißt, dass der Algorithmus bei Verdopplung der Anzahl an Sonnen bei gleichzeitiger Verdopplung der Anzahl Prozesse konstante
+    Laufzeit aufweist.
+    
+  \section{Ausblick}
+    Trotzdem bleiben noch viele Optimierungsmöglichkeiten. 
+    
+    In dieser Arbeit haben wir einen Algorithmus erarbeitet, der sich auf das Message-Passing-Modell beschränkt. Das hat Vorteile,
+    aber auch Nachteile. Beispielsweise wird durch das Message-Passing-Modell der Nutzen von Shared-Memory ignoriert. Das erhöht den Speicherbedarf, da jeder Prozess Kopien von Daten von anderen
+    Prozessen benötigt. Das erhöht aber auch die Laufzeit, da auch Prozesse, die auf einem gemeinsamen Knoten arbeiten Daten explizit austauschen und kopieren müssen. Ein kombinierter Ansatz,
+    der auf den einzelnen Knoten die Arbeit, aber nicht die Daten aufteilt und Messege-Passing zur Kommunikation zwischen Knoten, könnte die Laufzeit weiter senken.
+    
+    Außerdem wurde bei dem Algorithmus darauf geachtet, dass die Datenstrukturen eine Vektorisierung möglich machen. Viele der Berechnungen in diesem Algorithmus eignen sich dafür als Vektoren
+    verarbeitet zu werden. Dies würde zumindest diese Teile der Berechnung nochmals um einen Faktor beschleunigen.
+    
+    Eine weitere Option, die in Zukunft zu prüfen wäre, ist, die Technologie von Grafikkarten für dieses Problem zu nutzen. Ob dies möglich und effektiv wäre muss aber an anderer Stelle geklärt werden.
+    
+    Es bleibt zu hoffen, dass sich viele Probleme in Zukunft mit einem derartigen Ansatz, wie er in dieser Arbeit vorgestellt wurde, effizient lösen lassen.
