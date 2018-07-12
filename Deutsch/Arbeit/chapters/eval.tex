@@ -1,5 +1,5 @@
 \chapter{Evaluierung}
-\label{chp:Evaluation}
+\label{chp:eval}
   \citet{distrh2} haben gezeigt, dass deren paralleler Ansatz sehr nah an die optimale parallele Effizienz von $\mathcal{O}(\frac{nk}{p})$ herankommt, falls $n$ deutlich größer als $p$ ist.
   Dabei gilt: $n := |\Omega|$ ist die Anzahl Sonnen, $p := |\Proc|$ ist die Anzahl Prozesse und $k := k_0^3$ ist die Anzahl Interpolationspunkte, mit dem Grad der eindimensionalen Lagrange-Polynomen 
   $k_0$. Außerdem sei $m := \frac{n}{p}$ die durchschnittliche Anzahl Elemente pro Prozess.
@@ -8,6 +8,7 @@
   Blockbäumen und \hquad arbeitet, wird die Konstruktion nicht weiter behandelt. Statt dessen konzentrieren wir uns auf eine Abschätzung für die Laufzeit.
   
   \section{Theoretische Abschätzung}
+  \label{sec:theo}
   
   Zunächst treffen wir auch für diesen Abschnitt eine Annahme, die bereits bei der Vorstellung des Algorithmus zielführend war:
   \begin{ann} \ \\
@@ -130,6 +131,7 @@
   \citet{distrh2} merken noch an, dass  für genügend große Probleme, also $n \geq k^2 log_2p$, die optimale Komplexitätsordnung von $\mathcal{O}(\frac{nk}{p})$ erreicht wird.
   
   \section{Laufzeitmessung}
+  \label{sec:lauf}
   Die theoretischen Argumente des letzten Abschnitts wollen wir nun durch die Messung von Laufzeitdaten des Algorithmus untermauern.
   
   Um diese Daten zu sammeln, wurde das vorliegende auf dem NEC HPC-Linux-Cluster der CAU Kiel ausgeführt. Jeder Knoten dieses Clusters ist mit 192 GB Arbeitsspeicher und zwei Intel Xeon Gold 
