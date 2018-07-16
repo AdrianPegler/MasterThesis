@@ -1,8 +1,8 @@
-Erinnern wir uns an \autoref{eq:multi_grav} aus der \nameref{ch:einl}, in welcher die gravitationelle Wechselwirkung zwischenzwei Körpern $x$ und $y$ beschrieben wurde. 
+Erinnern wir uns an \autoref{eq:multi_grav} aus der \nameref{ch:einl}, in welcher die gravitationelle Wechselwirkung zwischen zwei Körpern $x$ und $y$ beschrieben wurde. 
 Die Struktur dieser Formel erinnert stark an Matrizen. 
 Ein Ansatz, um große vollbesetzte Matrizen speicherplatzsparend aufzustellen und Berechnungen zeiteffektiv durchzuführen, besteht darin, sie als hierarchische Matrizen darzustellen.
-Im Folgenden sollen daher die Grundlagen für allgemeine $\mathcal{H}$- und \hquad eingeführt werden. Für ausführlichere Arbeiten zu dem Thema der hierarchischen Matrizen verweise 
-ich auf \citet{h2diss} und \citet{hackbusch1999sparse}.
+Im Folgenden sollen daher die Grundlagen für allgemeine $\mathcal{H}$- und \hquad eingeführt werden. Für ausführlichere Arbeiten zu dem Thema der hierarchischen Matrizen sei auf die
+Arbeiten von \citet{h2diss} und \citet{hackbusch1999sparse} verwiesen.
 
 \TODO{Quellenangaben einfügen: vgl. Nicht lokale Operationen}
 
@@ -20,7 +20,7 @@ Die Kernfunktion $g$ muss also in der Form
 \begin{equation*}
   g\left(x,y\right) = \sum_{\nu \in \haken{k}} a_{\nu}\left(x\right) b_{\nu}\left(y\right)
 \end{equation*}
-mit $k \in \N$, $a_{\nu}, b_{\nu} \colon \R^d \to \R$ vorliegt. Eine Kernfunktion dieser Form heißt \textit{entartete Kernfunktion} von Rang k.
+mit $k \in \N$, $a_{\nu}, b_{\nu} \colon \R^d \to \R$ vorliegen. Eine Kernfunktion dieser Form heißt \textit{entartete Kernfunktion} von Rang $k$.
 Allgemein nennen wir eine Funktion $g$ eine Kernfunktion einer Matrix $G$, falls die Funktion $g$ die Matrix $G$ erzeugt, also gerade $G_{\mu\nu} = g{\mu, \nu}$ gilt.
 Nicht jede Kernfunktion ist entartet, es lassen sich aber oft entartete Kernfunktionen konstruieren, die die Funktion approximieren. Möglichkeiten sind beispielsweise
 Approximationen durch Taylor-Entwicklung oder Interpolation. \citep{h2diss}
@@ -32,8 +32,8 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     
     \subsubsection{Approximation}
     \label{sec:approx}
-      Im Folgenden möchte ich eine beispielhafte Approximation einer nicht-entarteten Kernfunktion durch Interpolation vorstellen, um so eine entartete Kernfunktion zu erhalten.
-      Der Aufbau folgt weitestgehend dem von \citet{nichtlokop}. Für eine Approximation einer nicht-entarten Kernfunktion durch Taylor-Entwicklung verweise ich auf \citet{h2diss}. 
+      Im Folgenden wird eine beispielhafte Approximation einer nicht-entarteten Kernfunktion durch Interpolation vorgestellt, um so eine entartete Kernfunktion zu erhalten.
+      Der Aufbau folgt weitestgehend dem von \citet{nichtlokop}. Für eine Approximation einer nicht-entarten Kernfunktion durch Taylor-Entwicklung sei wiederum auf \citet{h2diss} verwiesen. 
       
       Sei $g \colon \Omega \times \Omega \to \R$ eine nicht-entartete Kernfunktion. Für eine Interpolationsordnung $k$ und ein Teilgebiet $\sigma \subset \Omega$ wählen wir Interpolationspunkte 
       $\xi_\inds{1}, \dots , \xi_\inds{k}$. Nun suchen wir eine Approximation von $\left. g\right|_{\Omega \times \sigma}$ der Form
@@ -82,13 +82,11 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \begin{equation*}
 	\mathfrak{I}_{[a,b]} \colon C[a,b] \to \Pi_k, \ \ \ \ \ \ \ \ \ \ \ \ f \mapsto \mathfrak{I}[f \after \Phi_{[a,b]}] \after \Phi_{[a,b]}^{-1}
       \end{equation*}
-      definieren, was, die Definition von $\mathfrak{I}$ eingesetzt, die Darstellung
+      definieren. Durch Einsetzen der Definition von $\mathfrak{I}$, erhalten wir so die Darstellung:
       \begin{equation*}
 	\mathfrak{I}_{[a,b]}[f] = \sum_{\nu \in \nullhaken{k}} f \after \Phi_{[a,b]}\left(\xi_\nu\right) \lag_\nu \after \Phi_{[a,b]}^{-1} = 
-				 \sum_{\nu \in \nullhaken{k}} f \left( \Phi_{[a,b]}\left(\xi_\nu\right)\right)     \lag_\nu \after \Phi_{[a,b]}^{-1}
+				 \sum_{\nu \in \nullhaken{k}} f \left( \Phi_{[a,b]}\left(\xi_\nu\right)\right)     \lag_\nu \after \Phi_{[a,b]}^{-1}.
       \end{equation*}
-      ergibt.
-      
       Zur Vereinfachung definieren wir für $\nu \in \nullhaken{k}$ und $x \in [a,b]$
       \begin{align*}
 	\xi_{[a,b],  \nu} &:= \Phi_{[a,b]}\left(\xi_\nu\right) = \frac{b + a}{2} + \frac{b - a}{2} \xi_\nu\\
