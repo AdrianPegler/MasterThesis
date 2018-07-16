@@ -95,6 +95,26 @@
     Dies kann bei manchen Programmen zu viel Wartezeit führen, andere benötigen eventuell mehr Sicherheit im Ablauf. Daher bietet MPI Variationen dieser Standard-Sendeoperation an. 
     Diese sind in \autoref{tab:p2p_comm} aufgelistet und werden im Folgenden kurz erläutert.
     
+    \begin{figure}[t]
+      \begin{subfigure}[c]{0.53\textwidth}
+	\includegraphics[width=0.9\textwidth]{img/SyncSend_gray.png}
+	\subcaption{Ablauf der synchronen Sendeoperation.}
+	\label{fig:sync_send}
+      \end{subfigure}
+      \begin{subfigure}[c]{0.45\textwidth}
+	\includegraphics[width=0.9\textwidth]{img/ReadySend_gray.png}
+	\subcaption{Ablauf der Ready-Send-Operation.}
+	\label{fig:ready_send}
+      \end{subfigure}
+      \begin{subfigure}[c]{0.5\textwidth}
+	\includegraphics[width=0.9\textwidth]{img/BufferedSend_gray.png}
+	\subcaption{Ablauf der gepufferten Sendeoperation.}
+	\label{fig:buff_send}
+      \end{subfigure}
+      \caption{Quelle: \citet{mpi_p2p}}
+      \label{fig:send_var}
+    \end{figure}
+    
     Beim synchronen Senden wird, wie in \autoref{fig:send_var}\hyperref[fig:sync_send]{.(a)} dargestellt, zunächst vom sendenden Prozess eine ``Ready to send''-Mitteilung verschickt. Auf 
     diese Antwortet der empfangende Prozess mit einer ``Ready to receive''-Mitteilung. Im Anschluss findet das Senden und Empfangen der Daten statt. Durch dieses Vorgehen müssen die Prozesse
     aber gegebenenfalls auf einander warten. Die Wartezeit ist in der Abbildung dunkel eingefärbt. Dafür wird aber nicht nur sichergestellt, dass die gesendeten Daten verändert werden dürfen,
@@ -118,26 +138,6 @@
     einer Abschlussmethode, wie \code{MPI\_Wait}, \code{MPI\_Probe} oder \code{MPI\_Test}. Dies ermöglicht es dem sendenden und dem empfangenden Prozess weitere Arbeiten auszuführen,
     um so möglichst Wartezeiten zu vermeiden beziehungsweise produktiv zu nutzen. Allerdings sollten weder der Sende- noch der Empfangspuffer zwischen Initialisierung und Abschluss
     verändert werden. \citep{mpi_p2p, mpiv31}
-    
-    \begin{figure}[t]
-      \begin{subfigure}[c]{0.53\textwidth}
-	\includegraphics[width=0.9\textwidth]{img/SyncSend_gray.png}
-	\subcaption{Ablauf der synchronen Sendeoperation.}
-	\label{fig:sync_send}
-      \end{subfigure}
-      \begin{subfigure}[c]{0.45\textwidth}
-	\includegraphics[width=0.9\textwidth]{img/ReadySend_gray.png}
-	\subcaption{Ablauf der Ready-Send-Operation.}
-	\label{fig:ready_send}
-      \end{subfigure}
-      \begin{subfigure}[c]{0.5\textwidth}
-	\includegraphics[width=0.9\textwidth]{img/BufferedSend_gray.png}
-	\subcaption{Ablauf der gepufferten Sendeoperation.}
-	\label{fig:buff_send}
-      \end{subfigure}
-      \caption{Quelle: \citet{mpi_p2p}}
-      \label{fig:send_var}
-    \end{figure}
     
 %     \begin{figure}[p]
 %       \begin{subfigure}[c]{0.9\textwidth}
@@ -185,22 +185,6 @@
       \end{figure}
       \end{center}
       
-      \begin{figure}[t]
-      \begin{subfigure}{0.9\textwidth}
-      \begin{lstlisting}[language=C, label=lst:a2a, caption={Die Syntax von \code{MPI\_Alltoallv}}, numbers=none]
-	int MPI_Alltoallv(
-	  const void* sendbuffer,
-	  const int sendcounts[], 
-	  const int senddispls[], 
-	  MPI_Datatype sendtype, 
-	  void* recvbuffer, 
-	  const int recvcounts[], 
-	  const int recvdispls[], 
-	  MPI_Datatype recvtype, 
-	  MPI_Comm comm)
-      \end{lstlisting}
-      \end{subfigure}
-      \end{figure}
       Zusätzlich zur klassischen Point-to-Point-Kommuniklation bietet MPI Möglichkeiten für kollektive Kommunikation. Ein Unterschied zur direkten Kommunikation zwischen zwei Knoten ist, dass hier
       keine getrennten Send- und Receive-Operationen durchgeführt werden. Bei der kollektiven Kommunikation rufen alle Prozesse eines Kommunikators dieselbe Methode auf. Daher sind auch die Parameter
       \code{destination} und \code{tag} nicht mehr notwendig. Wie auch bei der Point-to-Point-Kommunikation gibt es bei diesen Methoden jeweils eine blockierende und eine nicht-blockierende Variante.
@@ -234,10 +218,27 @@
       Von jeder dieser kollektiven Methoden gibt es wie bereits erwähnt ebenfalls eine nicht-blockierende Variante, die, der Namenskonvention folgend, durch ein eingeschobenes \code{I}
       gekennzeichnet ist. 
       
+      \begin{figure}[t]
+      \begin{subfigure}{0.9\textwidth}
+      \begin{lstlisting}[language=C, label=lst:a2a, caption={Die Syntax von \code{MPI\_Alltoallv}}, numbers=none]
+	int MPI_Alltoallv(
+	  const void* sendbuffer,
+	  const int sendcounts[], 
+	  const int senddispls[], 
+	  MPI_Datatype sendtype, 
+	  void* recvbuffer, 
+	  const int recvcounts[], 
+	  const int recvdispls[], 
+	  MPI_Datatype recvtype, 
+	  MPI_Comm comm)
+      \end{lstlisting}
+      \end{subfigure}
+      \end{figure}
+      
       Außerdem gibt es für die Daten austauschenden Methoden eine \textit{vektorisierte} Variante. Alle zuvor erläuterten Methoden erwarten eine feste Anzahl an zu 
       kommunizierenden Elementen pro Prozess.
-      Es kann aber vorkommen, dass zwischen unterschiedlichen Prozessen unterschiedliche Anzahlen von Elementen ausgetauscht werden müssen. Diese vektorisierten Varianten, zu erkennen an
-      einem hinter dem Namen angefügten \code{v}, erwarten ein Array von Anzahlen.
+      Es kann aber vorkommen, dass zwischen unterschiedlichen Prozessen unterschiedliche Anzahlen von Elementen ausgetauscht werden müssen. Genau dies ist durch die vektorisierten Varianten, 
+      zu erkennen an einem hinter dem Namen angefügten \code{v}, möglich. Diese erwarten jeweils ein Array von Anzahlen zu sendender und zu empfangender Elemente.
       Als Beispiel ist die Syntax der vektorisierten Alltoall-Methode in \autoref{lst:a2a} aufgeführt.
       
       Für $i \in \nullhaken{p-1}$ legt der $i$-te Eintrag der Arrays \code{sendcounts} und \code{recvcounts} fest, wie viele Elemente an den $i$-ten Prozess gesendet, respektive vom $i$-ten
