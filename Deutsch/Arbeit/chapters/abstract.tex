@@ -1,0 +1,8 @@
+\chapter*{Zusammenfassung}
+  Um gravitationelle Wechselwirkungen in unserer Galaxie berechnen zu können, müssen Gleichungen gelöst werden, die großen, vollbesetzten Matrizen entsprechen. Eine Möglichkeit derartige Matrizen
+  anzunähern sind \hquad. Als Approximationsmethode kann dazu Interpolation genutzt werden. Durch diese Methodik kann die Berechnung der Gravitationskräfte von $n$ Himmelsköroern und $k$ 
+  Interpolationspunkten in $\mathcal{O}(kn)$ Zeiteinheiten gelöst werden. Die Approximation durch Interpolation konvergiert für steigendes $k$ exponentiell gegen die Lösung. 
+  Da in der Regel $k \ll n$ gilt, ist dieser Ansatz wesentlich effizienter als das vollbesetzte Problem zu lösen.
+  
+  Für die Dimension einer Galaxie wäre aber auch dieser Ansatz nicht ausreichend. Daher wird ferner eine Möglichkeit vorgestellt die Berechnung auf viele Rechner zu verteilen, die durch ein 
+  Netzwerk verbunden sind. Dabei beschränken wir uns zunächst auf das Message-Passing-Modell und stellen eine Implementierung unter Verwendung der Bibliothek MPI vor.

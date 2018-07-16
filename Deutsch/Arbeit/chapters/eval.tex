@@ -169,9 +169,10 @@
   Nutzung der $\mathcal{H}^2$-Struktur den theoretischen Berechnungen auch in reellen Anwendungen gerecht wird und die Komplexität von $\mathcal{O}(n^2)$ auf $\mathcal{O}(k n)$ senken kann. Da $k$ 
   wesentlich kleiner als $n$ ist, ist damit viel gewonnen.
   
-  Wir haben nun, ohne weiter Gedanken an die Auswirkungen zu verschwenden, eine Approximation durchgeführt. Zwar haben wir über eine Zulässigkeitsbedingung sichergestellt, dass die Ergebnisse
-  ``vernünftig'' sind, aber wie ungenau wird die Berechnung durch die Approximation? Dazu wurden im kleineren Maßstab\footnote{Ausgeführt auf einem Computer mit 16 Gb Arbeitsspeicher und einem Intel 
-  Core i7-4710HQ.} einige Testläufe durchgeführt, die ebenfalls sehr stabile Resultate gezeigt haben. Die Ergebnisse sind in \autoref{tab:error} zu finden.
+  Um diese $\mathcal{H}^2$-Struktur nutzen zu können hatten wir die eigentliche Kernfunktion durch Interpolation approximiert. Zwar haben wir über eine Zulässigkeitsbedingung sichergestellt, dass die 
+  Ergebnisse ``vernünftig'' sind und Beweise angeführt, nach denen diese Approximation miot steigender Ordnung exponentiell gegen die eigentliche Kernfunktion konvergiert, aber wie ungenau wird die
+  Berechnung durch die Approximation? Dazu wurden im kleineren Maßstab\footnote{Ausgeführt auf einem Computer mit 16 Gb Arbeitsspeicher und einem Intel Core i7-4710HQ.} einige Testläufe durchgeführt, 
+  die ebenfalls sehr stabile Resultate gezeigt haben. Die Ergebnisse sind in \autoref{tab:error} zu finden.
   
   Wie an den Daten zu erkennen ist, nimmt der Fehler bei jeder Erhöhung der Interpolationsordnung $k_0$ um etwa Faktor $8$ ab. Unsere Approximation konvergiert also wie vorgesehen exponentiell. Natürlich
   dauert die Berechnung für mehr Interpolationspunkte länger. Zu erkennen ist außerdem, dass bei diesem Testlauf bei $k_0=7$ eine Art Plateau erreicht wurde. Weitere Erhöhung hat keine Signifikante
