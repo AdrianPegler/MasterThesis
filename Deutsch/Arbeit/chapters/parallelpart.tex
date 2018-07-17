@@ -18,7 +18,7 @@
     Zweierpotenz $p = 2^q$ wählen. Da dann die Anzahl von Clustern in $T_\Omega^{(q)}$ gerade $p$ entspricht, können wir diese Ebene, zuzüglich der Sohncluster, optimal auf die Prozesse verteilen.
     Wir gehen im Folgenden immer von einer so gewählten Anzahl Prozesse aus.
     
-    Um diesen Ansatz auf den Algorithmus zu übertragen, wird in der in \autoref{lst:init} aufgeführten \code{init}-Methode die globale Variable $\tcode{SPLIT_DEPTH} = log_2(p) = q$ gesetzt. 
+    Um diesen Ansatz auf den Algorithmus zu übertragen, wird in der in \autoref{lst:init} aufgeführten \code{init}-Methode die globale Variable $\tcode{SPLIT_DEPTH} = \log_2(p) = q$ gesetzt. 
     Außerdem bekommt die Datenstruktur \code{Cluster} einen weiteren Member: \code{int active}. In diesem  wird die $id$ des für dieses Cluster zuständigen Prozesses gespeichert.
     
     Zudem gibt es aber noch Cluster auf den Ebenen $T_\Omega^{<q} := T_\Omega^{(0)},\dots,T_\Omega^{(q-1)}$. Um ein Cluster $C \in T_\Omega^{<q}$ zu klassifizieren nutzt jeder Prozess $P \in \Proc$
@@ -99,7 +99,7 @@ void _setup(Cluster *c, int depth){
     genau die Teile der \code{bodies}-Struktur beinhalten, die zu seinen aktiven Clustern gehören. Dies entspricht den hellblau gekennzeichneten Teilen des Clusterbaumes links in \autoref{fig:vertblock}.
     
     Weder bei reellen Daten noch bei unseren zufällig generierten Testdaten können wir davon ausgehen, dass diese nach Clustern sortiert vorliegen. Da ferner bei reellen Daten davon auszugehen
-    ist, dass diese aus Gründen des Speicherbedarfs auch verteilt eingelesen werden müssen, generiert in unserem Programm jeder Prozesse selbst zufällige Testdaten. Es wäre möglich die Daten 
+    ist, dass diese aus Gründen des Speicherbedarfs auch verteilt eingelesen werden müssen, generiert in unserem Programm jeder Prozess selbst zufällige Testdaten. Es wäre möglich die Daten 
     so verteilt zu belassen, wie sie generiert beziehungsweise eingelesen wurden. Jedoch wäre dann während der \vorruck eine große Menge an Kommunikation notwendig um diese entsprechend der 
     Arbeitsverteilung durchzuführen. Daher ist es sinnvoll diese Daten einmal nach Prozesszugehörigkeit auszutauschen. Dies bedeutet zwar einen erheblichen Kommunikationsaufwand, dafür kann aber im
     Anschluss die \vorruck komplett lokal und ohne weitere Kommunikation durchgeführt werden. Außerdem ist nicht davon auszugehen, dass viele Sonnen ihre bounding box während weniger Simulationsschritte
@@ -124,7 +124,7 @@ void _setup(Cluster *c, int depth){
     In \autoref{sec:konstr} wurde der Programmparameter $\tcode{pot}$ vorgestellt, der die Anzahl an Testsonnen bestimmt. Bei der parallelen Variante generiert jeder Prozess gerade $2^{\tcode{pot}}$
     Sonnen. Die globale Menge $\Omega$ hat also $|\Omega| = 2^q 2^\tcode{pot} = 2^{q+\tcode{pot}}$ Elemente. Daher wird die maximale Baumtiefe $\tcode{MAX_DEPTH} = q + \tcode{pot} - \mathfrak{l}$ 
     gesetzt. Dadurch wird die durchschnittliche Blattgröße von $2^\mathfrak{l}$ Elementen beibehalten. Im Folgenden wird die Zahl $n := |\Omega| = 2^{q+\tcode{pot}}$ für alle \code{bodies} auf allen 
-    Prozessen und die Zahl $m := 2^\tcode{pot}$ für die durchschnittliche Anzahl \code{bodies} pro Prozess.
+    Prozessen und die Zahl $m := 2^\tcode{pot}$ für die durchschnittliche Anzahl \code{bodies} pro Prozess verwendet.
     
   \subsection{Kommunikation}
   \label{sec:komm}

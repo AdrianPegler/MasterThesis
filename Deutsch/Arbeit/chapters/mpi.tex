@@ -9,8 +9,7 @@
     \subsection{Geschichte}
       Bereits vor 1992 gab es Bibliotheken für paralleles Rechnen. Jedoch gab es keinen einheitlichen Standard und die meisten Bibliotheken waren systemspezifisch,
       sodass das Portieren von Programmen auf ein anderes System zumindest eine aufwendige Aufgabe war. Auch die Ansätze der Bibliotheken unterschieden sich teilweise
-      stark. Ein weit verbreiteter Ansatz war allerdings das Message-Passing-Model, bei dem die verteilten Prozessteile Nachrichten austauschen, um eine gemeinsame
-      Aufgabe zu erfüllen.\citep{mpitut}
+      stark. Ein weit verbreiteter Ansatz war allerdings auch damals schon das Message-Passing-Model. \citep{mpitut}
       
       Am 29. und 30. April 1992 begann mit dem \textit{Workshop on Standards for Message-Passing in a Distributed Memory Environment} am \textit{Center for Research on Parallel 
       Computing} in Williamsburg (Virginia) ein Prozess zur Standardisierung des Message-Passing-Ansatzes \citep{workshop}. Hier wurden die essentiellen Bestandteile eines 
@@ -56,7 +55,7 @@
     
     Der Umschlag besteht aus:
     \begin{labeling}{Kennzeichnung}
-     \item[Sender] Dieser bei der Point-to-Point-Kommunikation automatisch hinzugefügt, muss aber bei der kollektiven Kommunikation explizit angegeben werden (vgl.: \autoref{sec:kolkom}).
+     \item[Sender] Dieser wird bei der Point-to-Point-Kommunikation automatisch hinzugefügt, muss aber bei der kollektiven Kommunikation explizit angegeben werden (vgl.: \autoref{sec:kolkom}).
      \item[Empfänger] Jeder Prozess im Kommunikator hat eine eindeutige Nummer. Über diese Nummer (\code{int destination}) wird der Empfänger festgelegt.
      \item[Kennzeichnung] Eine Kennzeichnung (engl.: tag) kann zur Differenzierung der Nachrichten eingesetzt werden (\code{int tag}).
      \item[Kommunikator] Der \code{MPI\_Comm communicator} spezifiziert eine Menge von $p$ Prozessen, die sich diesen Kommunikator teilen. Die \textit{Prozessgruppe} ist geordnet und
@@ -116,7 +115,7 @@
     \end{figure}
     
     Beim synchronen Senden wird, wie in \autoref{fig:send_var}\hyperref[fig:sync_send]{.(a)} dargestellt, zunächst vom sendenden Prozess eine ``Ready to send''-Mitteilung verschickt. Auf 
-    diese Antwortet der empfangende Prozess mit einer ``Ready to receive''-Mitteilung. Im Anschluss findet das Senden und Empfangen der Daten statt. Durch dieses Vorgehen müssen die Prozesse
+    diese antwortet der empfangende Prozess mit einer ``Ready to receive''-Mitteilung. Im Anschluss findet das Senden und Empfangen der Daten statt. Durch dieses Vorgehen müssen die Prozesse
     aber gegebenenfalls auf einander warten. Die Wartezeit ist in der Abbildung dunkel eingefärbt. Dafür wird aber nicht nur sichergestellt, dass die gesendeten Daten verändert werden dürfen,
     sondern auch, dass der Empfänger-Prozess zumindest damit begonnen hat die Daten auch zu empfangen. \citep{mpi_p2p, mpiv31}
     
@@ -193,7 +192,7 @@
       Jeder Prozess, der diese Methode aufruft, wartet, bis jeder Prozess des Kommunikators diese Methode ebenfalls aufgerufen hat. Eine Deadlockgefahr besteht, falls nicht alle Prozesse
       des Kommunikators die Methode aufrufen. \citep{mpiv31}
       
-      In \autoref{fig:kolkom} sind einige kollektive Methoden und ihre Funktionsweise veranschaulicht und werden im Folgenden kurz erläutert.
+      In \autoref{fig:kolkom} sind einige kollektive Methoden und ihre jeweilige Funktionsweise veranschaulicht und werden im Folgenden kurz erläutert.
       
       Der Broadcast dient dazu, Daten von einem Prozess an alle anderen zu verteilen. Die Syntax ist \autoref{lst:bcast} zu finden.
 
@@ -210,7 +209,7 @@
       
       Ähnlich zu den beiden Gather-Methoden sind die Methoden \code{MPI\_Reduce} und \code{MPI\_Allreduce}. Auch diese sammeln Daten von allen Prozessen auf einen, respektive
       auf alle Prozesse, zusammen. Jedoch werden hierbei die Daten nicht einfach in einem Array gebündelt, sondern über den Parameter \code{MPI\_Op op} eine Operation mitgegeben,
-      die auf die gesammelten Daten angewandt wird. So können aus den gesendet Daten direkt das Maximum, Minimum, die Summe und vieles mehr bestimmt werden. \citep{mpitut, mpiv31}
+      die auf die gesammelten Daten angewandt wird. So können aus den gesendeten Daten direkt das Maximum, Minimum, die Summe und vieles mehr bestimmt werden. \citep{mpitut, mpiv31}
       
       Zuletzt ist \code{MPI\_Alltoall} in \autoref{fig:kolkom} dargestellt. Hierbei führt quasi jeder Prozess ein Scatter durch. Man könnte es auch als \textit{Transponieren} der
       ``Prozess-Daten-Matrix'' bezeichnen. \citep{mpiv31}

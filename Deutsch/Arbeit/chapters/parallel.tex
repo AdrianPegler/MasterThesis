@@ -21,11 +21,11 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
     dieser Größe passt nicht mehr in den Hauptspeicher eines Computers.
     Hinzu kommt die Skalierbarkeit solcher Probleme: Angenommen ein Hauptspeicher von 24000 GB stünde auf einem Computer zur Verfügung. Warum bei einer Maschendichte von 
     1,56 km stehen bleiben und nicht noch feiner auflösen um noch genauere Berechnungen durchzuführen?
-    Warum bei der Berechnung der gravitationellen Wechselwirkungen bei den Sonnen unserer Galaxie stehen bleiben und nicht die Planeten, Monde oder noch kleinere Himmelkörper mit einbeziehen? 
+    Warum bei der Berechnung der gravitationellen Wechselwirkungen bei den Sonnen unserer Galaxie stehen bleiben und nicht die Planeten, Monde oder noch kleinere Himmelskörper mit einbeziehen? 
     Diese Probleme, und damit auch der Speicherbedarf, lassen sich also nahezu beliebig vergrößern.
     
-    Im folgenden Kapitel wird kurz skizziert, wie parallel arbeitende Hardware gestalten sein kann und welche Vor- und Nachteile und welche Herausforderungen damit einhergehen. Grundbegriffe
-    der Computerarchtektur werden vorausgesetzt, da eine Einführung den Umfang dieser Arbeit sprengen würde.
+    Im folgenden Kapitel wird kurz skizziert, wie parallel arbeitende Hardware gestaltet sein kann und welche Vor- und Nachteile und welche Herausforderungen damit einhergehen. Grundbegriffe
+    der Computerarchitektur werden vorausgesetzt, da eine Einführung den Umfang dieser Arbeit sprengen würde.
     
     \subsection{Parallele Hardware}
     \label{sec:parhard}
@@ -97,12 +97,12 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
 	Arbeiten  also mehrere Recheneinheiten gemeinsam an einem Problem, müssen die Ergebnisse einer Einheit den andern also gegebenenfalls nicht explizit mitgeteilt werden. Dies vermeidet Overhead
 	durch das Austauschen und Kopieren von Daten.
 	Jedoch ist es bei privatem Cache möglich, diesen in größerer Nähe zum zugehörigen Kern auf dem Chip zu platzieren. Dies führt zu besseren Zugriffszeiten, als gänzlich gemeinsam genutzter 
-	Cache und wird daher auch oft in verwendet. 
+	Cache und wird daher auch oft verwendet. 
 	
 	Ein Nachteil von Shared Memory Systemen ist, dass der Schaltungsaufwand für den Zugriff auf den gemeinsam genutzten Speicher mit wachsender Anzahl Recheneinheiten rapide ansteigt
 	\citep{hpcskript}. Außerdem können Race Conditions auftreten, die durch den gemeinsam genutzten Speicher verursacht werden.
 	
-	Beim schreiben von parallelen Programmen ist also besondere Vorsicht geboten. Es muss klar sein welche Daten sich wo befinden, und ob sie gemeinsam genutzt werden, oder nicht.
+	Beim Schreiben von parallelen Programmen ist also besondere Vorsicht geboten. Es muss klar sein welche Daten sich wo befinden, und ob sie gemeinsam genutzt werden, oder nicht.
 	Dies ist gegebenenfalls eine noch größere Herausforderung, wenn der Hauptspeicher innerhalb eines parallelen Programms teilweise gemeinsam genutzt wird und teilweise verteilt ist.
 	
       \subsubsection{Netzwerk}

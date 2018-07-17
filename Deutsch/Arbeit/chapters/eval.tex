@@ -66,7 +66,7 @@
   \begin{lem}
   \label{lem:vorw}
     (Vorwärtstransformation)\\
-    Die parallele Vorwärtstransformation benötigt $\mathcal{O}(\frac{nk}{p}+k^2log_2p)$ Zyklen.
+    Die parallele Vorwärtstransformation benötigt $\mathcal{O}(\frac{nk}{p}+k^2 \log_2p)$ Zyklen.
   \end{lem}
   
   \textit{Beweis:} 
@@ -88,13 +88,13 @@
   \end{align*}
   Operationen ausgeführt werden müssen.
   
-  Für die Ebenen $T_\Omega^{(<q)}$ werden nun jeweils die $k$ Ersatzmassen aus den $k$ Ersatzmassen eines Sohnclusters berechnet. Da es gerade $q = log_2(p)$ Ebenen gibt führt dies insgesamt zu obiger
+  Für die Ebenen $T_\Omega^{(<q)}$ werden nun jeweils die $k$ Ersatzmassen aus den $k$ Ersatzmassen eines Sohnclusters berechnet. Da es gerade $q = \log_2(p)$ Ebenen gibt führt dies insgesamt zu obiger
   Abschätzung. \qed
   
   \begin{lem}
   \label{lem:ruckw}
     (Rückwärtstransformation)\\
-    Die parallele Rückwärtstransformation benötigt $\mathcal{O}(\frac{nk}{p}+k^2log_2p)$ Zyklen.
+    Die parallele Rückwärtstransformation benötigt $\mathcal{O}(\frac{nk}{p}+k^2 \log_2p)$ Zyklen.
   \end{lem}
   
   \textit{Beweis:}
@@ -103,33 +103,33 @@
   \begin{lem}
   \label{lem:koppl}
     (Kopplungsmatrizen und Nahfeld)
-    Die Auswertung der Kopplungs- und Nahfeldmatrizen benötigt $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen.
+    Die Auswertung der Kopplungs- und Nahfeldmatrizen benötigt $\mathcal{O}(\frac{nk}{p} + k^2 \log_2p)$ Zyklen.
   \end{lem}
 
   \textit{Beweis:}
-  Von \citet{distrh2} wurde bewiesen, dass der Speicherbedarf für Nah- und Fernfeldmatrizen $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ beträgt. Da der Algorithmus für jedes Element der Matrizen $S_b$ und
-  $N_b$ nicht mehr als zwei Auswertungen vornimmt, liegt auch die benötigte Anzahl Zyklen in $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$. Auch in diesem Schritt ist keine Kommunikation notwendig, sodass 
+  Von \citet{distrh2} wurde bewiesen, dass der Speicherbedarf für Nah- und Fernfeldmatrizen $\mathcal{O}(\frac{nk}{p} + k^2 \log_2p)$ beträgt. Da der Algorithmus für jedes Element der Matrizen $S_b$ und
+  $N_b$ nicht mehr als zwei Auswertungen vornimmt, liegt auch die benötigte Anzahl Zyklen in $\mathcal{O}(\frac{nk}{p} + k^2 \log_2p)$. Auch in diesem Schritt ist keine Kommunikation notwendig, sodass 
   auch diese Auswertung in einem Superschritt stattfinden kann. \qed
   
   Bleibt noch die Kommunikation. Diese gliedert sich in zwei Superschritte: Das Vorbereiten mit dem anschließenden Senden der Daten und das Empfangen der Daten. 
   
   \begin{lem}
     (Kommunikation)
-    Die Kommunikation benötigt $\mathcal{O}(\frac{nk}{p} + k log_2p)$ Zyklen.
+    Die Kommunikation benötigt $\mathcal{O}(\frac{nk}{p} + k \log_2p)$ Zyklen.
   \end{lem}
 
   \textit{Beweis:}
   Die Vorbereitung der Kommunikation arbeitet nach der selben Struktur wie die Auswertung der Kopplungs- und Nahfeldmatrizen. Anders als während der Kopplung werden allerdings die $k$ Ersatzmassen
-  lediglich gesendet, und nicht jeweils mit $k$ weiteren Ersatzmassen verrechnet. Insgesamt fallen also $\mathcal{O}(\frac{nk}{p} + k log_2p)$ Zyklen für die Kommunikation
+  lediglich gesendet, und nicht jeweils mit $k$ weiteren Ersatzmassen verrechnet. Insgesamt fallen also $\mathcal{O}(\frac{nk}{p} + k \log_2p)$ Zyklen für die Kommunikation
   an. Da ebenso viele Elemente gesendet und empfangen werden müssen liegt der Gesamtaufwand für die Kommunikation in eben dieser Komplexitätsklasse. \qed
   
-  Für jeden Superschritt wurde also gezeigt, dass dieser $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen benötigt. Damit folgt für den gesamten Algorithmus:
+  Für jeden Superschritt wurde also gezeigt, dass dieser $\mathcal{O}(\frac{nk}{p} + k^2 \log_2p)$ Zyklen benötigt. Damit folgt für den gesamten Algorithmus:
   
   \begin{thm}
-    Die Berechnung des Algorithmus benötigt $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen.
+    Die Berechnung des Algorithmus benötigt $\mathcal{O}(\frac{nk}{p} + k^2 \log_2p)$ Zyklen.
   \end{thm}
   
-  \citet{distrh2} merken noch an, dass  für genügend große Probleme, also $m = \frac{n}{p} \geq k^2 log_2p$, die optimale Komplexitätsordnung von $\mathcal{O}(\frac{nk}{p})$ erreicht wird.
+  \citet{distrh2} merken noch an, dass  für genügend große Probleme, also $m = \frac{n}{p} \geq k^2 \log_2p$, die optimale Komplexitätsordnung von $\mathcal{O}(\frac{nk}{p})$ erreicht wird.
   
   \section{Laufzeitmessung}
   \label{sec:lauf}
@@ -175,11 +175,12 @@
   Berechnung durch die Approximation? Dazu wurden im kleineren Maßstab\footnote{Ausgeführt auf einem Computer mit 16 Gb Arbeitsspeicher und einem Intel Core i7-4710HQ.} einige Testläufe durchgeführt, 
   die ebenfalls sehr stabile Resultate gezeigt haben. Die Ergebnisse sind in \autoref{tab:error} zu finden.
   
-  \todo{genauer ausarbeiten!}Wie an den Daten zu erkennen ist, nimmt der Fehler bei jeder Erhöhung der Interpolationsordnung $k_0$ um etwa Faktor $8$ ab. Unsere Approximation konvergiert also wie vorgesehen exponentiell. Natürlich
-  dauert die Berechnung für mehr Interpolationspunkte länger. Zu erkennen ist außerdem, dass bei diesem Testlauf bei $k_0=7$ eine Art Plateau erreicht wurde. Weitere Erhöhung hat keine Signifikante
-  Änderung der Fehlerwerte mehr ergeben. Dies scheint mit den Ebenen des Clusterbaumes zusammenzuhängen. Wird die Interpolationsordnung gegenüber der Anzahl Sonnen groß genug, werden durch den
-  vorliegenden Algorithmus zu wenig Ebenen im Clusterbaum erzeugt, sodass entsprechend wenig zulässige Blöcke gefunden werden können. Dies erklärt sowohl den plötzlichen Anstieg an Genauigkeit und
-  die anschließende Stagnation.
+  Um zu ermitteln welchen Fehler die Approximation induziert, wurde zunächst das Approximierte Simulationsergebnis berechnet. Anschließend wurden die Kräfte aller Sonnen durch den nicht-approximierten
+  vollbesetzten Algorithmus berechnet. Der Quotient der bedien Ergebnisse gibt dann die relative Abweichung des approximierten Algorithmus von der tatsächlichen Lösung an und ist in der Tabelle
+  in der Zeile ``Fehler'' zu finden.
+  
+  Wie an den Daten zu erkennen ist, nimmt der Fehler bei jeder Erhöhung der Interpolationsordnung $k_0$ um etwa Faktor $8$ ab. Unsere Approximation konvergiert also wie vorgesehen exponentiell. 
+  %Natürlich dauert die Berechnung für mehr Interpolationspunkte länger.
   
   \subsubsection{Parallelität}
   \input{chapters/x20}

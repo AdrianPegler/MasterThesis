@@ -348,7 +348,7 @@ void _eval(Cluster *ct, Cluster *cs){
     Methode \code{_backward_nonLeaf(Cluster *c)} die approximierten Quasi-Kräfte, gewichtet über die Lagrange-Polynome, an die Sohncluster weiter. Für alle Söhne $\tilde{\tcode{c}} \in sons(\tcode{c})$
     und alle $\mu \in M$ wird
     \[
-      \tcode{F}_{\tcode{c},\tilde{\tcode{c}},\mu} = \sum_{\nu \in M} \lag_{\tcode{c},\nu}(\xi_{\tilde{\tcode{c}},\mu} \tcode{F}_{\tcode{c},\nu}
+      \tcode{F}_{\tcode{c},\tilde{\tcode{c}},\mu} = \sum_{\nu \in M} \lag_{\tcode{c},\nu}(\xi_{\tilde{\tcode{c}},\mu} \tcode{F}_{\tcode{c},\nu})
     \]
     zu den dort eventuell bereits aus der \koppl vorhandenen Quasi-Ersatzkräfte addiert.
     
