@@ -1,11 +1,11 @@
-\chapter{Evaluierung}
+\chapter{Evaluation}
 \label{chp:eval}
   \citet{distrh2} haben gezeigt, dass deren paralleler Ansatz sehr nah an die optimale parallele Effizienz von $\mathcal{O}(\frac{nk}{p})$ herankommt, falls $n$ deutlich größer als $p$ ist.
   Dabei gilt: $n := |\Omega|$ ist die Anzahl Sonnen, $p := |\Proc|$ ist die Anzahl Prozesse und $k := k_0^3$ ist die Anzahl Interpolationspunkte, mit dem Grad der eindimensionalen Lagrange-Polynomen 
   $k_0$. Außerdem sei $m := \frac{n}{p}$ die durchschnittliche Anzahl Elemente pro Prozess.
   
-  Im folgenden gilt es diese Argumentation auf den vorliegenden Algorithmus zu übertragen und durch Daten aus praktischen Laufzeitmessungen zu unterstützen. Da unser Algorithmus mit impliziten
-  Blockbäumen und \hquad arbeitet, wird die Konstruktion nicht weiter behandelt. Statt dessen konzentrieren wir uns auf eine Abschätzung für die Laufzeit.
+  Im Folgenden gilt es, diese Argumentation auf den vorliegenden Algorithmus zu übertragen und durch Daten aus praktischen Laufzeitmessungen zu unterstützen. Da unser Algorithmus mit impliziten
+  Blockbäumen und \hquad arbeitet, wird die Konstruktion nicht weiter behandelt. Stattdessen konzentrieren wir uns auf eine Abschätzung für die Laufzeit.
   
   \section{Theoretische Abschätzung}
   \label{sec:theo}
@@ -13,30 +13,28 @@
   Zunächst treffen wir auch für diesen Abschnitt eine Annahme, die bereits bei der Vorstellung des Algorithmus zielführend war:
   \begin{ann} \ \\
   \label{ann:nodes}
-    Es existiert $q \in \N$ sodass für $p := \left| \Proc \right|$ gilt:
-    \[ p = 2^q \]
+    Es existiert $q \in \N$, sodass für $p := \left| \Proc \right|$ gilt:
+    \[ p = 2^q. \]
   \end{ann}
   
   Zusätzlich zu der sichergestellten vollständigen Binärbaumstruktur benötigt der Clusterbaum für einige Abschätzungen weitere Eigenschaften:
   
   \begin{ann} \ \\
   \label{ann:tree}
-    Es existiert eine Konstante $C_{st}$, sodass für alle Teilbäume $T_{sub}$ mit $\tau := root(T_{sub}) \in T_\Omega^{(q)}$ gilt
+    Es existiert eine Konstante $C_{st}$, sodass für alle Teilbäume $T_{sub}$ mit $\tau := root(T_{sub}) \in T_\Omega^{(q)}$ gilt:
     \[
-     |T_{sub}|\footnotemark \leq C_{st} \frac{n}{kp} \text{ und}
-    \]
-    \[
-     |\tau| \leq C_{st}\frac{n}{p}
+     |T_{sub}|\footnotemark \leq C_{st} \frac{n}{kp} \ \ \text{ und } \ \ |\tau| \leq C_{st}\frac{n}{p}.
     \]
   \end{ann}
-  \footnotetext{$|T_{sub}|$ bezeichnet die Anzahl Knoten im Baum}
+  \footnotetext{$|T_{sub}|$ bezeichnet die Anzahl Knoten im Baum.}
   
   Diese Annahme wurde durch die Wahl der Abbruchbedingung bei der Konstruktion des Clusterbaumes sichergestellt. Es gilt $|T_{sub}| = \frac{1}{2} \frac{n}{kp}$ (vgl. \autoref{eq:l}),
   da jeder Prozess gerade einen Teilbaum konstruiert, wie er zuvor vom gesamten nicht-parallelisierten Algorithmus vorgenommen wurde (vgl. letzter Absatz in \autoref{sec:data}). Zwar lässt sich die
   Anzahl Elemente der Cluster $\tau \in T_\Omega^{(q)}$ nicht exakt angeben, da die Unterteilung in Sohncluster nicht nach Kardinalität vorgenommen wird, jedoch beträgt diese im Schnitt gerade 
   $m = \frac{n}{p}$. Die Konstante $C_{st}$ kann also als $\approx 1$ angenommen werden.
   
-  Die Methode \code{_setup(Cluster *c, int depth)}, die in unserem Algorithmus die Verteilung der Cluster auf Prozesse vornimmt, gewährleistet folgende Eigenschaften:
+  Die Methode \code{_setup(Cluster *c, int depth)}, die in unserem Algorithmus die Verteilung der Cluster auf Prozesse vornimmt, gewährleistet einige Eigenschaften, die wir im Folgenden noch benötigen
+  werden.
   
   \begin{bem}
     (Zuständigkeiten)\\
@@ -46,22 +44,22 @@
     \end{equation}
     \begin{equation}
       \text{Jeder Prozess } P \in \Proc \text{ berechnet auf jeder Ebene } T_\Omega^{(q')}, \ q' \in \nullhaken{q-1} \text{ genau eine Transfermatrix.}\label{eq:log}
-    \end{equation}
-
+    \end{equation}\newline
     Aus \autoref{eq:log} folgt direkt mit $q = \log_2 p$ (vgl. \autoref{sec:work}):
     \begin{equation}
       \text{Die Anzahl Transfermatrizen } E_\tau, \ \tau \in T_\Omega^{(\leq q)} \text{ pro Prozess beträgt } q.\tag{\ref{eq:log}'}
     \end{equation}
   \end{bem}
+  \TODO{schöner?}
 
-  Da wir einen parallel arbeitenden Algorithmus haben ist es für die Abschätzung des Rechenaufwandes nicht ausreichend die Anzahl an Operationen zu zählen. Da die Prozesse kommunizieren müssen ist 
-  regelmäßig eine Synchronisation der Prozesse notwendig. So wird es vorkommen, dass ein Prozess $P_i$ schneller seine Berechnungen durchführt als ein Prozess $P_j$ und dann auf diesen warten muss bevor
-  die Kommunikation stattfinden kann. 
+  Da wir einen parallel arbeitenden Algorithmus haben, ist es für die Abschätzung des Rechenaufwandes nicht ausreichend, die Anzahl an Operationen zu zählen. Da die Prozesse kommunizieren müssen, ist 
+  regelmäßig eine Synchronisation der Prozesse notwendig. So wird es vorkommen, dass ein Prozess $P_i$ schneller seine Berechnungen durchführt als ein Prozess $P_j$ und dann auf diesen warten muss,
+  bevor die Kommunikation stattfinden kann. 
   
   Daher verwenden wir einen ähnlichen Ansatz, wie er auch beim BSP-Modell \citep{bsp} verwendet wurde: Die gesamte Berechnung wird in eine Sequenz von $s \in \N_0$ \textit{Superschritten} eingeteilt,
   die jeweils unabhängig von den anderen Prozessen von einem Prozess durchgeführt werden können. Der $i$-te Superschritt startet simultan, sobald alle Prozesse den $(i-1)$-ten Superschritt abgeschlossen
-  haben, $i \in \haken{s}$. Als Zeiteinheit verwenden wir die abstrahierte Einheit \textit{Zyklus}. Ein Zyklus sei dabei lang genug um eine arithmetische Operation, einen Speicherzugriff oder eine Sende-
-  oder Empfangsoperation für einen \code{double}-Wert durchzuführen.
+  haben, $i \in \haken{s}$. Als Zeiteinheit verwenden wir die abstrahierte Einheit \textit{Zyklus}. Ein Zyklus sei dabei lang genug, um eine arithmetische Operation, einen Speicherzugriff oder eine 
+  Sende- oder Empfangsoperation für einen \code{double}-Wert durchzuführen.
   
   \begin{lem}
   \label{lem:vorw}
@@ -88,7 +86,7 @@
   \end{align*}
   Operationen ausgeführt werden müssen.
   
-  Für die Ebenen $T_\Omega^{(<q)}$ werden nun jeweils die $k$ Ersatzmassen aus den $k$ Ersatzmassen eines Sohnclusters berechnet. Da es gerade $q = \log_2(p)$ Ebenen gibt führt dies insgesamt zu obiger
+  Für die Ebenen $T_\Omega^{(<q)}$ werden nun jeweils die $k$ Ersatzmassen aus den $k$ Ersatzmassen eines Sohnclusters berechnet. Da es gerade $q = \log_2(p)$ Ebenen gibt, führt dies insgesamt zu obiger
   Abschätzung. \qed
   
   \begin{lem}
@@ -98,11 +96,11 @@
   \end{lem}
   
   \textit{Beweis:}
-  Der Beweis läuft analog zu dem von \autoref{lem:vorw}, die Berechnung verläuft lediglich von der Wurzel zu den Blättern statt wie bei der Vorwärtstransformation umgekehrt. \qed
+  Der Beweis läuft analog zu dem von \hyperref[lem:vorw]{Lemma}\autoref{lem:vorw}, die Berechnung verläuft lediglich von der Wurzel zu den Blättern statt wie bei der Vorwärtstransformation umgekehrt. \qed
   
   \begin{lem}
   \label{lem:koppl}
-    (Kopplungsmatrizen und Nahfeld)
+    (Kopplungsmatrizen und Nahfeld)\\
     Die Auswertung der Kopplungs- und Nahfeldmatrizen benötigt $\mathcal{O}(\frac{nk}{p} + k^2 \log_2p)$ Zyklen.
   \end{lem}
 
@@ -114,14 +112,14 @@
   Bleibt noch die Kommunikation. Diese gliedert sich in zwei Superschritte: Das Vorbereiten mit dem anschließenden Senden der Daten und das Empfangen der Daten. 
   
   \begin{lem}
-    (Kommunikation)
+    (Kommunikation)\\
     Die Kommunikation benötigt $\mathcal{O}(\frac{nk}{p} + k \log_2p)$ Zyklen.
   \end{lem}
 
   \textit{Beweis:}
-  Die Vorbereitung der Kommunikation arbeitet nach der selben Struktur wie die Auswertung der Kopplungs- und Nahfeldmatrizen. Anders als während der Kopplung werden allerdings die $k$ Ersatzmassen
+  Die Vorbereitung der Kommunikation arbeitet nach derselben Struktur wie die Auswertung der Kopplungs- und Nahfeldmatrizen. Anders als während der Kopplung werden allerdings die $k$ Ersatzmassen
   lediglich gesendet, und nicht jeweils mit $k$ weiteren Ersatzmassen verrechnet. Insgesamt fallen also $\mathcal{O}(\frac{nk}{p} + k \log_2p)$ Zyklen für die Kommunikation
-  an. Da ebenso viele Elemente gesendet und empfangen werden müssen liegt der Gesamtaufwand für die Kommunikation in eben dieser Komplexitätsklasse. \qed
+  an. Da eben so viele Elemente gesendet und empfangen werden müssen, liegt der Gesamtaufwand für die Kommunikation in eben dieser Komplexitätsklasse. \qed
   
   Für jeden Superschritt wurde also gezeigt, dass dieser $\mathcal{O}(\frac{nk}{p} + k^2 \log_2p)$ Zyklen benötigt. Damit folgt für den gesamten Algorithmus:
   
@@ -135,11 +133,11 @@
   \label{sec:lauf}
   Die theoretischen Argumente des letzten Abschnitts wollen wir nun durch die Messung von Laufzeitdaten des Algorithmus untermauern.
   
-  Um diese Daten zu sammeln, wurde das vorliegende auf dem NEC HPC-Linux-Cluster der CAU Kiel ausgeführt. Jeder Knoten dieses Clusters ist mit 192 GB Arbeitsspeicher und zwei Intel Xeon Gold 
+  Um diese Daten zu sammeln, wurde das vorliegende Programm auf dem NEC HPC-Linux-Cluster der CAU Kiel ausgeführt. Jeder Knoten dieses Clusters ist mit 192 GB Arbeitsspeicher und zwei Intel Xeon Gold 
   6130 bestückt, die einen Kerntakt von 2,1 GHz aufweisen. Verbunden sind die Knoten über EDR infiniband. Als Compiler wurden der Intel-C-Compiler 17.0.4 sowie der Intel-MPI-Compiler 17.0.4 verwendet.
   
   Es wurden unterschiedliche Testreihen durchgeführt, bei denen entweder die Anzahl Prozesse oder die Anzahl Sonnen variiert wurde, um beide Ansätze unabhängig voneinander testen zu können.
-  Alle Tests wurden mit Lagrange-Polynomen von Grad $3$ in jeder Richtung approximiert, was zu $3^3 = 27$ Interpolationspunkten führt. Außerdem wurde jeder Testlauf 10 Mal wiederholt und immer 
+  Alle Tests wurden mit Lagrange-Polynomen von Grad $3$ in jeder Richtung approximiert, was zu $3^3 = 27$ Interpolationspunkten führt. Außerdem wurde jeder Testlauf 10 Mal wiederholt und es wurden immer 
   vollständige Knoten im Clustersystem angefordert, um stabile Daten zu ermitteln.
   
   \subsubsection{Approximation}
@@ -157,7 +155,7 @@
     Laufzeit [s] & 0,0486 & 0,0967 & 0,259 & 0,454 & 0,864 & 1,09 & 1,3\\
     \hline
     \end{tabular}
-    \caption{Die Tabelle zeigt den Approximationsfehler und die Laufzeit in Abhängigkeit zur Interpolationsordnung.\TODO{besser erklären}}
+    \caption{Die Tabelle zeigt den Approximationsfehler und die Laufzeit in Abhängigkeit zur Interpolationsordnung.}
     \label{tab:error}
   \end{table}
   
@@ -170,9 +168,11 @@
   Nutzung der $\mathcal{H}^2$-Struktur den theoretischen Berechnungen auch in reellen Anwendungen gerecht wird und die Komplexität von $\mathcal{O}(n^2)$ auf $\mathcal{O}(k n)$ senken kann. Da $k$ 
   wesentlich kleiner als $n$ ist, ist damit viel gewonnen.
   
-  Um diese $\mathcal{H}^2$-Struktur nutzen zu können hatten wir die eigentliche Kernfunktion durch Interpolation approximiert. Zwar haben wir über eine Zulässigkeitsbedingung sichergestellt, dass die 
+  Um diese $\mathcal{H}^2$-Struktur nutzen zu können, hatten wir die eigentliche Kernfunktion durch Interpolation approximiert. Zwar haben wir über eine Zulässigkeitsbedingung sichergestellt, dass die 
   Ergebnisse ``vernünftig'' sind und Beweise angeführt, nach denen diese Approximation mit steigender Ordnung exponentiell gegen die eigentliche Kernfunktion konvergiert, aber wie ungenau wird die
-  Berechnung durch die Approximation? Dazu wurden im kleineren Maßstab\footnote{Ausgeführt auf einem Computer mit 16 Gb Arbeitsspeicher und einem Intel Core i7-4710HQ.} einige Testläufe durchgeführt, 
+  Berechnung durch die Approximation? Dazu wurden im kleineren Maßstab
+  \footnote{Ausgeführt auf einem Computer mit 16 Gb Arbeitsspeicher und einem Intel Core i7-4710HQ.} 
+  einige Testläufe durchgeführt, 
   die ebenfalls sehr stabile Resultate gezeigt haben. Die Ergebnisse sind in \autoref{tab:error} zu finden.
   
   Um zu ermitteln welchen Fehler die Approximation induziert, wurde zunächst das Approximierte Simulationsergebnis berechnet. Anschließend wurden die Kräfte aller Sonnen durch den nicht-approximierten
@@ -185,12 +185,12 @@
   \subsubsection{Parallelität}
   \input{chapters/x20}
   Bereits durch die höhere Steigung der Geraden in \autoref{fig:1-32x}.\textbf{(b)} gegenüber der in \textbf{(a)} lässt sich erahnen, dass durch die Kommunikation bei der Parallelisierung ein gewisser
-  Overhead verursacht wird. Um dies genauer zu untersuchen wurde die Anzahl Sonnen pro Prozess\footnote{Mit einer Verdoppelung der Prozessanzahl geht also auch eine Verdopplung der Anzahl Sonnen 
+  Overhead verursacht wird. Um dies genauer zu untersuchen, wurde die Anzahl Sonnen pro Prozess\footnote{Mit einer Verdoppelung der Prozessanzahl geht also auch eine Verdopplung der Anzahl Sonnen 
   einher.} auf $m = 2^{20}$ fixiert und die Anzahl Prozesse variiert.  Die Messdaten sind in \autoref{tab:x20} und \autoref{fig:x20} zu finden. 
   
-  Die Daten unterliegen leider recht großen Schwankungen. Woher diese Schwankungen stammen muss an anderer Stelle genauer untersucht werden, da es den Umfang und die Zielsetzung dieser Arbeit 
-  übersteigt. Allerdings waren diese Ergebnisse in sich sehr stabil. Auch mehrfache Wiederholungen der einzelnen Testläufe haben immer bis auf wenige Zehntelsekunden die selbe Zeit benötigt. 
-   Trotzdem scheint mir, dass die errechnete Regressionsgerade die allgemeine Tendenz der Laufzeit einigermaßen akkurat wiedergibt.
+  Die Daten unterliegen leider recht großen Schwankungen. Woher diese Schwankungen stammen, muss an anderer Stelle genauer untersucht werden, da es den Umfang und die Zielsetzung dieser Arbeit 
+  übersteigt. Allerdings waren diese Ergebnisse in sich sehr stabil. Auch mehrfache Wiederholungen der einzelnen Testläufe haben immer bis auf wenige Zehntelsekunden dieselbe Zeit benötigt. 
+  Trotzdem scheint mir, dass die errechnete Regressionsgerade die allgemeine Tendenz der Laufzeit einigermaßen akkurat wiedergibt.
   
   Ein gewisser Anstieg der Laufzeit ist zu erwarten, da der Kommunikationsaufwand steigt. Insgesamt zeigt sich aber die fast optimale Ausnutzung der Parallelität.
   

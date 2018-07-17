@@ -5,8 +5,8 @@
     In Anlehnung an die Schreibweise $\N_0$ für die natürlichen Zahlen $\N \cap \{0\}$ bezeichnet $\nullhaken{n}$ die Menge $\{0, \dots , n\}$.
   \section{Motivation}
   \label{sec:mot}
-    Angeblich soll Sir Isaac Newton durch das Fallen eines Apfels die grundlegende Idee gehabt haben, dass die Mechanik des Himmels und der Erde doch die selben sein 
-    könnten \citep{memoirs}. Jeder Schüler hat von dieser Geschichte gehört - und ob sie nun wahr ist oder nicht, sein Gesetz der nicht-relativistischen Gravitation ist bis
+    Angeblich soll Sir Isaac Newton durch das Fallen eines Apfels die grundlegende Idee gehabt haben, dass die Mechanik des Himmels und der Erde doch dieselbe sein 
+    könnte \citep{memoirs}. Jeder Schüler hat von dieser Geschichte gehört - und ob sie nun wahr ist oder nicht, sein Gesetz der nicht-relativistischen Gravitation ist bis
     heute eine wichtige Formel in der Physik.
     
     Seien für zwei Körper die Massen $m_1$, $m_2$ und Positionen $x_1$, $x_2$ gegeben. Dann wirkt durch die Masse $m_2$ eine Kraft $f$ auf die Masse $m_1$, die sich durch 
@@ -15,22 +15,22 @@
       \label{eq:simple_grav}
     \end{equation}
     ergibt \citep{newton}. Dabei ist $\gamma \approx 6{,}67408*10^{-11} m^3 kg^{-1} s^{-2}$ die Gravitationskonstante \citep{graviconst} und $\norm{\cdot}_2: \R^d \to \R^d$ die 
-    euklidische Norm $z \mapsto \sqrt{ \sum_{i \in \haken{d}} |z|^2 }$. Im weiteren werden die Position eines Körpers und der Körper assoziiert. 
+    euklidische Norm $z \mapsto \sqrt{ \sum_{i \in \haken{d}} |z|^2 }$. Im Weiteren werden die Position eines Körpers und der Körper assoziiert. 
     
-    Diese Formel für zwei Körper auszurechnen stellt zunächst kein Problem dar. Von größerem Interesse für die Wissenschaft sind aber Mehrkörperprobleme, also die gravitationellen 
-    Wechselwirkungen zwischen einer Menge von Körpern. Seien im folgenden also $n \in \N$ und Menge $\Omega$ von $n$ Körpern gegeben.
-    Für $x \neq y \in \Omega$ und zugehörigen Massen $m_x$ und $m_y$ wirkt mit \autoref{eq:simple_grav} durch den Körper $y$ eine Kraft 
+    Diese Formel für zwei Körper auszurechnen, stellt zunächst kein Problem dar. Von größerem Interesse für die Wissenschaft sind aber Mehrkörperprobleme, also die gravitationellen 
+    Wechselwirkungen zwischen einer Menge von Körpern. Seien im Folgenden also $n \in \N$ und eine Menge $\Omega$ von $n$ Körpern gegeben.
+    Für $x \neq y \in \Omega$ und die zugehörigen Massen $m_x$ und $m_y$ wirkt mit \autoref{eq:simple_grav} durch den Körper $y$ eine Kraft 
     \begin{equation}
       f_{xy} = \gamma m_x m_y \frac{y - x}{\norm{y - x}^3_2}
       \label{eq:multi_grav}
     \end{equation}
-    auf den Körper $x$. Will man nun die kumulative Kraft, die durch alle Körper aus $\Omega$ auf den Körper $x$ wirken, berechnen muss folgende Gleichung gelöst werden:
+    auf den Körper $x$. Will man nun die kumulative Kraft berechnen, die durch alle Körper aus $\Omega$ auf den Körper $x$ wirkt, muss folgende Gleichung gelöst werden:
     \begin{equation}
       f_x = \sum_{\substack{y \in \Omega \\ y \neq x}} \gamma m_x m_y \frac{y - x}{\norm{y - x}^3_2}
       \label{eq:sum_grav}
     \end{equation}
     \citep{wissrech}.
-    Für die Simulation aller auftretenden Gravitationskräfte, müssen also für alle $n$ Körper jeweils $(n-1)$ Therme berechnet werden. Das Problem hat also eine Komplexität von
+    Für die Simulation aller auftretenden Gravitationskräfte müssen also für alle $n$ Körper jeweils $(n-1)$ Therme berechnet werden. Das Problem hat also eine Komplexität von
     $\mathcal{O}(n^2)$.
     
     Problematisch wird dies, wenn man sich beispielsweise die Dimensionen unseres Sonnensystems vergegenwärtigt. Laut NASA\footnote{
@@ -39,39 +39,37 @@
     Archivierte url: http://mynasa.nasa.gov/worldbook/galaxy\_worldbook.html vom 12. April 2009. Abgerufen am 1. Mai 2018.} besteht die Milchstraße aus etwa 100 Milliarden
     (also $10^{11}$) Sonnen. Um sämtliche gravitationelle Wechselwirkungen in unserer Galaxie zu berechnen, müssten also ungefähr $(10^{11})^2 = 10^{22}$ Terme gelöst werden. Geht man 
     davon aus, dass ein aktueller Prozessor nicht mehr als eine Milliarde Terme pro Sekunde ausrechnen kann, so benötigt er etwa $10^{13}$ Sekunden, also mehr als 300.000 Jahre für 
-    einen einzigen Simulationsschritt. Ein Problem dieser Größenordnung könnte also nicht in annehmbarer Zeit gelöst werden.\citep{wissrech} 
+    einen einzigen Simulationsschritt. Ein Problem dieser Größenordnung könnte also nicht in annehmbarer Zeit gelöst werden. \citep{wissrech} 
     
     In dieser Arbeit wird ein zweigleisiger Ansatz am vorliegenden Beispiel vorgestellt, mit dessen Hilfe Probleme dieser Größen- und Komplexitätsklasse in den Griff zu bekommen sind.
     
   \section{Ziele}
 %     \TODO{Der erste Schritt ist über Approximation die Komplexitätsklasse des Problems zu reduzieren. Reduktion auf O(n)}
-    Der erste Teil des Ansatzes ist eine Reduktion der Komplexitätsklasse des Gravitationsproblems. \autoref{eq:multi_grav} definiert eine vollbesetzte Matrix. Es gibt Möglichkeiten solche
+    Der erste Teil des Ansatzes ist eine Reduktion der Komplexitätsklasse des Gravitationsproblems. \autoref{eq:multi_grav} definiert eine vollbesetzte Matrix. Es gibt Möglichkeiten, solche
     Matrizen speicherplatzsparend durch Matrizen mit deutlich niedrigerem Rang anzunähern. Eine dieser Möglichkeiten ist die Darstellung als hierarchische Matrix. Diese Technik soll genutzt
     werden, um das vorliegende Problem in linearer Komplexität bewältigen zu können.
     
 %     \TODO{In einem weiteren Schritt wird der vorige Algorithmus zur Ausführung auf Parallel-Rechner-Systemen angepasst.}
-    Dieser Ansatz alleine wird aber nicht ausreichen um das vorliegende Problem ausreichend schnell zu lösen. Wir werden daher zusätzlich nach einer Möglichkeit suchen, den Algorithmus parallel
+    Dieser Ansatz alleine wird aber nicht ausreichen, um das vorliegende Problem ausreichend schnell zu lösen. Wir werden daher zusätzlich nach einer Möglichkeit suchen, den Algorithmus parallel
     von vielen Rechnern gleichzeitig lösen zu lassen. Wir werden dazu einen Algorithmus vorstellen, der dies bewerkstelligt, und zeigen, dass dieser die Arbeit optimal auf die beteiligten
     Prozesse aufteilen kann.
   
   \section{Aufbau}
-    Zunächst werden die \nameref{chp:foundations} der Arbeit vorgestellt. Den Anfang bilden die \hyperref[sec:h2]{hierarchischen Matrizen}. Zunächst werden allgemeine Möglichkeiten vorgestellt, 
-    eine Matrix als hierarchische Matrix darzustellen. Im Anschluss werden einige Möglichkeiten der Optimierung dieser Darstellung vorgestellt, die uns schließlich zu den sogenannten \nameref{sec:hquad}
-    führt, welche wir für die Darstellung des Gravitationsproblems nutzen wollen.
+    Im folgenden Kapitel werden die \nameref{chp:foundations} der Arbeit vorgestellt. Den Anfang bilden die \hyperref[sec:h2]{hierarchischen Matrizen}. Dazu werden zunächst allgemeine Möglichkeiten 
+    vorgestellt, eine Matrix als hierarchische Matrix darzustellen. Im Anschluss werden einige Möglichkeiten der Optimierung dieser Darstellung vorgestellt, die uns schließlich zu den sogenannten 
+    \nameref{sec:hquad} führen, welche wir für die Darstellung des Gravitationsproblems nutzen wollen.
     
     In \autoref{sec:parrech} wird eine Zusammenfassung der Entwicklung der Computer hin zu Parallelität gegeben. Außerdem werden kurz Herausforderungen im Zusammenhang mit parallel arbeitenden
     Algorithmen erläutert. Im Anschluss wird mit dem \hyperref[sec:mpm]{Message-Passing-Modell} ein Modell vorgestellt, mit dem parallele Algorithmen strukturiert und viele der 
     Herausforderungen umgangen werden können.
     
-    \autoref{sec:mpi} widmet sich einer Bibliothek, die das \hyperref[sec:mpm]{Message-Passing-Modell} umsetzt: das \hyperref[sec:mpi]{Messege-Passing-Interface}. Diese Bibliothek werden wir später
+    \autoref{sec:mpi} widmet sich einer Bibliothek, die das \hyperref[sec:mpm]{Message-Passing-Modell} umsetzt: das \hyperref[sec:mpi]{Message-Passing-Interface}. Diese Bibliothek werden wir später
     nutzen, um unseren Algorithmus zu parallelisieren.
     
     In \autoref{chp:haupt} wird zunächst die \nameref{sec:ausgang} für unseren Ansatz vorgestellt, also ein nicht-optimierter, nicht-parallel arbeitender Algorithmus zur Berechnung der gravitationellen
-    Wechselwirkungen. Dann werden wir in \autoref{sec:approxf} eine Variante vorstellen, die die Struktur der \nameref{sec:hquad} nutzt, um die Berechnungen deutlich effektiver durchzuführen.
+    Wechselwirkungen. Dann werden wir uns in \autoref{sec:approxf} eine Variante anschauen, die die Struktur der \nameref{sec:hquad}nutzt, um die Berechnungen deutlich effektiver durchzuführen.
     Schließlich wird in \autoref{sec:parallelpart} dieser Algorithmus noch um Möglichkeiten der Parallelisierung erweitert.
     
     Der erarbeitete Algorithmus muss natürlich noch \hyperref[chp:eval]{evalutiert} werden. In \autoref{chp:eval} werden wir zunächst eine \hyperref[sec:theo]{theoretische Abschätzung} der 
-    Komplexitätsklasse des parallel arbeitenden Algorithmus vornehmen. Im Anschluss werden die theoretischen Überlegungen durch \nameref{sec:lauf} überprüft.
-    
+    Komplexitätsklasse des parallel arbeitenden Algorithmus vornehmen. Im Anschluss werden die theoretischen Überlegungen durch \nameref{sec:lauf} überprüft. 
     Den Abschluss bilden \nameref{chp:Conclusions}. 
-    \TODO{ist das wichtig oder kann das Weg?: Hier wird zusammengefasst, was erreicht wurde und aufgeführt, in welchen Richtungen noch weitere Arbeit möglich und notwendig ist.}
