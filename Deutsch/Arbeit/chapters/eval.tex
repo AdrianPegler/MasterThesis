@@ -81,7 +81,7 @@
   \end{align*}
   Operationen ausgeführt werden müssen.
   
-  Für Nicht-Blattcluster $\sigma \in T_\Omega^P \backslash mathcal{L}(T_\Omega^P)$ sind für die $k$ Ersatzmassen und beide Sohncluster wiederum $k$ Auswertungen notwendig. Damit folgt, dass weitere
+  Für Nicht-Blattcluster $\sigma \in T_\Omega^P \backslash \mathcal{L}(T_\Omega^P)$ sind für die $k$ Ersatzmassen und beide Sohncluster wiederum $k$ Auswertungen notwendig. Damit folgt, dass weitere
   \begin{align*}
     &\sum_{\sigma \in T_\Omega^P \backslash \mathcal{L}(T_\Omega^P)} \ \ \sum_{\tilde \sigma \in sons(\sigma)} 2k^2 \leq \sum_{\tilde \sigma \in T_\Omega^P} 2k^2\\
     &= 2k^2 |T_\Omega^P| \leq 2k^2 C_{st} \frac{n}{kp} = 2C_{st}\frac{nk}{p}
@@ -115,11 +115,12 @@
   
   \begin{lem}
     (Kommunikation)
-    Die Kommunikation benötigt $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen.
+    Die Kommunikation benötigt $\mathcal{O}(\frac{nk}{p} + k log_2p)$ Zyklen.
   \end{lem}
 
   \textit{Beweis:}
-  Da die Vorbereitung der Kommunikation nach der selben Struktur wie die Auswertung der Kopplungs- und Nahfeldmatrizen arbeitet, fallen dafür ebenfalls $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen 
+  Die Vorbereitung der Kommunikation arbeitet nach der selben Struktur wie die Auswertung der Kopplungs- und Nahfeldmatrizen. Anders als während der Kopplung werden allerdings die $k$ Ersatzmassen
+  lediglich gesendet, und nicht jeweils mit $k$ weiteren Ersatzmassen verrechnet. Insgesamt fallen also $\mathcal{O}(\frac{nk}{p} + k log_2p)$ Zyklen für die Kommunikation
   an. Da ebenso viele Elemente gesendet und empfangen werden müssen liegt der Gesamtaufwand für die Kommunikation in eben dieser Komplexitätsklasse. \qed
   
   Für jeden Superschritt wurde also gezeigt, dass dieser $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen benötigt. Damit folgt für den gesamten Algorithmus:
@@ -128,7 +129,7 @@
     Die Berechnung des Algorithmus benötigt $\mathcal{O}(\frac{nk}{p} + k^2 log_2p)$ Zyklen.
   \end{thm}
   
-  \citet{distrh2} merken noch an, dass  für genügend große Probleme, also $n \geq k^2 log_2p$, die optimale Komplexitätsordnung von $\mathcal{O}(\frac{nk}{p})$ erreicht wird.
+  \citet{distrh2} merken noch an, dass  für genügend große Probleme, also $m = \frac{n}{p} \geq k^2 log_2p$, die optimale Komplexitätsordnung von $\mathcal{O}(\frac{nk}{p})$ erreicht wird.
   
   \section{Laufzeitmessung}
   \label{sec:lauf}
@@ -164,7 +165,7 @@
   aufgeführt.
   
   Abbildung beziehungsweise Tabelle \textbf{(a)} bezieht sich jeweils auf die Testreihe mit einem Prozess, \textbf{(b)} auf die Testreihe mit 32 Prozessen. Trotz einiger Schwankungen, deren Herkunft
-  nicht festgestellt werden konnte, ist der lineare Zuwachs gut zu erkennen. Bei der eingezeichneten Geraden handelt es sich um eine von gnuplot berechnete Regressionsgrade. Der Testlauf mit $32$ 
+  nicht festgestellt werden konnte, ist der lineare Zuwachs gut zu erkennen. Bei der eingezeichneten Geraden handelt es sich um eine von gnuplot berechnete Regressionsgerade. Der Testlauf mit $32$ 
   Prozessen zeigt eine etwas stärkere Steigung, die vermutlich auf den erhöhten Kommunikationsaufwand zurückzuführen ist. Dennoch ist zu erkennen, dass die Approximation durch Interpolation und die 
   Nutzung der $\mathcal{H}^2$-Struktur den theoretischen Berechnungen auch in reellen Anwendungen gerecht wird und die Komplexität von $\mathcal{O}(n^2)$ auf $\mathcal{O}(k n)$ senken kann. Da $k$ 
   wesentlich kleiner als $n$ ist, ist damit viel gewonnen.
@@ -182,13 +183,13 @@
   
   \subsubsection{Parallelität}
   \input{chapters/x20}
-  Bereits durch die höhere Steigung der Graden in \autoref{fig:1-32x}.\textbf{(b)} gegenüber der in \textbf{(a)} lässt sich erahnen, dass durch die Kommunikation bei der Parallelisierung ein gewisser
+  Bereits durch die höhere Steigung der Geraden in \autoref{fig:1-32x}.\textbf{(b)} gegenüber der in \textbf{(a)} lässt sich erahnen, dass durch die Kommunikation bei der Parallelisierung ein gewisser
   Overhead verursacht wird. Um dies genauer zu untersuchen wurde die Anzahl Sonnen pro Prozess\footnote{Mit einer Verdoppelung der Prozessanzahl geht also auch eine Verdopplung der Anzahl Sonnen 
   einher.} auf $m = 2^{20}$ fixiert und die Anzahl Prozesse variiert.  Die Messdaten sind in \autoref{tab:x20} und \autoref{fig:x20} zu finden. 
   
   Die Daten unterliegen leider recht großen Schwankungen. Woher diese Schwankungen stammen muss an anderer Stelle genauer untersucht werden, da es den Umfang und die Zielsetzung dieser Arbeit 
   übersteigt. Allerdings waren diese Ergebnisse in sich sehr stabil. Auch mehrfache Wiederholungen der einzelnen Testläufe haben immer bis auf wenige Zehntelsekunden die selbe Zeit benötigt. 
-   Trotzdem scheint mir, dass die errechnete Regressionsgrade die allgemeine Tendenz der Laufzeit einigermaßen akkurat wiedergibt.
+   Trotzdem scheint mir, dass die errechnete Regressionsgerade die allgemeine Tendenz der Laufzeit einigermaßen akkurat wiedergibt.
   
   Ein gewisser Anstieg der Laufzeit ist zu erwarten, da der Kommunikationsaufwand steigt. Insgesamt zeigt sich aber die fast optimale Ausnutzung der Parallelität.
   
