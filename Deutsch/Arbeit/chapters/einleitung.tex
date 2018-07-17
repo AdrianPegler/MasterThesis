@@ -14,7 +14,7 @@
       f = \gamma m_1 m_2 \frac{x_2 - x_1}{\norm{x_2 - x_1}^3_2}
       \label{eq:simple_grav}
     \end{equation}
-    ergibt \citep{newton}. Dabei ist $\gamma \approx 6{,}67408*10^{-11} m^3 kg^{-1} s^{-2}$ die Gravitationskonstante \citep{graviconst} und $\norm{\cdot}_2: \R^d \to \R^d$ die 
+    berechnen lässt \citep{newton}. Dabei ist $\gamma \approx 6{,}67408*10^{-11} m^3 kg^{-1} s^{-2}$ die Gravitationskonstante \citep{graviconst} und $\norm{\cdot}_2: \R^d \to \R^d$ die 
     euklidische Norm $z \mapsto \sqrt{ \sum_{i \in \haken{d}} |z|^2 }$. Im Weiteren werden die Position eines Körpers und der Körper assoziiert. 
     
     Diese Formel für zwei Körper auszurechnen, stellt zunächst kein Problem dar. Von größerem Interesse für die Wissenschaft sind aber Mehrkörperprobleme, also die gravitationellen 
@@ -24,13 +24,13 @@
       f_{xy} = \gamma m_x m_y \frac{y - x}{\norm{y - x}^3_2}
       \label{eq:multi_grav}
     \end{equation}
-    auf den Körper $x$. Will man nun die kumulative Kraft berechnen, die durch alle Körper aus $\Omega$ auf den Körper $x$ wirkt, muss folgende Gleichung gelöst werden:
+    auf den Körper $x$. Will man nun die kumulative Kraft bestimmen, die durch alle Körper aus $\Omega$ auf den Körper $x$ wirkt, so muss der folgende Term berechnet werden:
     \begin{equation}
       f_x = \sum_{\substack{y \in \Omega \\ y \neq x}} \gamma m_x m_y \frac{y - x}{\norm{y - x}^3_2}
       \label{eq:sum_grav}
     \end{equation}
     \citep{wissrech}.
-    Für die Simulation aller auftretenden Gravitationskräfte müssen also für alle $n$ Körper jeweils $(n-1)$ Therme berechnet werden. Das Problem hat also eine Komplexität von
+    Für die Simulation aller auftretenden Gravitationskräfte müssen also für alle $n$ Körper jeweils $(n-1)$ Terme berechnet werden. Das Problem hat also eine Komplexität von
     $\mathcal{O}(n^2)$.
     
     Problematisch wird dies, wenn man sich beispielsweise die Dimensionen unseres Sonnensystems vergegenwärtigt. Laut NASA\footnote{
