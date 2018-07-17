@@ -16,7 +16,7 @@
    nobackground \
    palfuncparam 2000,0.003 \
    "Helvetica" 16  fontscale 1.0 
-# set output 'grav_32_lin.eps'
+# set output 'grav_32.eps'
 unset clip points
 set clip one
 unset clip two
@@ -126,17 +126,17 @@ set rrange [ * : * ] noreverse nowriteback
 set trange [ * : * ] noreverse nowriteback
 set urange [ * : * ] noreverse nowriteback
 set vrange [ * : * ] noreverse nowriteback
-set xlabel "# Elemente" 
+set xlabel "#Elemente pro Prozess" 
 set xlabel  font "" textcolor lt -1 norotate
 set x2label "" 
 set x2label  font "" textcolor lt -1 norotate
-set xrange [ 1024.00 : 4.50000e+06 ] noreverse nowriteback
+set xrange [ 0.00000 : 3.50000e+07 ] noreverse nowriteback
 set x2range [ 1024.00 : 3.35544e+07 ] noreverse nowriteback
-set ylabel "Gesamtlaufzeit [s]" 
+set ylabel "Laufzeit [s]" 
 set ylabel  font "" textcolor lt -1 rotate by -270
 set y2label "" 
 set y2label  font "" textcolor lt -1 rotate by -270
-set yrange [ 0.00000 : 200.000 ] noreverse nowriteback
+set yrange [ 0.00000 : 1400.00 ] noreverse nowriteback
 set y2range [ 0.00000 : 1270.00 ] noreverse nowriteback
 set zlabel "" 
 set zlabel  font "" textcolor lt -1 norotate
@@ -172,24 +172,23 @@ set fit brief errorvariables nocovariancevariables errorscaling prescale nowrap 
 g(x)=m*x+b
 f(x)=m*x+c
 GNUTERM = "wxt"
-x = 0.0
-a = 6e-05
+m = 6.7540739867984e-05
 b = 1e-30
 GPFUN_g = "g(x)=m*x+b"
+c = -1.43402997413802
+GPFUN_f = "f(x)=m*x+c"
+x = 0.0
+a = 6e-05
 FIT_CONVERGED = 1
-FIT_NDF = 11
-FIT_STDFIT = 10.2730581669135
-FIT_WSSR = 1160.89296510867
+FIT_NDF = 12
+FIT_STDFIT = 15.8840577772909
+FIT_WSSR = 3027.63949766779
 FIT_P = 0.0
-FIT_NITER = 4
+FIT_NITER = 5
 a_err = 2.42817661242016e-06
 b_err = 13.389534420901
-m = 4.83787443400388e-05
-m_err = 2.41838951787448e-06
-c = 0.555327120725925
-GPFUN_f = "f(x)=m*x+c"
-c_err = 3.24850728708729
+m_err = 1.84996127268043e-06
+c_err = 4.78914390344943
 ## Last datafile plotted: "results/grav_32_X_raw.dat"
-plot 'results/grav_32_X_raw.dat' using 1:2 with points title "Laufzeitmessung", f(x) title "lineare Approximation"
-## fit f(x) 'results/grav_32_X_raw.dat' using 1:2 via m,c
+plot 'results/grav_32_X_raw.dat' using 1:2 with points title "Laufzeitmessung", f(x) title "linearer Fit"
 #    EOF
