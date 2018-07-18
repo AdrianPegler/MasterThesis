@@ -54,7 +54,7 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
       \hyperref[sec:netzwerk]{Clustersysteme}. \citep{flynn, multicore}
       
       MIMD-Architekturen sind auf Grund ihrer autonom arbeitenden und programmierbaren Prozessoren sehr flexibel und können viele Probleme effizient lösen. Die Autonomie der Prozessoren
-      stellt die Programmierung aber auch vor Herausforderungen. Durch die asynchrone Ausführung der Programme wird das Verhalten des gesamten Systems schwer vorhersagbar.\citep{hpcskript}
+      stellt die Programmierung aber auch vor Herausforderungen. Durch die asynchrone Ausführung der Programme wird das Verhalten des gesamten Systems schwer vorhersagbar. \citep{hpcskript}
       
       MISD-Architekturen, also solche in denen parallel auf einem Datum mehrere Instruktionen ausgeführt werden können, sind nur in Spezialrechnern zu finden und für die Lösung der meisten
       Probleme nicht geeignet. \citep{architect, korbler}
@@ -63,11 +63,11 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
       Hintergrund sind Algorithmen, die auf ganzen Reihen von Daten immer wieder die selbe Operation ausführen. Während beim Ansatz der MIMD-Architekturen die Operationen dynamisch auf die
       einzelnen Recheneinheiten verteilt werden, ist der Ansatz von SIMD-Architekturen, beziehungsweise von Vektorrechnern, die Anzahl der Rechenwerke in den Recheneinheiten zu erhöhen 
       und eine Operation für mehrere Daten gleichzeitig auszuführen. Zum Beispiel werden für die Berechnung der Gravitationskräfte für viele Körper immer wieder die selben Operationen 
-      verarbeitet. Anstatt diese also für jedes einzelne Paar von Körpern durchzuführen könnten sie für mehrere Paare von Körpern gleichzeitig durchgeführt werden.
+      verarbeitet. Anstatt diese also für jedes einzelne Paar von Körpern durchzuführen, könnten sie für mehrere Paare von Körpern gleichzeitig durchgeführt werden.
       
       Der Name Vektorrechner leitet sich von der Anlehnung an die kartesische Geometrie her, in der ein Vektor ein Tupel von Zahlen ist. Entsprechend werden Daten des selben Typs ebenfalls 
       als Vektoren bezeichnet. Um solche Vektoren handhaben zu können, verfügen Vektorrechner über spezielle Vektorregister, die mehrere Daten gleichzeitig fassen können. Für jedes einzelne
-      Datum innerhalb dieser Register ist dann jeweils ein eigenes Rechenwerk im Kern zuständig.\citep{hpcskript}
+      Datum innerhalb dieser Register ist dann jeweils ein eigenes Rechenwerk im Kern zuständig. \citep{hpcskript}
       
       Prozessoren laden in der Regel nicht nur ein einzelnes Datum, sondern gleich eine sogenannte \textit{cache line} aus dem Hauptspeicher. Daher ist es sinnvoll, 
       um SIMD-Parallelisierung optimal ausnutzen zu können, die Daten im Hauptspeicher anhand dieser cache lines anzuordnen. Dazu müssen in der Regel explizite Methoden zum Anfordern von 
@@ -75,7 +75,7 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
       unterbrochen auftauchen. Nehmen wir an, wir wollten die Daten der Körper, die für die Berechnung der Gravitationskräfte benötigt werden, in einer Struktur zusammenfassen. Wollen wir
       Daten zu vielen dieser Körper speichern so wäre es in Bezug auf Vektorrechner nicht sinnvoll ein Array dieser Strukturen anzulegen (engl.: \wlabel{\textit{array of structs}}{w:aos}).
       Dabei würden die im Sinne der Vektorisierung zusammengehörigen Daten durch andere getrennt. Um eine Vektorisierung zu ermöglichen ist es daher sinnvoll die Struktur so zu definieren,
-      dass sie Array der benötigten Daten beinhaltet (engl.: \wlabel{\textit{struct of arrays}}{w:soa}). So kann sichergestellt werden, dass diese Daten im Hauptspeicher hintereinander stehen.
+      dass sie Arrays der benötigten Daten beinhaltet (engl.: \wlabel{\textit{struct of arrays}}{w:soa}). So kann sichergestellt werden, dass diese Daten im Hauptspeicher hintereinander stehen.
       \citep{hpcskript, architect}
       
       Viele aktuelle Multicore-Prozessoren verfügen zusätzlich über einige Möglichkeiten der Vektorisierung. Es existieren aber auch auf diese Art der Parallelisierung spezialisierte Prozessoren.
@@ -88,10 +88,10 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
 	
 	Grundsätzlich können die heute üblichen MIMD Architekturen weiter anhand ihrer Speicherverwaltung unterteilt werden. Beim Shared Memory Modell wird ein globaler
 	Speicher gemeinsam genutzt. Sie teilen sich also einen gemeinsamen Adressraum. Dies trifft in der Regel auf den Hauptspeicher, aber eventuell auch auf ebenen des Caches zu.
-	Anders ist dies beim Distributed Memory Modell. Hier besitzt jeder Prozessor seinen eigenen Speicher. Shared Memory Systeme sind unter anderem die heute üblichen Multicore-Prozessoren,
-	aber auch Computer mit mehreren Prozessoren, wie sie häufig in Servern und Großrechnern vorkommen. Distributed Memory Systeme sind in der Regel vernetzte Rechnersysteme. Allerdings wird
+	Anders ist dies beim Distributed Memory Modell. Hier besitzt jeder Prozessor seinen eigenen Speicher. Distributed Memory Systeme sind in der Regel vernetzte Rechnersysteme. Allerdings wird
 	auch auf Shared-Memory-Systemen durch moderne Betriebssysteme ein Distributed Memory Modell simuliert. Durch die Virtualisierung des Hauptspeichers etwa wird jedes Programm behandelt,
-	als liefe es alleine. Dabei wird jedem Programm ein privater Bereich des Hauptspeichers zugewiesen. Das Programm nutzt diesen Bereich, als sei es der gesamte Hauptspeicher. \citep{korbler}
+	als hätte es den Hauptspeicher für sich alleine. Dabei wird jedem Programm ein privater Bereich des Hauptspeichers zugewiesen. Das Programm nutzt diesen Bereich, als sei es der gesamte
+	Hauptspeicher. \citep{korbler}
 	
 	Der Vorteil von gemeinsam genutztem Speicher ist, vorausgesetzt das Programm wurde entsprechend entworfen, dass die Ergebnisse eines Kerns den anderen automatisch auch zur Verfügung stehen. 
 	Arbeiten  also mehrere Recheneinheiten gemeinsam an einem Problem, müssen die Ergebnisse einer Einheit den andern also gegebenenfalls nicht explizit mitgeteilt werden. Dies vermeidet Overhead
@@ -100,10 +100,12 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
 	Cache und wird daher auch oft verwendet. 
 	
 	Ein Nachteil von Shared Memory Systemen ist, dass der Schaltungsaufwand für den Zugriff auf den gemeinsam genutzten Speicher mit wachsender Anzahl Recheneinheiten rapide ansteigt
-	\citep{hpcskript}. Außerdem können Race Conditions auftreten, die durch den gemeinsam genutzten Speicher verursacht werden.
+	\citep{hpcskript}. Außerdem können Race Conditions auftreten, die durch den gemeinsam genutzten Speicher verursacht werden. Diese können dazu führen, dass die Ergebnisse von Programmen
+	unvorhersagbar werden.
 	
-	Beim Schreiben von parallelen Programmen ist also besondere Vorsicht geboten. Es muss klar sein welche Daten sich wo befinden, und ob sie gemeinsam genutzt werden, oder nicht.
-	Dies ist gegebenenfalls eine noch größere Herausforderung, wenn der Hauptspeicher innerhalb eines parallelen Programms teilweise gemeinsam genutzt wird und teilweise verteilt ist.
+	Beim Schreiben von parallelen Programmen ist also besondere Vorsicht geboten. Gegebenenfalls müssen Zugriffe auf gemeinsam genutzte Ressourcen zeitweise unterbunden werden, um Race Conditions
+	zu vermeiden. Es muss klar sein welche Daten sich wo befinden, und ob sie gemeinsam genutzt werden, oder nicht. Dies ist gegebenenfalls eine noch größere Herausforderung, wenn der Hauptspeicher 
+	innerhalb eines parallelen Programms teilweise gemeinsam genutzt wird und teilweise verteilt ist.
 	
       \subsubsection{Netzwerk}
       \label{sec:netzwerk}
@@ -115,7 +117,7 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
 	einen oder mehrere Multicore-Prozessor(en). \citep{cluster}
 	
     \subsection{Parallele Software}
-      Im vorherigen Kapitel wurde die Entwicklung von einzelnen Computern mit einer Recheneinheit hin zu Clustersystemen, deren Knoten mit mehreren Recheneinheiten bestückt sind, skizzert.
+      Im vorherigen Abschnitt wurde die Entwicklung von einzelnen Computern mit einer Recheneinheit hin zu Clustersystemen skizzert, deren Knoten mit multiplen Recheneinheiten bestückt sind.
       
       Solange es sich um einen Computer mit Multicore-Prozessor handelt, ist bis dato keine Änderung an der Software notwendig um auf diesem Multicore-Prozessor lauffähig zu sein. 
       Auf einem Computer läuft in der Regel nicht nur ein einzelnes Programm, sondern mindestens noch ein Betriebssystem und meist auch noch einige weitere Programme.
@@ -123,13 +125,14 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
       
       Allerdings profitiert ein Programm bis dato auch wenig von parallel arbeitender Technologie. Es wird nun lediglich gegebenenfalls seltener von anderen Programmen unterbrochen.
       Soll sich das Potential der Parallelität für ein Programm voll entfalten, so muss das Programm selbst parallel arbeiten und so mehrere Kerne beziehungsweise mehrere Knoten eines 
-      Clusters nutzen können. Dazu sind natürlich auch entsprechende Entwicklungen im Bereich der Software notwendig. Zum einen muss es überhaupt möglich sein mehrere Instanzen eines 
+      Clusters nutzen können. 
+      
+      Dazu sind natürlich auch entsprechende Entwicklungen im Bereich der Software notwendig. Zum einen muss es überhaupt möglich sein mehrere Instanzen eines 
       Prozesses zu starten und diese zusammenarbeiten zu lassen. Dies impliziert aber wiederum die Schaffung von Möglichkeiten, die oben erwähnten Race Conditions zu vermeiden. Schließlich 
       müssen für Programme, die auf Clustersystemen arbeiten, Möglichkeiten geschaffen werden, zu kommunizieren. Durch diese Kommunikation wäre es dann auch nicht mehr notwendig alle Daten
       lokal abrufbar zu haben. Statt dessen wäre es möglich die Datenmenge auf die Knoten zu verteilen und bei Bedarf zwischen Knoten auszutauschen. Erst dadurch sind Probleme wie die 
       Berechnung der Gravitationskräfte oder engmaschige Klimamodelle zu bewältigen.
-      
-      All diese Konzepte vorzustellen wäre im Rahmen dieser Arbeit nicht zielführend. Im folgenden Kapitel wird daher nur das für diese Arbeit relevante Konzept vorgestellt.
+      All diese Konzepte vorzustellen wäre im Rahmen dieser Arbeit nicht zielführend. Wir beschränken uns also auf die Einführung eines Konzeptes.
       
       \subsubsection{Das Message-Passing-Modell}
       \label{sec:mpm}
@@ -146,13 +149,13 @@ Bereits in \autoref{sec:mot} wurde gezeigt, dass das Problem der gravitationelle
       Dieses Konzept ist das sogenannte \textit{Message-Passing-Modell}. 
       Dieses Modell geht von einer Menge von \textit{autonomen} Prozessen aus, die
       \begin{enumerate}
-       \item eindeutig benannt sind,
+       \item eindeutig benannt sind und
        \item jeweils über \textit{privaten Speicher} verfügen.
       \end{enumerate}
       Dies spezifiziert nicht, um welche Art Rechner(system) es sich handelt. Bei gemeinsam genutztem Hauptspeicher wird davon ausgegangen, dass jeder Prozess einen eigenen privaten 
       Bereich zugewiesen bekommt.
       
-      Um nun Daten von einem Prozess $P_i$ an einen Prozess $P_j$ zu kommunizieren, muss $P_i$ explizit im Programmlauf seine Daten in Form einer Nachricht (engl.: message) senden, und
+      Um nun Daten von einem Prozess $P_i$ an einen Prozess $P_j$ zu senden, muss $P_i$ explizit im Programmlauf seine Daten in Form einer Nachricht (engl.: message) verschiocken, und
       respektive $P_j$ diese Nachricht und damit die Daten in Empfang nehmen. 
 %       \autoref{fig:message-passing} veranschaulicht die Wege der Nachrichten. Dabei bezeichnen $P_0,\dots,P_n$ die Prozesse und $D_0,\dots,D_2$ zugehörige Daten im Hauptspeicher. 
       
