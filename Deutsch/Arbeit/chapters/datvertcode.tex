@@ -1,10 +1,8 @@
-\begin{figure}[b]
+\begin{figure}[t]
   \begin{subfigure}{0.9\textwidth}
     \begin{lstlisting}[label=lst:parconsttree, caption={Ausschnitt aus der parallelen Konstruktion des Clusterbaumes.}]
 Cluster *constructClusterTree(bodies *b){
   [...]
-  ////////////////////////////////////////////////////////
-  // Sort the bodies; first locally, then globally.
   preSort(root, 0);
   new_bs = new_bodies(new_n);
   alltoall_bodies(my_bs, send_count, send_displ, 
@@ -14,8 +12,6 @@ Cluster *constructClusterTree(bodies *b){
   //reset roots bodies*
   root->bodies = my_bs;
   root->n      = my_bs->n;
-  
-  //clean up
   [...]
 }
     \end{lstlisting}
@@ -34,7 +30,6 @@ void preSort(Cluster *c, int depth){
     send_displ[split_count] = split_count == 0 ? 0 : 
 			      send_displ[split_count - 1] + send_count[split_count - 1];
     
-    //if the current knot is the active one: gather counts and displs from the other knots:
     MPI_Gather(&send_count[split_count], 1, MPI_INT, recv_count, 1, MPI_INT, split_count, MPI_COMM_WORLD);
     if(world.rank == c->active){
       new_n = 0;
@@ -44,7 +39,7 @@ void preSort(Cluster *c, int depth){
       }
     }
   } 
-  [...}] // Sortierung und rekursiver Aufruf
+  [...] // Sortierung und rekursiver Aufruf
 }
     \end{lstlisting}
   \end{subfigure}
