@@ -312,6 +312,12 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       Das Teilen der Cluster kann ebenfalls unterschiedlich motiviert sein. Naheliegend sind kardinalitätsgesteuerte Zerlegungen, um ein optimales Loadbalancing zu erhalten,
       sowie die Zerlegung anhand der zugrundeliegenden geometrischen Struktur. Auch kombinierte Zerlegungen sind denkbar.
       
+      \begin{figure}[b]
+	\includegraphics[width=0.68\textwidth]{img/blockbaum.png}
+	\caption{Schematische Darstellung eines Blockbaumes. In grün sind zulässige, in rot unzulässige Blöcke gekennzeichnet. (Quelle: \citet{h2slides})}
+	\label{fig:blockbaum}
+      \end{figure}
+      
       \begin{defn}
 	(Blockbaum, (streng) zulässiger Blockbaum)\\
 	Seien Menge $X, Y$ und jeweils zugehörige Clusterbäume $T_X$ und $T_Y$ gegeben.
@@ -353,12 +359,6 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	bezeichnen wir die Mengen der zulässigen beziehungsweise unzulässigen Blätter eines Blockbaumes. $\mathcal{L}^+\left(T_{X \times Y}\right)$ wird auch \textit{Fernfeld} und 
 	$\mathcal{L}^-\left(T_{X \times Y}\right)$ \textit{Nahfeld} genannt. Die Namen leiten sich von der $\eta$-Zulässigkeitsbedingung her, die auf der relativen Nähe der Cluster zueinander beruht.
       \end{defn}
-      
-      \begin{figure}[t]
-	\includegraphics[width=0.68\textwidth]{img/blockbaum.png}
-	\caption{Schematische Darstellung eines Blockbaumes. In grün sind zulässige, in rot unzulässige Blöcke gekennzeichnet. (Quelle: \citet{h2slides})}
-	\label{fig:blockbaum}
-      \end{figure}
       
       Mit Hilfe von Blockbäumen können wir nun also Paare von Teilgebieten hierarchisch strukturieren und auf Zulässigkeit prüfen.
       In \autoref{fig:blockbaum} ist ein Blockbaum $T_{\Omega \times \Omega}$, genauer die Blätter des Blockbaumes, für eine Menge $\Omega \subset \R^1$ dargestellt. Die unzulässigen Blöcke sind rot, 
@@ -431,13 +431,6 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     
     \subsubsection{Zeilen- und Spaltenmatrizen}
     
-    \begin{figure}[b]
-      \includegraphics[width=0.7\textwidth]{img/semi-h2-matrix.png}
-      \caption{Darstellung der Ersetzung der Matrizen $B_b$ durch Spaltenmatrizen $W_\sigma$. Letztere sind in hellblau auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen 
-	       Matrizen sind die Matrizen $A_b$. (Quelle: \citet{h2slides})}
-      \label{fig:semi-h2}
-    \end{figure}
-    
     Bisher wurde eine hierarchische Matrix konstruiert, indem die Kernfunktion $g$ auf zulässigen Blöcken $b = \tau \times \sigma \in \mathcal{L}^+\left(T_{X \times Y}\right)$ durch die auf $\sigma$ 
     interpolierte Funktion
     \begin{equation*}
@@ -462,6 +455,13 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     diese Matrix $W_\sigma$ auch nur einmal berechnet werden, womit ein erheblicher Teil des Rechnungsaufwands bei der Konstruktion von \hmat eingespart werden kann. Zudem können wiederum Operationen
     wie die Matrix-Vektor-Multiplikation effektiver durchgeführt werden, da auch hier die Matrix $W_\sigma$ ausgeklammert werden kann, und so nur einmal in die Berechnung einfließt. \citep{nichtlokop}
     
+    \begin{figure}[t]
+      \includegraphics[width=0.7\textwidth]{img/semi-h2-matrix.png}
+      \caption{Darstellung der Ersetzung der Matrizen $B_b$ durch Spaltenmatrizen $W_\sigma$. Letztere sind in hellblau auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen 
+	       Matrizen sind die Matrizen $A_b$. (Quelle: \citet{h2slides})}
+      \label{fig:semi-h2}
+    \end{figure}
+    
     \begin{defn}
       (Zeilen-/Spaltenmatrizen)\\
       Wir nennen Matrizen $W_\sigma \in \R^{\sigma \times k}$ wie oben \textit{Spaltenmatrizen} einer hierarchischen Matrix $G$. Bei Interpolation in der ersten Komponente nennen wir sie 
@@ -474,18 +474,6 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     
     \subsubsection{Transfermatrizen und Clusterbasis}
     \label{sec:transmat}
-    
-    \begin{figure}[b]
-      \begin{tabular}{c}
-	\includegraphics[width=0.5\textwidth]{img/cbaum_full.png}\\
-	
-	\begin{turn}{-90} $\longrightarrow$ \ \ \  \end{turn}\\
-	
-	\includegraphics[width=0.5\textwidth]{img/cbaum_transfer.png}
-      \end{tabular}
-      \caption{Ersetzung der Matrizen $W_\sigma$ durch Transfermatrizen $E_{\tilde \sigma}$ auf Nicht-Blattclustern. (Quelle: \citet{h2slides})}
-      \label{fig:trans}
-    \end{figure}
     
     Von \citet{h2approxint} wird auf folgende Eigenschaft der Interpolationsoperatoren hingewiesen:
 
@@ -517,6 +505,18 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 
     Mit der \textit{geschachtelten Darstellung} $\left(\left(W_\sigma\right)_{\sigma in \mathcal{L}\left(T_Y\right)} , \left(E_\sigma\right)_{\sigma \in T_Y \backslash \mathcal{L}\left(T_Y\right)}\right)$ der Clusterbasen haben wir nun also eine 
     noch kompaktere Darstellung der Matrizen $B_b$. Dargestellt ist dies in \autoref{fig:trans}.
+    
+    \begin{figure}[h!]
+      \begin{tabular}{c}
+	\includegraphics[width=0.5\textwidth]{img/cbaum_full.png}\\
+	
+	\begin{turn}{-90} $\longrightarrow$ \ \ \  \end{turn}\\
+	
+	\includegraphics[width=0.5\textwidth]{img/cbaum_transfer.png}
+      \end{tabular}
+      \caption{Ersetzung der Matrizen $W_\sigma$ durch Transfermatrizen $E_{\tilde \sigma}$ auf Nicht-Blattclustern. (Quelle: \citet{h2slides})}
+      \label{fig:trans}
+    \end{figure}
 
     \subsubsection{Interpolation in beiden Komponenten}
     Auch in diesem Abschnitt folge ich dem Aufbau von \citet{nichtlokop}.
@@ -565,7 +565,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	erfüllt ist. Die Familie $\left(S_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)}$ bezeichnen wir als Familie der \textit{Kopplungsmatrizen}.
       \end{defn}
       
-      \begin{figure}[t]
+      \begin{figure}[b]
 	\includegraphics[width=0.7\textwidth]{img/h2-matrix.png}
 	\caption{Darstellung einer $\mathcal{H}^2$-Matrix: In blau die geschachtelten Clusterbasen, in pink die Kopplungsmatrizen, in rot die verbleibenden Nahfeldmatrizen. (Quelle: \citet{h2slides})}
 	\label{fig:h2}

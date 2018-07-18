@@ -1,10 +1,12 @@
 \chapter*{Zusammenfassung}
   Um gravitationelle Wechselwirkungen in unserer Galaxie berechnen zu können, müssen Gleichungen gelöst werden, die großen, vollbesetzten Matrizen entsprechen. Eine Möglichkeit, derartige Matrizen
-  anzunähern, sind \hquad.\todo{Lehrzeichen weg!} Als Approximationsmethode kann dazu Interpolation genutzt werden. Durch diese Methodik kann die Berechnung der Gravitationskräfte von $n$ Himmelskörpern und $k$ 
-  Interpolationspunkten in $\mathcal{O}(kn)$ Zeiteinheiten gelöst werden. Die Approximation durch Interpolation konvergiert für steigendes $k$ exponentiell gegen die Lösung. 
-  Da in der Regel $k \ll n$ gilt, ist dieser Ansatz wesentlich effizienter als das vollbesetzte Problem zu lösen.
+  anzunähern, sind \hquad \kern-0.3em. Um diesen Ansatz nutzen zu können, muss die Berechnung der Gravitationskräfte auf Teilgebieten approximiert werden. Dazu kann beispielsweise Lagrange-Interpolation
+  genutzt werden. Durch diese Methodik kann die Berechnung der Gravitationskräfte von $n$ Himmelskörpern und $k$ Interpolationspunkten auf jedem Teilgebiet in $\mathcal{O}(kn)$ Zeiteinheiten gelöst 
+  werden. Die Approximation durch Interpolation konvergiert für steigendes $k$ exponentiell gegen die korrekte Lösung. Da in der Regel $k \ll n$ gilt, ist dieser Ansatz wesentlich effizienter als das 
+  vollbesetzte Problem zu lösen, welches eine Komplexität von $\mathcal{O}(n^2)$ aufweist.
   
-  Für die Dimension einer Galaxie wäre aber auch dieser Ansatz nicht ausreichend. Daher wird ferner eine Möglichkeit vorgestellt, die Berechnung auf viele Rechner zu verteilen, die durch ein 
-  Netzwerk verbunden sind. Dabei beschränken wir uns auf das Message-Passing-Modell und stellen eine Implementierung unter Verwendung der Bibliothek MPI vor.
-  
-  \TODO{Ergebnis!}
+  Für die Dimension einer Galaxie wäre aber auch dieser Ansatz nicht ausreichend. Zum einen wird bei etwa $100$ Milliarden Sonnen weiterhin eine riesige Menge Rechenleistung benötigt, zum anderen
+  wird genügend Speicher benötigt, um die benötigten Daten vorzuhalten. 
+  Daher wird ferner eine Möglichkeit vorgestellt, die Berechnung und die Daten auf ein Rechencluster zu verteilen. Dabei beschränken wir uns auf das Message-Passing-Modell
+  und stellen eine Implementierung unter Verwendung der Bibliothek MPI vor.  
+  Durch diese Parallelisierung ist für große Probleme die optimale Komplexität $\mathcal{O}(\frac{kn}{p})$ erreichbar.

@@ -241,25 +241,25 @@
   
   \begin{figure}[b]
     \includegraphics{img/grav_32X_mem.eps}
-    \caption{Diese Abbildung zeigt den Speicherbedarf in MB in Abhängig zur Anzahl Sonnen pro Prozess. Die Kurven zeigen jeweils den Speicherbedarf eines einzelnen Prozesses; in lila den maximalen 
-    Gesamtbedarf, in grün den für den Clusterbaum, in blau den für die \code{bodies}-Struct und in gelb aller weiterer Speicherbedarf.}
+    \caption{Diese Abbildung zeigt den Speicherbedarf in MB in Abhängig zur Anzahl Sonnen pro Prozess. Die Kurven zeigen den Speicherbedarf eines einzelnen Prozesses: in lila den maximalen 
+    Gesamtbedarf, in grün den für den Clusterbaum, in blau den für die \code{bodies}-Struct und in gelb allen weiteren Speicherbedarf.}
     \label{fig:mem}
   \end{figure}
 
-  Unser Algorithmus nutzt die Struktur der \hquad weitestgehend implizit. Daher haben wir auch darauf verzichtet eine theoretische Speicherplatzabschätzung durchzuführen. Abschätzungen für vollständig
+  Unser Algorithmus nutzt die Struktur der \hquad weitestgehend implizit. Daher haben wir auch darauf verzichtet, eine theoretische Speicherplatzabschätzung durchzuführen. Abschätzungen für vollständig
   konstruierte \hquad wurden bereits erarbeitet (vgl. beispielsweise \citet{distrh2}, Kapitel 4.2 \textit{Storage complexity}). Diese sind zwar vermutlich für unseren reichlich pessimistisch, jedoch
-  auch für hinreichend große $n$ linear. Gleichwohl ist natürlich von Interesse welchen Speicherbedarf unser Algorithmus aufweist.
+  auch für hinreichend große $n$ linear. Gleichwohl ist natürlich von Interesse, welchen Speicherbedarf unser Algorithmus aufweist.
   
-  Dazu wurde aus obiger Testreihe mit $p=32$ und $k_0=3$, also $k = 27$ zusätzlich zur Laufzeit der Speicherbedarf des Algorithmus in Abhängigkeit zur Problemgröße $n$ ermittelt. Der Wert $m$, also
-  die Anzahl Sonnen pro Prozess,wurde dazu, wie zuvor, variiert. In \autoref{tab:mem} sind die Ergebnisse zu finden. Zusätzlich sind diese in \autoref{fig:mem} veranschaulicht. Dabei ist jeweils
+  Dazu wurde aus obiger Testreihe mit $p=32$ und $k_0=3$, also $k = 27$, zusätzlich zur Laufzeit der Speicherbedarf des Algorithmus in Abhängigkeit zur Problemgröße $n$ ermittelt. Der Wert $m$, also
+  die Anzahl Sonnen pro Prozess, wurde dazu wie zuvor variiert. In \autoref{tab:mem} sind die Ergebnisse zu finden. Zusätzlich sind diese in \autoref{fig:mem} veranschaulicht. Dabei ist jeweils
   der Speicherbedarf eines einzelnen Prozesses aufgeführt. 
   
-  Gut zu erkennen ist die Lineare Komplexität. Bei den Kurven handelt es sich nicht um Regressionsgeraden, sondern direkt um Verbindungsstrecken der Messerwerte. Der prognostizierte lineare 
+  Gut zu erkennen ist die lineare Komplexität. Bei den Kurven handelt es sich nicht um Regressionsgeraden, sondern direkt um Verbindungsstrecken der Messerwerte. Der prognostizierte lineare 
   Speicherbedarf ist damit also bestätigt. Den größten Anteil am Gesamtspeicherbedarf macht der Clusterbaum aus, gefolgt von den Daten der \code{bodies}. Die Kommunikationspuffer sind lediglich
   Teil des sonstigen Speicherbedarfs und fallen damit verhältnismäßig wenig ins Gewicht. 
   
   Obwohl wir durch die Nutzung der der \hquad lineare statt quadratische Komplexität erreichen, und durch die Verteilung der Daten weiteren Speicherplatz einsparen, benötigt der Algorithmus dennoch 
-  viel Hauptspeicher. Bei $32$ Prozessen auf einem Knoten, von denen bei $m=2^{23}=8.388.608$ jeder ungefähr $2,5$ GB Arbeitsspeicher benötigt, summiert sich zu einem stolzen Speicherbedarf von
+  viel Hauptspeicher. Bei $32$ Prozessen auf einem Knoten, von denen bei $m=2^{23}=8.388.608$ jeder ungefähr $2,5$ GB Arbeitsspeicher benötigt, summiert sich dies zu einem stolzen Speicherbedarf von
   $80$ GB. Das Monitoring-System des HPC-Clusters hat mit einem Spitzenbedarf von $109$ GB sogar noch etwas mehr Speicherbedarf gemessen. Diese Diskrepanz könnte auf Speicherfragmentierung zurückzuführen
   sein. Entscheidend ist, dass $m$ bei dem zur Verfügung stehenden Hauptspeicher von $196$ GB nicht weiter gesteigert werden kann.
   
