@@ -17,11 +17,11 @@
       Anbieter von Parallelrechnern sowie Forscher aus Universitäten, staatlichen Laboren und der Industrie. Die Ergebnisse wurden zunächst in einem vorläufigen Entwurf im
       November 1992 und schließlich in revidierter Fassung in einem Proposal, bekannt als MPI-1, veröffentlicht. \citep{mpi1}
       
-      Eine Hauptabsicht von MPI-1 war es, erst einmal den ``Ball in's Rollen zu bringen'' und eine Diskussion anzuregen. Daher beschäftigte es sich noch hauptsächlich
-      mit Point-to-Point-Kommunikation. Zu diesem Zeitpunkt war MPI weder thread safe, noch bot es Methoden zur kollektiven Kommunikation. Aktuell liegt MPI in der Version 3.1
-      vor und bietet neben der Point-to-Point-Kommunikation auch kollektive Routinen, nicht-blockierende Methoden, automatische Puffer-Verwaltung und vieles mehr. \citep{mpiv31}
+      Eine Hauptabsicht von MPI-1 war es, erst einmal den ``Ball in's Rollen zu bringen'' und eine Diskussion anzuregen. Daher beschäftigte es sich noch hauptsächlich mit Point-to-Point-Kommunikation.
+      Aktuell liegt MPI in der Version 3.1 vor und bietet neben der Point-to-Point-Kommunikation auch kollektive Routinen, nicht-blockierende Methoden, automatische Puffer-Verwaltung und vieles mehr.
+      \citep{mpiv31}
       
-      Das Interfaces wurden bald für Die Programmiersprachen C und Fortran implementiert. Heute gibt es eine Vielzahl von Implementierungen; sowohl kostenfreie, wie  
+      Das Interfaces wurden bald in den Programmiersprachen C und Fortran implementiert. Heute gibt es eine Vielzahl von Implementierungen; sowohl kostenfreie, wie  
       MPICH\footnote{Entwickler: Argonne National Laboratory -- Früheste Implementierung -- Bis heute weiterentwickelt -- URL: https://www.mpich.org/} oder
       Open MPI\footnote{Entwickler: Diverse -- Kombiniert Ansätze von FT-MPI, LA-MPI und LAM/MPI -- URL:https://www.open-mpi.org/},
       aber auch kostenpflichtige, wie die Implementierungen von Intel\footnote{https://software.intel.com/en-us/intel-mpi-library} oder IBM\footnote{https://www.ibm.com/de-de/marketplace/spectrum-mpi}. 
@@ -110,16 +110,16 @@
 	\subcaption{Ablauf der gepufferten Sendeoperation.}
 	\label{fig:buff_send}
       \end{subfigure}
-      \caption{Quelle: \citet{mpi_p2p}}
+      \caption{Ablauf unterschiedlicher Kommunikationsmodi in MPI. Quelle: \citet{mpi_p2p}}
       \label{fig:send_var}
     \end{figure}
     
     Beim synchronen Senden wird, wie in \autoref{fig:send_var}\hyperref[fig:sync_send]{.(a)} dargestellt, zunächst vom sendenden Prozess eine ``Ready to send''-Mitteilung verschickt. Auf 
     diese antwortet der empfangende Prozess mit einer ``Ready to receive''-Mitteilung. Im Anschluss findet das Senden und Empfangen der Daten statt. Durch dieses Vorgehen müssen die Prozesse
-    aber gegebenenfalls auf einander warten. Die Wartezeit ist in der Abbildung dunkel eingefärbt. Dafür wird aber nicht nur sichergestellt, dass die gesendeten Daten verändert werden dürfen,
-    sondern auch, dass der Empfänger-Prozess zumindest damit begonnen hat die Daten auch zu empfangen. \citep{mpi_p2p, mpiv31}
+    aber gegebenenfalls auf einander warten. Die Wartezeit ist in der Abbildung durch die dunkel eingefärbten Bereiche dargestellt. Dafür wird aber nicht nur sichergestellt, dass die gesendeten
+    Daten verändert werden dürfen, sondern auch, dass der Empfänger-Prozess zumindest damit begonnen hat die Daten auch zu empfangen. \citep{mpi_p2p, mpiv31}
     
-    Das Ready-Send sieht wie eine einfachere synchrone Sende-Variante aus (vgl. \autoref{fig:send_var}\hyperref[fig:ready_send]{.(b)}), ist aber restriktiver. Die Methoden \code{MPI\_Rsend}
+    Das Ready-Send sieht wie eine einfachere synchrone Sende-Variante aus (vgl. \autoref{fig:send_var}\hyperref[fig:ready_send]{.(b)}), ist tatsächlich aber noch restriktiver. Die Methoden \code{MPI\_Rsend}
     beziehungsweise \code{MPI\_Irsend} erwarten, dass die ``Ready to receive''-Mitteilung bereits geschickt wurde, wenn sie aufgerufen werden. Nur wenn diese Mitteilung bereits eingetroffen
     ist, werden die Daten auch gesendet, ansonsten wird ein Fehler gemeldet. Diese Methode soll den System-Overhead durch Sendeoperationen und Synchronisation minimieren. Es wird jedoch 
     dazu geraten diese Methode nur zu verwenden, wenn die zeitliche Abfolge garantiert ist. \citep{mpi_p2p, mpiv31}
@@ -134,8 +134,8 @@
     nie aus dem Senden zurückkehren. Abhilfe können die nicht-blockierenden Methoden liefern.
     
     Die nicht-blockierenden Methoden bestehen grundsätzlich aus zwei Aufrufen. Einer Initialisierung des Sendens/Empfangens, ohne dass auf dessen Ausführung gewartet wird, und
-    einer Abschlussmethode, wie \code{MPI\_Wait}, \code{MPI\_Probe} oder \code{MPI\_Test}. Dies ermöglicht es dem sendenden und dem empfangenden Prozess weitere Arbeiten auszuführen,
-    um so möglichst Wartezeiten zu vermeiden beziehungsweise produktiv zu nutzen. Allerdings sollten weder der Sende- noch der Empfangspuffer zwischen Initialisierung und Abschluss
+    einer Abschlussmethode, wie \code{MPI\_Wait}, \code{MPI\_Probe} oder \code{MPI\_Test}. Dies nicht-blockierenden Methoden ermöglicht es dem sendenden und dem empfangenden Prozess weitere Arbeiten
+    auszuführen, um so möglichst Wartezeiten zu vermeiden beziehungsweise produktiv zu nutzen. Allerdings sollten weder der Sende- noch der Empfangspuffer zwischen Initialisierung und Abschluss
     verändert werden. \citep{mpi_p2p, mpiv31}
     
 %     \begin{figure}[p]
@@ -207,7 +207,7 @@
       Daten aller Prozesse eines Kommunikators auf einem Prozess zusammen, beispielsweise um die Ergebnisse einer verteilten Berechnung auf einem Prozess zu aggregieren und
       auszugeben. Beim darunter abgebildeten \code{MPI\_Allgather} wird das Ergebnis nicht nur auf einem, sondern auf allen Prozessen gesammelt. \citep{mpitut, mpiv31}
       
-      Ähnlich zu den beiden Gather-Methoden sind die Methoden \code{MPI\_Reduce} und \code{MPI\_Allreduce}. Auch diese sammeln Daten von allen Prozessen auf einen, respektive
+      Ähnlich zu den beiden Gather-Methoden sind die Methoden \code{MPI\_Reduce} und \code{MPI\_\-Allreduce}. Auch diese sammeln Daten von allen Prozessen auf einen, respektive
       auf alle Prozesse, zusammen. Jedoch werden hierbei die Daten nicht einfach in einem Array gebündelt, sondern über den Parameter \code{MPI\_Op op} eine Operation mitgegeben,
       die auf die gesammelten Daten angewandt wird. So können aus den gesendeten Daten direkt das Maximum, Minimum, die Summe und vieles mehr bestimmt werden. \citep{mpitut, mpiv31}
       
@@ -217,7 +217,7 @@
       Von jeder dieser kollektiven Methoden gibt es wie bereits erwähnt ebenfalls eine nicht-blockierende Variante, die, der Namenskonvention folgend, durch ein eingeschobenes \code{I}
       gekennzeichnet ist. 
       
-      \begin{figure}[t]
+      \begin{figure}[b]
       \begin{subfigure}{0.9\textwidth}
       \begin{lstlisting}[language=C, label=lst:a2a, caption={Die Syntax von \code{MPI\_Alltoallv}}, numbers=none]
 	int MPI_Alltoallv(
