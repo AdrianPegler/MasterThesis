@@ -1,28 +1,33 @@
 \chapter{Fazit und Ausblick}
 \label{chp:Conclusions}
   \section{Fazit}
-    Wir haben gesehen, dass sich die Berechnung der Gravitationskräfte gut durch Interpolation approximieren und sich die zu berechnende vollbesetzte Matrix damit auch gut durch hierarchische Matrizen
-    darstellen lässt. Dadurch kann dieses Problem, das an sich quadratische Komplexität besitzt, mit linearem Zeitaufwand gelöst werden.
+    Wir haben gesehen, dass sich hierarchische Matrizen, speziell \hquad sehr gut eignen um vollbesetzte Matrizen zumindest näherungsweise und effizient zu berechnen.
+    Indem wir die Berechnung der Gravitationskräfte durch Interpolation approximierten, konnten wir den Ansatz der \hquad nutzen um den Berechnungsaufwand von $\mathcal{O}(n^2)$ auf einen
+    Aufwand von $\mathcal{O}(nk)$ reduzieren. Für konstantes $k$ erhalten wir also lineare Komplexität.
     
-    Außerdem wurde gezeigt, dass sich der entstandene Algorithmus gut auf viele Rechner verteilen lässt.
-    \TODO{überarbeiten}
-    Dennoch konnte gezeigt werden, dass durch die Parallelisierung des Algorithmus nahezu optimale Komplexität erreicht werden kann. Kann der Kommunikationsaufwand weiter reduziert werden, so besteht
-    Grund zur Annahme, dass schwache Skalierbarkeit erreicht werden kann. Das heißt, dass der Algorithmus bei Verdopplung der Anzahl an Sonnen bei gleichzeitiger Verdopplung der Anzahl Prozesse 
-    konstante Laufzeit aufweist.
+    Da wir weder eine explizite Matrix, noch einen expliziten Blockbaum speichern ist in unserem Fall zwar der durch \hquad erreichbare lineare Speicherbedarf
+    von zweitrangiger Bedeutung. Tatsächlich liegt der Speicherbedarf sogar höher als bei dem nicht-optimierten Grundalgorithmus, da dieser lediglich die \code{bodies} speichert. Indem wir
+    also Speicheraufwand für einen Clusterbaum investieren erhalten wir eine signifikant verbesserte Laufzeit, ohne die dieses Problem nicht sinnvoll lösbar wäre.
+    
+    Weiterhin wurde gezeigt, dass sich der entstandene Algorithmus gut auf viele Rechner verteilen lässt. Für große $n$ ist durch die Parallelisierung des Algorithmus nahezu optimale Komplexität 
+    erreichbar. Allerdings kann auch hier der erhöhte Speicherbedarf bei großem $m$ und $n=mp$ zu einem Problem werden. Hier ist weitere Optimierung erforderlich.
     
   \section{Ausblick}
   \label{sec:ausblick}
-    Trotzdem bleiben noch viele Optimierungsmöglichkeiten. 
+    Trotz allem was wir in dieser Arbeit erreicht haben, bleiben noch viele Optimierungsmöglichkeiten. 
     
     In dieser Arbeit haben wir einen Algorithmus erarbeitet, der sich auf das Message-Passing-Modell beschränkt. Das hat Vorteile,
     aber auch Nachteile. Beispielsweise wird durch das Message-Passing-Modell der Nutzen von Shared Memory ignoriert. Das erhöht den Speicherbedarf, da jeder Prozess Kopien von Daten von anderen
-    Prozessen benötigt. Zudem erhöht sich die Laufzeit, da auch Prozesse, die auf einem gemeinsamen Knoten arbeiten, Daten explizit austauschen und kopieren müssen. Ein kombinierter Ansatz,
-    der auf den einzelnen Knoten die Arbeit, aber nicht die Daten aufteilt und Message-Passing zur Kommunikation zwischen Knoten nutzt, könnte die Laufzeit weiter senken.
+    Prozessen benötigt. Zudem erhöht sich die Laufzeit, da sich auch Prozesse, die auf einem gemeinsamen Knoten arbeiten, über Daten explizit austauschen müssen. Ein kombinierter Ansatz könnte
+    die Laufzeit weiter optimieren. Auf den einzelnen Knoten des Rechenclusters könnten die Vorteile von Shared Memory genutzt werden, indem die Parallelisierung hier auf anderem Wege als durch 
+    MPI erfolgt. Die benötigte Kommunikation zwischen Knoten könnte weiterhin über Message Passing implementiert werden.
     
     Außerdem wurde bei dem Algorithmus darauf geachtet, dass die Datenstrukturen eine Vektorisierung möglich machen. Viele der Berechnungen in diesem Algorithmus eignen sich dafür, als Vektoren
-    verarbeitet zu werden. Dies würde zumindest diese Teile der Berechnung nochmals um einen Faktor beschleunigen.
+    verarbeitet zu werden. Dies hätte das Potential zumindest diese Teile der Berechnung nochmals um einen Faktor zu beschleunigen. 
     
-    Eine weitere Option, die in Zukunft zu prüfen wäre, ist, die Technologie von Grafikkarten für dieses Problem zu nutzen.
+    Eine weitere Option, die in Zukunft zu prüfen wäre, ist, die Technologie von Grafikkarten für dieses Problem zu nutzen. Diese sind sehr spezielle Recheneinheiten. Eventuell eignet diese sich
+    daher nicht uneingeschränkt um gravitationelle Wechselwirkungen zu berechnen.
     
-    \TODO{positiver:}
-    Es bleibt zu hoffen, dass sich viele Probleme in Zukunft mit einem derartigen Ansatz, wie er in dieser Arbeit vorgestellt wurde, effizient lösen lassen.
+    Der Ansatz in dieser Arbeit, über Approximation die Komplexität zu reduzieren und die Berechnung dann effizient parallel durchführen zu lassen, wurde nur am Beispiel der Gravitationskräfte
+    eingeführt. Gleichzeitig wurde die Grundlage bewusst sehr allgemein eingeführt, sodass voraussichtlich viele weitere Probleme mit ähnlicher Struktur ebenfalls durch diesen Ansatz effizient
+    gelöst werden können.

@@ -211,21 +211,60 @@
   
   \clearpage
   
-  \subsubsection{Speicherbedarf der Kommunikation}
+  \section{Speicherbedarf}
   
-  Aus der Testreihe mit $p=32$, $k_0=3$
+  \begin{table}[b]
+    \begin{tabular}{|P{2.3cm}|P{2.3cm}|P{2.3cm}|P{2.3cm}|P{2.3cm}|}
+      \hline
+      \#Elemente \newline pro Prozess & Speicherbedarf \newline gesamt [MB] & Speicherbedarf \newline Clusterbaum [MB] & Speicherbedarf \newline \code{bodies} [MB] & Speicherbedarf \newline sonstiges [MB]\\
+      \hline
+      $2^{10}$	& 0,91    & 0,24    & 0,09    & 0,58	\\
+      $2^{11}$	& 1,31    & 0,42    & 0,18    & 0,71	\\    
+      $2^{12}$	& 2,48    & 0,79    & 0,35    & 1,35	\\
+      $2^{13}$	& 4,28    & 1,53    & 0,69    & 2,06	\\
+      $2^{14}$	& 7,23    & 3,01    & 1,38    & 2,84	\\
+      $2^{15}$	& 13,66   & 5,98    & 2,76    & 4,92	\\
+      $2^{16}$	& 24,73   & 11,92   & 5,51    & 7,3	\\
+      $2^{17}$	& 45,22   & 23,8    & 11,01   & 10,41	\\
+      $2^{18}$	& 87,43   & 47,49   & 22,02   & 17,92	\\
+      $2^{19}$	& 166,47  & 95,09   & 44,04   & 27,34	\\
+      $2^{20}$	& 318,14  & 190,18  & 88,08   & 39,88	\\
+      $2^{21}$	& 621,1   & 380,21  & 176,16  & 64,73	\\
+      $2^{22}$	& 1216,34 & 760,3   & 352,32  & 103,72	\\
+      $2^{23}$	& 2377,01 & 1519,89 & 704,65  & 152,47	\\
+      \hline
+    \end{tabular}
+    \caption{Diese Tabelle zeigt die gemessenen Kategorien des Speicherbedarfs eines einzelnen Prozesses.}
+    \label{tab:mem}
+  \end{table}
+
   
-%   Bei all den positiven Eigenschaften sei auch auf einen Nachteil des vorgestellten Algorithmus hingewiesen: Die verwendete Kommunikation benötigt viel unnötigen Speicher. Mein Hauptaugenmerk lag
-%   darauf, die Kommunikation so einfach wie möglich zu gestalten, um die Laufzeit möglichst gering zu halten. Da die \code{MPI_Alltoallv(..)}-Methode exakt das benötigte Kommunikationsmuster liefert
-%   und davon auszugehen ist, dass bei der Implementierung dieser Methode mehr Zeit und Know-How eingeflossen ist, als ich im Rahmen dieser Arbeit hätte investieren können, habe ich mich dazu entschieden
-%   diese Methode zu nutzen. Die dafür notwendigen Puffer waren recht schnell konstruiert und wurden von mir zunächst nicht weiter beachtet. 
-%   
-%   Es hat sich aber gezeigt, dass bei 32 Prozessen auf einem Knoten mit $2^{22}$ Sonnen pro Prozess bereits $182$ GB Arbeitsspeicher benötigt werden. Das sind $5,68$ GB pro Prozess. Vergleicht man dies
-%   mit dem Testlauf mit nur einem Prozess, der lediglich $52.37$ MB Hauptspeicher belegt, ist schnell einzusehen, dass die Kommunikation mit derart riesigem Pufferbedarf nicht tragbar ist.
-%   \TODO{ausarbeiten!}
-%   
-%   Ganz ohne Puffer wird die Kommunikation nie auskommen. Es wäre aber möglich die Kommunikation durch nicht-blockierende Methoden derart zu verteilen, dass keinerlei Sendepuffer und lediglich 
-%   Empfangspuffer für nicht-zulässige Blöcke benötigt würden. Dieser Ansatz ähnelt stärker dem von \citet{distrh2} vorgestellten Algorithmus, jedoch wäre weiterhin keine Kommunikation für Vorwärts- und 
-%   Rückwärtstransformation notwendig. Eine genaue Ausarbeitung eines solchen Ansatzes muss leider aus Zeit- und Umfangsgründen an anderer Stelle fortgesetzt werden.
+  \begin{figure}[b]
+    \includegraphics{img/grav_32X_mem.eps}
+    \caption{Diese Abbildung zeigt den Speicherbedarf in MB in Abhängig zur Anzahl Sonnen pro Prozess. Die Kurven zeigen jeweils den Speicherbedarf eines einzelnen Prozesses; in lila den maximalen 
+    Gesamtbedarf, in grün den für den Clusterbaum, in blau den für die \code{bodies}-Struct und in gelb aller weiterer Speicherbedarf.}
+    \label{fig:mem}
+  \end{figure}
+
+  Unser Algorithmus nutzt die Struktur der \hquad weitestgehend implizit. Daher haben wir auch darauf verzichtet eine theoretische Speicherplatzabschätzung durchzuführen. Abschätzungen für vollständig
+  konstruierte \hquad wurden bereits erarbeitet (vgl. beispielsweise \citet{distrh2}, Kapitel 4.2 \textit{Storage complexity}). Diese sind zwar vermutlich für unseren reichlich pessimistisch, jedoch
+  auch für hinreichend große $n$ linear. Gleichwohl ist natürlich von Interesse welchen Speicherbedarf unser Algorithmus aufweist.
+  
+  Dazu wurde aus obiger Testreihe mit $p=32$ und $k_0=3$, also $k = 27$ zusätzlich zur Laufzeit der Speicherbedarf des Algorithmus in Abhängigkeit zur Problemgröße $n$ ermittelt. Der Wert $m$, also
+  die Anzahl Sonnen pro Prozess,wurde dazu, wie zuvor, variiert. In \autoref{tab:mem} sind die Ergebnisse zu finden. Zusätzlich sind diese in \autoref{fig:mem} veranschaulicht. Dabei ist jeweils
+  der Speicherbedarf eines einzelnen Prozesses aufgeführt. 
+  
+  Gut zu erkennen ist die Lineare Komplexität. Bei den Kurven handelt es sich nicht um Regressionsgeraden, sondern direkt um Verbindungsstrecken der Messerwerte. Der prognostizierte lineare 
+  Speicherbedarf ist damit also bestätigt. Den größten Anteil am Gesamtspeicherbedarf macht der Clusterbaum aus, gefolgt von den Daten der \code{bodies}. Die Kommunikationspuffer sind lediglich
+  Teil des sonstigen Speicherbedarfs und fallen damit verhältnismäßig wenig ins Gewicht. 
+  
+  Obwohl wir durch die Nutzung der der \hquad lineare statt quadratische Komplexität erreichen, und durch die Verteilung der Daten weiteren Speicherplatz einsparen, benötigt der Algorithmus dennoch 
+  viel Hauptspeicher. Bei $32$ Prozessen auf einem Knoten, von denen bei $m=2^{23}=8.388.608$ jeder ungefähr $2,5$ GB Arbeitsspeicher benötigt, summiert sich zu einem stolzen Speicherbedarf von
+  $80$ GB. Das Monitoring-System des HPC-Clusters hat mit einem Spitzenbedarf von $109$ GB sogar noch etwas mehr Speicherbedarf gemessen. Diese Diskrepanz könnte auf Speicherfragmentierung zurückzuführen
+  sein. Entscheidend ist, dass $m$ bei dem zur Verfügung stehenden Hauptspeicher von $196$ GB nicht weiter gesteigert werden kann.
+  
+  Hinzu kommt, dass selbst aus inaktiven Clustern Daten für die Ermittlung von zulässigen Blöcken benötigt werden. Daher würde der Speicherbedarf des Clusterbaumes durch Erhöhung der Anzahl Prozesse
+  selbst bei konstanter Anzahl Elemente pro Prozess voraussichtlich weiter ansteigen.
+  Hier besteht also sicherlich noch Optimierungspotential.
   
   
