@@ -938,3 +938,40 @@ correlation matrix of the fit parameters:
 j               1.000 
 k              -0.959  1.000 
 l               0.606 -0.724  1.000 
+
+
+*******************************************************************************
+Wed Jul 18 01:00:26 2018
+
+
+FIT:    data read from 'results/grav_32_X_raw.dat' using 1:2
+        format = x:z
+        x range restricted to [0.00000 : 3.50000e+07]
+        #datapoints = 14
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x)=m*x+c
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   m             c            
+   0 3.6254881451e+04   0.00e+00  8.86e+01    4.837874e-05   5.553271e-01
+   5 3.0276394977e+03  -2.48e-04  8.86e-04    6.754074e-05  -1.434030e+00
+
+After 5 iterations the fit converged.
+final sum of squares of residuals : 3027.64
+rel. change during last iteration : -2.47747e-09
+
+degrees of freedom    (FIT_NDF)                        : 12
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 15.8841
+variance of residuals (reduced chisquare) = WSSR/ndf   : 252.303
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+m               = 6.75407e-05      +/- 1.85e-06     (2.739%)
+c               = -1.43403         +/- 4.789        (334%)
+
+correlation matrix of the fit parameters:
+                m      c      
+m               1.000 
+c              -0.463  1.000 

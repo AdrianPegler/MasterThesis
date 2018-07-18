@@ -1,30 +1,32 @@
 Run with 32 processes and 2^23 elements per node
-step;total_time;work_time_min;work_time_avg;work_time_max;prep_time_min;prep_time_avg;prep_time_max;comm_time_min;comm_time_avg;comm_time_max
+memory befor cluster tree: 704646320 bytes
+memory after cluster tree: 2224539236 bytes
+  differenze: 	 1519892916 bytes
+step;total_time;work_time_min;work_time_avg;work_time_max;prep_time_min;prep_time_avg;prep_time_max;comm_time_min;comm_time_avg;comm_time_max;max_alloced
+1;580;584;592;599;3,82;4,55;4,75;0,0245;0,0293;0,0353;2292320676
+2;580;584;592;599;4,29;8,57;17,7;0,0183;0,022;0,0269;2301730628
+3;580;584;592;599;4,3;8,56;17,7;0,0184;0,0221;0,0271;2311140580
+4;580;584;592;599;4,3;8,56;17,7;0,0178;0,0227;0,028;2320550532
+5;580;584;592;599;4,3;8,58;17,7;0,0174;0,0226;0,0278;2329960484
+6;580;584;592;599;4,3;8,56;17,7;0,0184;0,0222;0,0269;2339370436
+7;580;584;592;599;4,3;8,82;18,3;0,0189;0,0235;0,0289;2348780388
+8;583;587;595;601;4,3;8,6;17,7;0,0177;0,0225;0,0277;2358190340
+9;580;584;592;599;4,29;8,41;17,4;0,017;0,0233;0,0286;2367600292
+10;581;585;593;600;4,3;8,58;17,6;0,017;0,0219;0,0276;2377010244
 
-===================================================================================
-=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
-=   PID 14754 RUNNING AT neshcl224
-=   EXIT CODE: 9
-=   CLEANING UP REMAINING PROCESSES
-=   YOU CAN IGNORE THE BELOW CLEANUP MESSAGES
-===================================================================================
-   Intel(R) MPI Library troubleshooting guide:
-      https://software.intel.com/node/561764
-===================================================================================
-
-real	2m56.857s
-user	5m6.737s
-sys	6m54.419s
-Request ID: 140146.ace-ssiox
+real	99m24.618s
+user	3169m48.169s
+sys	3m16.483s
+Request ID: 518854.ace-ssiox
     Request Name = gravitation_32_23
     User  Name = sunms434
     User  ID   = 62718
     Group ID   = 8229
     Current State           = Running
     Previous State          = Pre-running
-    State Transition Time   = Thu Jun  7 17:30:02 2018
+    State Transition Time   = Tue Jul 17 18:40:31 2018
     State Transition Reason = PRERUN_SUCCESS
-    Queue = clbigmem@ace-ssiox (Execution Queue)
+    Queue = clexpress@ace-ssiox (Execution Queue)
     Job Topology = INTMPI Job
     Request Privilege = Level 0
     Ticket Key        = (none)
@@ -36,20 +38,20 @@ Request ID: 140146.ace-ssiox
     Migratable   = Yes
     Suspend Type = (none)
     Account Code = (none)
-    Stdout = nesh-fe1:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_23.csv
-    Stderr = nesh-fe1:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_23.csv
+    Stdout = nesh-fe2:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_23.csv
+    Stderr = nesh-fe2:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_23.csv
     Reqlog = (none)
     Shell = (none)
-    Mail Address = sunms434@nesh-fe1.rz.uni-kiel.de
+    Mail Address = sunms434@nesh-fe2.rz.uni-kiel.de
     Mail Option  = (none)
     Job Condition:
         Job NO: 0 ""
     Number of Jobs = 1
-    Created Request Time = Thu Jun  7 17:29:09 2018
-    Entered Queue Time   = Thu Jun  7 17:29:09 2018
-    Planned Start Time   = Thu Jun  7 17:29:59 2018
+    Created Request Time = Tue Jul 17 17:28:44 2018
+    Entered Queue Time   = Tue Jul 17 17:28:44 2018
+    Planned Start Time   = Tue Jul 17 18:40:29 2018
     Execute Request Time = (none)
-    Started Request Time = Thu Jun  7 17:30:02 2018
+    Started Request Time = Tue Jul 17 18:40:31 2018
     Ended Request Time   = (none)
     Requested Start Time = (none)
     Deadline Time        = (none)
@@ -61,12 +63,12 @@ Request ID: 140146.ace-ssiox
     Attach = No
     Cluster Type Select = NONE
   Resources Information:
-    Memory    = 11.262863GB
-    CPU Time  = 719.930000S
-    Accumulated CPU Time = 719.930000S
-    Elapse    = 178S
-    Remaining Elapse = 7022S
-    Virtual Memory = 12.400776GB
+    Memory    = 109.360222GB
+    CPU Time  = 189713.850000S
+    Accumulated CPU Time = 189713.850000S
+    Elapse    = 5966S
+    Remaining Elapse = 1234S
+    Virtual Memory = 123.436249GB
   Resources Limits:
     (Per-Req) Elapse Time Limit       = Max:     7200S Warn:     7200S 
     (Per-Job) CPU Time                = Max:   230400S Warn:   230400S 
@@ -76,7 +78,7 @@ Request ID: 140146.ace-ssiox
     (Per-Job) Tape Number             = Max: UNLIMITED Warn:       --- 
     (Per-Job) Open File Number        = Max: UNLIMITED Warn:       --- 
     (Per-Job) Process Number          = Max: UNLIMITED Warn:       --- 
-    (Per-Job) Memory Size             = Max:      384G Warn:      384G 
+    (Per-Job) Memory Size             = Max:      196G Warn:      196G 
     (Per-Job) Virtual Memory Size     = Max: UNLIMITED Warn: UNLIMITED 
     (Per-Job) Permanent File Capacity = Max: UNLIMITED Warn: UNLIMITED 
     (Per-Job) Temporary File Capacity = Max: UNLIMITED Warn: UNLIMITED 

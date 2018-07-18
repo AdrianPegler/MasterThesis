@@ -1,0 +1,181 @@
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+old_local:C 	 new_local: de_DE.UTF-8
+
+Run with 32 processes and 2^14 elements per node
+step;total_time;work_time_min;work_time_avg;work_time_max;prep_time_min;prep_time_avg;prep_time_max;comm_time_min;comm_time_avg;comm_time_max
+1;0,452;0,464;0,615;0,854;0,0012;0,00253;0,00308;0,00233;0,00246;0,00262
+2;0,45;0,464;0,615;0,854;0,000812;0,186;0,383;0,000659;0,000714;0,000781
+3;0,45;0,464;0,615;0,855;0,000825;0,186;0,383;0,00065;0,000698;0,000743
+4;0,45;0,464;0,615;0,854;0,00089;0,186;0,384;0,000745;0,000812;0,00089
+5;0,45;0,464;0,615;0,855;0,000819;0,186;0,383;0,000642;0,000692;0,000739
+6;0,45;0,464;0,615;0,854;0,00116;0,187;0,385;0,000651;0,0008;0,00092
+7;0,45;0,464;0,614;0,854;0,000824;0,186;0,383;0,000658;0,000698;0,000751
+8;0,451;0,466;0,617;0,86;0,000826;0,186;0,383;0,000645;0,000692;0,000747
+9;0,45;0,464;0,615;0,855;0,00092;0,189;0,387;0,000647;0,000694;0,000748
+10;0,451;0,465;0,616;0,858;0,000867;0,186;0,384;0,000688;0,00124;0,00201
+
+real	0m8.706s
+user	4m29.027s
+sys	0m4.767s
+Request ID: 125549.ace-ssiox
+    Request Name = gravitation_32_14
+    User  Name = sunms434
+    User  ID   = 62718
+    Group ID   = 8229
+    Current State           = Running
+    Previous State          = Pre-running
+    State Transition Time   = Mon Jun  4 18:54:01 2018
+    State Transition Reason = PRERUN_SUCCESS
+    Queue = clexpress@ace-ssiox (Execution Queue)
+    Job Topology = INTMPI Job
+    Request Privilege = Level 0
+    Ticket Key        = (none)
+    Request Priority  = 0
+    Request Loglevel  = 0
+    Rerunable    = Yes
+    Holdable     = Yes
+    Hold Type    = (none)
+    Migratable   = Yes
+    Suspend Type = (none)
+    Account Code = (none)
+    Stdout = nesh-fe3:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_14.csv
+    Stderr = nesh-fe3:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_14.csv
+    Reqlog = (none)
+    Shell = (none)
+    Mail Address = sunms434@nesh-fe3.rz.uni-kiel.de
+    Mail Option  = (none)
+    Job Condition:
+        Job NO: 0 ""
+    Number of Jobs = 1
+    Created Request Time = Mon Jun  4 18:51:22 2018
+    Entered Queue Time   = Mon Jun  4 18:51:22 2018
+    Planned Start Time   = Mon Jun  4 18:53:59 2018
+    Execute Request Time = (none)
+    Started Request Time = Mon Jun  4 18:54:01 2018
+    Ended Request Time   = (none)
+    Requested Start Time = (none)
+    Deadline Time        = (none)
+    UMASK = 022
+    Checkpoint Interval = 0
+    Restart File Directory = (none)
+    Reservation ID      = (none)
+    qattach command = Enable
+    Attach = No
+    Cluster Type Select = NONE
+  Resources Information:
+    Memory    = 1.163204GB
+    CPU Time  = 50.520000S
+    Accumulated CPU Time = 50.520000S
+    Elapse    = 8S
+    Remaining Elapse = 592S
+    Virtual Memory = 15.439503GB
+  Resources Limits:
+    (Per-Req) Elapse Time Limit       = Max:      600S Warn:      600S 
+    (Per-Job) CPU Time                = Max:    19200S Warn:    19200S 
+    (Per-Job) CPU Resident Number     = Max: UNLIMITED Warn:       --- 
+    (Per-Job) CPU Resident Time       = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) CPU Number              = Max:        32 Warn:       --- 
+    (Per-Job) Tape Number             = Max: UNLIMITED Warn:       --- 
+    (Per-Job) Open File Number        = Max: UNLIMITED Warn:       --- 
+    (Per-Job) Process Number          = Max: UNLIMITED Warn:       --- 
+    (Per-Job) Memory Size             = Max:      100G Warn:      100G 
+    (Per-Job) Virtual Memory Size     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) Permanent File Capacity = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) Temporary File Capacity = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) RLG 0 File Capacity     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) RLG 1 File Capacity     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) RLG 2 File Capacity     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) RLG 3 File Capacity     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Job) GPID Number             = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) CPU Time                = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) CPU Resident Number     = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) CPU Resident Time       = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) CPU Number              = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) Task Number             = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) Open File Number        = Max: UNLIMITED Warn:       --- 
+    (Per-Prc) Memory Size             = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Virtual Memory Size     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Data Segment Size       = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Stack Segment Size      = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Core File Size          = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Permanent File Size     = Max: UNLIMITED Warn: UNLIMITED 
+    (Per-Prc) Permanent File Capacity = Max: UNLIMITED Warn: UNLIMITED 
+  Kernel Parameter:
+    Resource Sharing Group     = 0
+    Nice Value                 = 0
+    Base Priority              = 80
+    Modification Factor of CPU = 2
+    Tick Count                 = 0
+    Decay Factor               = 1
+    Decay Interval             = 1
+    Timeslice Value            = 1000
+    Memory Priority            = 0
+    MRT Size Effect            = 30
+    MRT Priority Effect        = 100
+    MRT Minimum                = 2
+    Aging Range                = 160
+    Slave Priority             = 0
+  User Attributes:
+    (none)
+

@@ -1,27 +1,30 @@
 Run with 32 processes and 2^18 elements per node
-step;total_time;work_time_min;work_time_avg;work_time_max;prep_time_min;prep_time_avg;prep_time_max;comm_time_min;comm_time_avg;comm_time_max
-1;15,6;15,6;24,9;44;0,0202;0,0496;0,053;0,00499;0,00577;0,00656
-2;15,5;15,6;24,8;44;0,0234;11,3;28,3;0,00389;0,0049;0,00583
-3;15,5;15,6;24,8;44;0,0228;11,3;28,3;0,00344;0,00439;0,00517
-4;15,5;15,6;24,8;44;0,0157;11,3;28,3;0,00342;0,00438;0,00518
-5;15,5;15,6;24,8;44;0,0218;11,3;28,3;0,0036;0,00447;0,00525
-6;15,5;15,6;24,8;44;0,0217;11,3;28,3;0,00428;0,00498;0,00569
-7;15,5;15,6;24,8;44;0,0225;11,3;28,3;0,00329;0,00397;0,0046
-8;15,6;15,7;25,4;45,7;0,0224;11,3;28,3;0,00336;0,00424;0,00512
-9;15,6;15,6;24,8;44;0,0217;11,9;29,9;0,00389;0,00454;0,00517
-10;15,6;15,7;25;44,5;0,0223;11,3;28,3;0,00382;0,00459;0,00516
+memory befor cluster tree: 22023344 bytes
+memory after cluster tree: 69517644 bytes
+  differenze: 	 47494300 bytes
+step;total_time;work_time_min;work_time_avg;work_time_max;prep_time_min;prep_time_avg;prep_time_max;comm_time_min;comm_time_avg;comm_time_max;max_alloced
+1;19,9;20,1;27,9;46,2;0,0398;0,0537;0,0635;0,00524;0,006;0,00684;77988372
+2;19,9;20;27,9;46,1;0,0358;11,1;26,1;0,00405;0,00515;0,00611;79037524
+3;19,9;20,1;27,9;46,2;0,0388;11,1;26,1;0,00428;0,00538;0,0063;80086676
+4;19,9;20;27,9;46,1;0,0373;11,1;26,1;0,00417;0,00529;0,00619;81135828
+5;19,9;20;27,9;46,1;0,0347;11,1;26,1;0,00392;0,00506;0,00592;82184980
+6;19,9;20,1;27,9;46,2;0,036;11,1;26,1;0,00415;0,00529;0,0062;83234132
+7;19,9;20;27,9;46,1;0,0371;11,1;26,1;0,00355;0,00408;0,0047;84283284
+8;19,9;20,1;28,2;47,3;0,0374;11,1;26,1;0,00381;0,00449;0,00538;85332436
+9;19,9;20;27,9;46,1;0,0353;11,6;27,2;0,00417;0,00531;0,00618;86381588
+10;19,9;20,1;28;46,5;0,0377;11,1;26,1;0,00435;0,00579;0,00666;87430740
 
-real	7m20.037s
-user	232m59.285s
-sys	1m2.679s
-Request ID: 139228.ace-ssiox
+real	7m40.887s
+user	244m17.877s
+sys	0m50.743s
+Request ID: 518842.ace-ssiox
     Request Name = gravitation_32_18
     User  Name = sunms434
     User  ID   = 62718
     Group ID   = 8229
     Current State           = Running
     Previous State          = Pre-running
-    State Transition Time   = Thu Jun  7 15:32:01 2018
+    State Transition Time   = Tue Jul 17 17:29:32 2018
     State Transition Reason = PRERUN_SUCCESS
     Queue = clexpress@ace-ssiox (Execution Queue)
     Job Topology = INTMPI Job
@@ -35,20 +38,20 @@ Request ID: 139228.ace-ssiox
     Migratable   = Yes
     Suspend Type = (none)
     Account Code = (none)
-    Stdout = nesh-fe1:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_18.csv
-    Stderr = nesh-fe1:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_18.csv
+    Stdout = nesh-fe2:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_18.csv
+    Stderr = nesh-fe2:/gpfs/fs5/home-sh/sunms434/gravitation/grav_32_18.csv
     Reqlog = (none)
     Shell = (none)
-    Mail Address = sunms434@nesh-fe1.rz.uni-kiel.de
+    Mail Address = sunms434@nesh-fe2.rz.uni-kiel.de
     Mail Option  = (none)
     Job Condition:
         Job NO: 0 ""
     Number of Jobs = 1
-    Created Request Time = Thu Jun  7 13:08:42 2018
-    Entered Queue Time   = Thu Jun  7 13:08:42 2018
-    Planned Start Time   = Thu Jun  7 15:31:59 2018
+    Created Request Time = Tue Jul 17 17:27:07 2018
+    Entered Queue Time   = Tue Jul 17 17:27:07 2018
+    Planned Start Time   = Tue Jul 17 17:29:29 2018
     Execute Request Time = (none)
-    Started Request Time = Thu Jun  7 15:32:01 2018
+    Started Request Time = Tue Jul 17 17:29:32 2018
     Ended Request Time   = (none)
     Requested Start Time = (none)
     Deadline Time        = (none)
@@ -60,12 +63,12 @@ Request ID: 139228.ace-ssiox
     Attach = No
     Cluster Type Select = NONE
   Resources Information:
-    Memory    = 12.485622GB
-    CPU Time  = 13780.590000S
-    Accumulated CPU Time = 13780.590000S
-    Elapse    = 440S
-    Remaining Elapse = 160S
-    Virtual Memory = 26.551838GB
+    Memory    = 4.831440GB
+    CPU Time  = 13843.400000S
+    Accumulated CPU Time = 13843.400000S
+    Elapse    = 460S
+    Remaining Elapse = 140S
+    Virtual Memory = 18.911015GB
   Resources Limits:
     (Per-Req) Elapse Time Limit       = Max:      600S Warn:      600S 
     (Per-Job) CPU Time                = Max:    19200S Warn:    19200S 
