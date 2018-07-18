@@ -69,13 +69,13 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\mathfrak{I} \colon C[-1,1] \to \Pi_k, \ \ \ \ \ \ \ \ \ \ \ \ f \mapsto \sum_{\nu \in \nullhaken{k}} f\left(\xi_\nu\right) \lag_\nu
       \end{equation*}
       einen Lagrange-Interpolationsoperator definieren, der auf $[-1,1]$ stetige Funktionen auf Polynome aus $\Pi_k$ abbildet, also auf Polynome von höchstens Grad $k$.
-      \TODO{Somit können wir diese Funktionen bereits mit Hilfe der Stützstellen durch die Lagrange-Polynome annähern.}
+      Somit können wir diese Funktionen bereits mit Hilfe der Stützstellen durch die Lagrange-Polynome annähern.
       
-      \TODO{Um diesen Operator auf Funktionen auf beliebigen Intervallen $[a,b]$ mit $a < b$ zu übertragen, definieren wir eine Transformation:}
+      Um diesen Operator auf Funktionen auf beliebigen Intervallen $[a,b]$ mit $a < b$ zu übertragen, definieren wir eine Transformation:
       \begin{equation*}
 	\Phi_{[a,b]} \colon [-1,1] \to [a,b] \ \ \ \ \ \ \ \ \ \ \ \  x \mapsto \frac{b + a}{2} + \frac{b - a}{2} x.
       \end{equation*}
-      \TODO{Diese Transformation hat für alle $x \in [-1,1]$ die Eigenschaften:}
+      Diese Transformation hat für alle $x \in [-1,1]$ die Eigenschaften:
       \begin{equation*}
 	\Phi_{[a,b]}\left(-1\right) = a , \ \ \ \ \Phi_{[a,b]}\left(1\right) = b , \ \ \ \ \Phi'_{[a,b]}\left(x\right) = \frac{b - a}{2} > 0.
       \end{equation*}
@@ -89,12 +89,12 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\mathfrak{I}_{[a,b]}[f] = \sum_{\nu \in \nullhaken{k}} f \after \Phi_{[a,b]}\left(\xi_\nu\right) \lag_\nu \after \Phi_{[a,b]}^{-1} = 
 				 \sum_{\nu \in \nullhaken{k}} f \left( \Phi_{[a,b]}\left(\xi_\nu\right)\right)     \lag_\nu \after \Phi_{[a,b]}^{-1}.
       \end{equation*}
-      \todo{Korrektur}Da diese Definition recht unhandlich ist, definieren wir zu Vereinfachung für $\nu \in \nullhaken{k}$ und $x \in [a,b]$:
+      Da diese Definition recht unhandlich ist, definieren wir zur Vereinfachung für $\nu \in \nullhaken{k}$ und $x \in [a,b]$:
       \begin{align*}
 	\xi_{[a,b],  \nu} &:= \Phi_{[a,b]}\left(\xi_\nu\right) = \frac{b + a}{2} + \frac{b - a}{2} \xi_\nu\\
 	\lag_{[a,b], \nu} &:= \prod_{\substack{\mu \in \nullhaken{k} \\ \mu \neq \nu}} \frac{x - \xi_{[a,b],  \mu}}{\xi_{[a,b],  \nu} - \xi_{[a,b],  \mu}}.
       \end{align*}
-      \TODO{Da mit \autoref{eq:lag_delta} die Gleichung}
+      Da mit \autoref{eq:lag_delta} die Gleichung
       \begin{align*}
 	 \lag_\nu \after \Phi_{[a,b]}^{-1}\left(\xi_{[a,b],\mu}\right) &= \lag_\nu \after \Phi_{[a,b]}^{-1} \left( \Phi_{[a,b]}\left(\xi_{[a,b],\mu}\right) \right)\\
 							    &= \lag_\nu \left(\xi_\mu\right) = \delta_{\nu\mu}\\
@@ -118,7 +118,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \begin{equation*}
 	\mathfrak{I}_{Q,\iota} \colon C\left(Q\right) \to C\left(Q\right).
       \end{equation*}
-      \TODO{Mit diesem erhalten wir für $f \in C\left(Q\right)$ und $x \in Q$:}
+      Mit diesem erhalten wir für $f \in C\left(Q\right)$ und $x \in Q$:
       \begin{equation*}
 	\mathfrak{I}_{Q,\iota}[f]\left(x\right) = \sum_{\nu \in \nullhaken{k}} f\left(x_1, \dots , x_{\iota-1} , \xi_{[a_\iota,b_\iota]} , x_{\iota+1}, \dots , x_d\right) \lag_{[a_\iota,b_\iota],\nu}\left(x_\iota\right).
       \end{equation*}
@@ -143,8 +143,8 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\mathfrak{I}_Q[f] = \sum_{\nu \in M} f\left(\xi_{Q,\nu}\right)\lag_{Q,\nu} \text{, für alle } f \in C\left(Q\right).
       \end{equation*}
       
-      Mit diesem Interpolationsoperator können wir nun die entartete Approximation der Kernfunktion $g$ aus \autoref{eq:gsigma} konstruieren. \TODO{Der Einfachheit halber identifizieren wir im Folgenden
-      die Gebiete $\sigma \in T_\Omega$ mit einem überdeckenden Quader $Q_\sigma$. Der später vorgestellte Algorithmus konstruiert die Gebiete $\sigma$ von vornherein als achsenparallele Quader.}
+      Mit diesem Interpolationsoperator können wir nun die entartete Approximation der Kernfunktion $g$ aus \autoref{eq:gsigma} konstruieren. Der Einfachheit halber identifizieren wir im Folgenden
+      die Gebiete $\sigma \in T_\Omega$ mit einem überdeckenden Quader $Q_\sigma$. Der später vorgestellte Algorithmus konstruiert die Gebiete $\sigma$ von vornherein als achsenparallele Quader.
     
     \subsubsection{Zulässigkeit}
     \label{sec:zul}
@@ -189,7 +189,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       Für kleine $\eta$ zeigen \citet{h2approxint} in Kapitel 5 die exponentielle Konvergenz der durch Interpolation approximierten Funktion gegen die Kernfunktion und \citet{h2diss} die exponentielle 
       Konvergenz bei Approximation durch Taylor-Entwicklung.
       
-      \todo{Korrektur Absatz}\citet{nichtlokop} weist in Kapitel 3.4 nach, dass für asymptotisch glatte Funktionen die Approximation für jedes $\eta > 0$ exponentiell konvergiert, wenn die obige Zulässigkeitsbedingung erfüllt
+      \citet{nichtlokop} weist in Kapitel 3.4 nach, dass für asymptotisch glatte Funktionen die Approximation für jedes $\eta > 0$ exponentiell konvergiert, wenn die obige Zulässigkeitsbedingung erfüllt
       ist. Eine unendlich oft differenzierbare Kernfunktion $g$ heißt asymptotisch glatt, wenn für alle $\alpha , \beta \in \N_0^d$ und $x , y \in \R^d$ mit $x \neq y$ eine Konstante 
       $C \colon \N^2 \to \R_{> 0}$ existiert, sodass die partiellen Ableitungen von $g$ wie folgt abgeschätzt werden können:
       \begin{equation*}
@@ -246,7 +246,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	Ein Paar $T = \left(V,E\right)$ mit $E \subset V \times V$ nennen wir einen Baum mit Knoten $V$ und Kanten $E$, wenn die folgenden Bedingungen erfüllt sind:
 	\begin{enumerate}
 	  \item Es gibt genau ein Element $root\left(T\right) \in V$, sodass für alle $v \in V$ gilt: $\left(v, root\left(T\right)\right) \notin E$. Dieses Element heißt \textit{Wurzel} des Baumes $T$.
-	  \item \todo{Korrektur}Zu jedem Knoten $v \in V \backslash \{root\left(T\right)\}$ gibt es $n \in \N$ und einen Weg $w := \left(v_i\right)_{i \in \nullhaken{n}}$ der Länge $n$ von der Wurzel $root\left(t\right) =: v_0$ zum 
+	  \item Zu jedem Knoten $v \in V \backslash \{root\left(T\right)\}$ gibt es $n \in \N$ und einen Weg $w := \left(v_i\right)_{i \in \nullhaken{n}}$ der Länge $n$ von der Wurzel $root\left(t\right) =: v_0$ zum 
 		Knoten $v =: v_n$ mit $\left(v_{i-1}, v_{i}\right) \in E$ für $i \in \haken{n}$.
 	  \item Es gibt keine Zyklen.
 	\end{enumerate}
@@ -296,7 +296,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       des Clusterbaumes her. Es gilt nämlich:
       \begin{enumerate}
       \item Die Menge $P_M^{\left(i\right)} := T_M^{\left(i\right)} \cup \mathcal{L}\left(T, \leq i\right)$ bildet für alle $i \in \nullhaken{depth\left(T_M\right)}$ eine disjunkte Partition der Menge M.
-      \item \todo{korrektur} Die Partitionen sind über die Ebenen des Baumes hierarchisch geordnet. Damit ist gemeint, dass für alle $i \in \haken{depth\left(T_M\right)}$ die Partition $P^{\left(i\right)}$ feiner ist
+      \item Die Partitionen sind über die Ebenen des Baumes hierarchisch geordnet. Damit ist gemeint, dass für alle $i \in \haken{depth\left(T_M\right)}$ die Partition $P^{\left(i\right)}$ feiner ist
 	    als die Partition $P^{\left(i-1\right)}$, also mehr und kleinere Teilmengen beinhaltet.
       \end{enumerate}
 
@@ -316,7 +316,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	(Blockbaum, (streng) zulässiger Blockbaum)\\
 	Seien Menge $X, Y$ und jeweils zugehörige Clusterbäume $T_X$ und $T_Y$ gegeben.
 	
-	\TODO{Wir nennen einen Clusterbaum $T_{X \times Y}$ der Menge $X \times Y$ Blockbaum, falls die folgenden Eigenschaften erfüllt sind:}
+	Wir nennen einen Clusterbaum $T_{X \times Y}$ der Menge $X \times Y$ Blockbaum, falls die folgenden Eigenschaften erfüllt sind:
 	\begin{enumerate}
 	  \item Für alle Knoten $b \in T_{X \times Y}$ existieren Knoten $t \in T_X$ und $s \in T_Y$, sodass $b = t \times s$
 	  \item Falls $b = t \times s \in T_{X \times Y}$ kein Blatt ist, gilt
@@ -329,8 +329,8 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	    \end{cases}
 	  \end{equation*}
 	\end{enumerate}
-	\TODO{Die Knoten des Blockbaumes heißen \textit{Blöcke}. Die Komponenten $t \in T_X$ und $s \in T_Y$ werden auch \textit{Zeilen-} und \textit{Spaltencluster}
-	genannt.}
+	Die Knoten des Blockbaumes heißen \textit{Blöcke}. Die Komponenten $t \in T_X$ und $s \in T_Y$ werden auch \textit{Zeilen-} und \textit{Spaltencluster}
+	genannt.
 	
 	Wir nennen einen Block $b = t \times s$ \textit{zulässig} bezüglich einer Zulässigkeitsbedingung $\mathcal{Z}$, wenn $\mathcal{Z}\left(t,s\right) = \ttit{zulässig}$ erfüllt ist.
 	
@@ -360,7 +360,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\label{fig:blockbaum}
       \end{figure}
       
-      \todo{korrektur}Mit Hilfe von Blockbäumen können wir nun also Paare von Teilgebieten hierarchisch strukturieren und auf Zulässigkeit prüfen.
+      Mit Hilfe von Blockbäumen können wir nun also Paare von Teilgebieten hierarchisch strukturieren und auf Zulässigkeit prüfen.
       In \autoref{fig:blockbaum} ist ein Blockbaum $T_{\Omega \times \Omega}$, genauer die Blätter des Blockbaumes, für eine Menge $\Omega \subset \R^1$ dargestellt. Die unzulässigen Blöcke sind rot, 
       die zulässigen Blöcke grün markiert. Zur Linken des Blockbaumes ist der Clusterbaum mit den Targetclustern, unten der Clusterbaum mit den Sourceclustern schematisch abgebildet. Die langen, 
       parallel zur Matrix liegenden Striche stellen die Menge $\Omega$ und die kurzen, orthogonalen Striche die hierarchische Partitionierung dar. Bei einer eindimensionalen geometrischen Struktur,
@@ -426,7 +426,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     \subsection{Optimierung}
     \label{sec:optimierung}
     %Im Folgenden wollen wir noch einige Überlegungen vorstellen, durch die \hmat noch speicherplatzsparender und noch effizienter in der Berechnung werden.
-    \todo{korrektur} Im Folgenden werden wir uns einige Eigenschaften der \hmat genauer anschauen. Dadurch werden wir Möglichkeiten finden, durch die wir hierarchische Matrizen noch sparsamer speichern und 
+    Im Folgenden werden wir uns einige Eigenschaften der \hmat genauer anschauen. Dadurch werden wir Möglichkeiten finden, durch die wir hierarchische Matrizen noch sparsamer speichern und 
     effizienter Berechnungen auf ihnen durchführen können.
     
     \subsubsection{Zeilen- und Spaltenmatrizen}
@@ -498,8 +498,8 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \lag_\inds{\nu} = \mathfrak{I}_{\tilde \sigma}[\lag_\inds{\nu}] = \sum_{\tilde \nu \in \haken{k}} \lag_\inds{\nu}\left(\xi_{\tilde \sigma,\tilde \nu}\right) \lag_{\tilde \sigma,\tilde \nu}.
     \end{equation*}
     
-    \todo{korrektur}Die Spalten- (bzw. Zeilen-)matrizen lassen sich also verlustfrei aus den Spalten- (bzw. Zeilen-)matrizen der Söhne konstruieren.
-    Anstatt also auf jeder Ebene des Clusterbaumes eine vollständige Matrix $W_\sigma \in \R^{\sigma \times k}$ aufzustellen, genügt es für jeden Sohncluster $\tilde \sigma \in sons\left(\sigma\right)$
+    Die Spalten- (bzw. Zeilen-)matrizen lassen sich also verlustfrei aus den Spalten- (bzw. Zeilen-)matrizen der Söhne konstruieren.
+    Anstatt also auf jeder Ebene des Clusterbaumes eine vollständige Matrix $W_\sigma \in \R^{\sigma \times k}$ aufzustellen, genügt es, für jeden Sohncluster $\tilde \sigma \in sons\left(\sigma\right)$
     Matrizen $E_{\tilde \sigma} \in \R^{k \times k}$ mit $\left(E_{\tilde \sigma}\right)_{\tilde\nu , \nu} := \lag_\inds{\nu}\left(\xi_{\tilde \sigma, \tilde \nu}\right)$ zu speichern. 
     Diese Matrizen haben nur noch $k^2$ statt $|\sigma| \cdot k$ Einträge. Da in der Regel $k < |\sigma|$ gilt, können wir weiteren Speicherplatz einsparen. Dies führt zu folgender Definition:
     
@@ -530,7 +530,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     \begin{equation*}
       g\left(x,y\right) \approx \tilde g\left(x,y\right) = \sum_{\mu \in \haken{k}} \sum_{\nu \in \haken{k}} \lag_\indt{\mu}\left(x\right) g\left(\xi_\indt{\mu}, \xi_\inds{\nu}\right) \lag_\inds{\nu}\left(y\right).
     \end{equation*}
-    \todo{korrektur}Die Funktion $\tilde g$ ist ebenfalls eine entartete Kernfunktion, nur dass diesmal die Körper $x$ und $y$ ausschließlich in Verbindung mit den Lagrange-Polynomen auftauchen. Mit 
+    Die Funktion $\tilde g$ ist ebenfalls eine entartete Kernfunktion, nur dass diesmal die Körper $x$ und $y$ ausschließlich in Verbindung mit den Lagrange-Polynomen auftauchen. Mit 
     \begin{equation*}
       \left(S_b\right)_{\mu\nu} := g\left(\xi_\indt{\mu}, \xi_\inds{\nu}\right), \ \mu,\nu \in \haken{k}
     \end{equation*}
@@ -546,7 +546,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \left. G \right|_b \approx \left. \tilde G \right|_b = V_\tau S_b \trans{W_\sigma}.
     \end{equation*}
     
-    \todo{korrektur}Da die Matrizen $V_\tau$ analog zu den Matrizen $W_\sigma$ definiert wurden, teilen sie dieselben positiven Eigenschaften. Beide lassen sich also nicht nur effizient speichern, sondern auch 
+    Da die Matrizen $V_\tau$ analog zu den Matrizen $W_\sigma$ definiert wurden, teilen sie dieselben positiven Eigenschaften. Beide lassen sich also nicht nur effizient speichern, sondern auch 
     effizient konstruieren. Außerdem brauchen sie auf Grund der Entkoppelung von $\tau$ und $\sigma$ jeweils nur einmal aufgestellt zu werden. Die Matrizen $S_b$, die die Kopplung zwischen den
     Clustern $\tau$ und $\sigma$ beschreiben, sind wiederum verhältnismäßig klein. Diese haben nur $k \cdot k$ Einträge und lassen sich daher ebenfalls effizient verarbeiten.
     
