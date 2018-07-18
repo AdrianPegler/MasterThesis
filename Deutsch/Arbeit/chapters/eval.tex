@@ -150,7 +150,7 @@
     \hline
     $k$ & 1 & 8 & 27 & 64 & 125 & 216 & 343\\
     \hline
-    Fehler\footnote{Ausführung mit einem Prozess. Entspricht der nicht-parallelisierten Variante} 
+    Fehler\footnote{Ausführung mit einem Prozess. Entspricht der nicht-parallelisierten Variante.} 
     & $2,66e^{-2}$ & $3,99e^{-3}$ & $5,26e^{-4}$ & $5,79e^{-5}$ & $5,14e^{-6}$ & $1,08e^{-6}$ & $1,96e^{-7}$\\
     \hline
     Fehler\footnote{Ausführung mit vier Prozessen, zum Überprüfen der Korrektheit der Parallelisierung.} 
@@ -176,20 +176,20 @@
   Ergebnisse ``vernünftig'' sind und Beweise angeführt, nach denen diese Approximation mit steigender Ordnung exponentiell gegen die eigentliche Kernfunktion konvergiert, aber wie ungenau wird die
   Berechnung durch die Approximation? 
   
-  \TODO{Dazu wurden zwei Testreihen auf dem NEC-Cluster durchgeführt. Einmal wurde der Algorithmus mit nur einem Prozess ausgeführt, um eine nicht-parallel laufende Variante zu testen. Dazu wurde
-  die Anzahl Elemente auf $n = 2^{16}$ gesetzt. Um die parallel arbeitende Variante vergleichen zu können wurde eine weitere Testreihe mit $p = 4$, $m = 2^{14}$ und damit $n = 4 \cdot m = 2^{16}$
-  durchgeführt.}
+  Dazu wurden zwei Testreihen auf dem NEC-Cluster durchgeführt. Einmal wurde der Algorithmus mit nur einem Prozess ausgeführt, um eine nicht-parallel laufende Variante zu testen. Dazu wurde
+  die Anzahl Elemente auf $n = 2^{16}$ gesetzt. Um die parallel arbeitende Variante vergleichen zu können, wurde eine weitere Testreihe mit $p = 4$, $m = 2^{14}$ und so mit $n = 4 \cdot m = 2^{16}$
+  durchgeführt.
   
-  \TODO{Um zu ermitteln, welchen Fehler die Approximation induziert, wurde zunächst das Approximierte Simulationsergebnis berechnet. Anschließend wurden die Kräfte aller Sonnen durch den 
-  nicht-approximierten vollbesetzten Algorithmus berechnet. Der Quotient der bedien Ergebnisse gibt dann die relative Abweichung des approximierten Algorithmus von der tatsächlichen Lösung an und ist
-  in der Tabelle in den beiden ``Fehler''-Zeilen zu finden.}
+  Um zu ermitteln, welchen Fehler die Approximation induziert, wurde zunächst das approximierte Simulationsergebnis berechnet. Anschließend wurden die Kräfte aller Sonnen durch den 
+  nicht-approximierten vollbesetzten Algorithmus berechnet. Der Quotient der beiden Ergebnisse gibt dann die relative Abweichung des approximierten Algorithmus von der tatsächlichen Lösung an und ist
+  in der Tabelle in den beiden ``Fehler''-Zeilen zu finden.
   
-  \TODO{Da es umständlich ist beide Testläufe mit exakt den selben Daten auszuführen, wurden jeweils getrennt die Abweichung von der korrekten Lösung berechnet. Somit lassen sich beide Testläufe
-  indirekt vergleichen.}
+  Da es umständlich ist, beide Testläufe mit exakt denselben Daten auszuführen, wurden jeweils getrennt die Abweichungen von der korrekten Lösung berechnet. Somit lassen sich beide Testläufe
+  indirekt vergleichen.
   
-  \TODO{Wie an den Daten zu erkennen ist, nimmt der Fehler bei jeder Erhöhung der Interpolationsordnung $k_0$ um einen Faktor zwischen $5$ und $10$ ab. Unsere Approximation konvergiert also in
-  beiden Testläufen wie vorgesehen exponentiell. Allerdings fällt auf, dass die parallelisierte Variante fast durchgängig um etwa Faktor $2$ besser approximiert. Leider kann ich mir diese 
-  Verbesserung nicht erklären und mir fehlte gegen Ende die Zeit diesem Phänomen auf den Grund zu gehen.}
+  Wie an den Daten zu erkennen ist, nimmt der Fehler bei jeder Erhöhung der Interpolationsordnung $k_0$ um einen Faktor zwischen $5$ und $10$ ab. Unsere Approximation konvergiert also in
+  beiden Testläufen wie vorgesehen exponentiell. Allerdings fällt auf, dass die parallelisierte Variante fast durchgängig um etwa Faktor $2$ besser approximiert -- eine Verbesserung, die ich mir 
+  nicht ohne Weiteres erklären kann.
   
   \subsubsection{Parallelität}
   \input{chapters/x20}
