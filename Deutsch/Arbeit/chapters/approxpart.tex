@@ -52,9 +52,9 @@ typedef struct _bodies bodies;
     Die Körper entsprechen keinen reellen Himmelkörpern, zu denen uns keine Daten vorliegen, sondern werden zufällig generiert. Die Sonnen werden in einem Gebiet von $\pm 1$ Lichtjahr in
     jeder Koordinatenrichtung um einen angenommenen Ursprung mit Massen zwischen einer und $15$ Sonnenmassen verteilt.
 
-    Um nun alle gravitationellen Wechselwirkungen zu berechnen wird die Methode \code{compute_forces_bodies(...)} (vgl. \autoref{lst:compfbodies}) ausgeführt.
+    Um nun alle gravitationellen Wechselwirkungen zu berechnen, wird die Methode \code{compute_forces_bodies(...)} (vgl. \autoref{lst:compfbodies}) ausgeführt.
     Gut zu erkennen ist die matrixähnliche Struktur: Die beiden \code{for}-Schleifen entsprechen dem zeilen- und spaltenweisen Durchgehen der zugehörigen $\Omega \times \Omega$-Matrix. 
-    Explizit aufgestellt wird diese Matrix allerdings nicht, da dies in Bezug auf den Speicherplatz äußerst ineffizient wäre. Statt dessen wird direkt, wie in \autoref{eq:sum_grav2}
+    Explizit aufgestellt wird diese Matrix allerdings nicht, da dies in Bezug auf den Speicherplatz äußerst ineffizient wäre. Stattdessen wird direkt, wie in \autoref{eq:sum_grav2}
     angegeben, die kumulative Kraft für jede Sonne berechnet und in der \code{bodies}-Struktur gespeichert. Ein Teil der Kernfunktion ist in den Aufruf von \code{calc\_potential(...)}
     in Zeile 19 ausgegliedert. 
     Diese Methode berechnet das rein auf der Entfernung der beiden Sonnen beruhende Gravitationspotential $P(x,y)$, sodass die Formel aus \autoref{eq:sum_grav2} wie folgt dargestellt werden kann:
@@ -254,15 +254,15 @@ typedef struct _Cluster Cluster;
     \subsection{Vorwärtstransformation}
     \label{sec:vorw}
     \input{chapters/forw}
-    \todo{korrektur}Nun da wir den Clusterbaum $T_\Omega$ konstruiert haben, können wir uns an die Berechnung der Gravitation machen.
+    Nun da wir den Clusterbaum $T_\Omega$ konstruiert haben, können wir uns an die Berechnung der Gravitation machen.
     Um eine Matrix-Vektor-Multiplikation mit der Matrix $\tilde F$ auf zulässigen Blöcken auszuwerten, muss diese Operation als erstes auf den Matrizen $W_\sigma$ ausgewertet werden.
     Die Auswertung der Matrizen $W_\sigma$ nennt man auch \textit{Vorwärtstransformation}.
     
-    \todo{korrektur}Da $W_\sigma$ ausschließlich von Clustern und nicht von Blöcken abhängt, können wir die Vorwärtstransformation einfach für alle $\sigma \in T_\Omega$ durchführen. Dies geschieht
+    Da $W_\sigma$ ausschließlich von Clustern und nicht von Blöcken abhängt, können wir die Vorwärtstransformation einfach für alle $\sigma \in T_\Omega$ durchführen. Dies geschieht
     im vorliegenden Programm durch einen Aufruf von \code{forward(Cluster *c)} mit $root(T_\Omega)$. Die Methode \code{forward(...)} unterscheidet zwischen Blatt- und Nicht-Blattclustern, und ruft 
     entsprechend die Methode \code{\_forward\_Leaf(Cluster *c)} oder \code{\_forward\_nonLeaf(Cluster *c)} auf. 
     
-    \todo{korrektur}Die Methode \code{\_forward\_Leaf(...)} entspricht der Konstruktion und Auswertung der Matrizen $W_\sigma$ anhand der Sonnen $x \in \sigma$. Durch sie werden, wie auf 
+    Die Methode \code{\_forward\_Leaf(...)} entspricht der Konstruktion und Auswertung der Matrizen $W_\sigma$ anhand der Sonnen $x \in \sigma$. Durch sie werden, wie auf 
     \hyperref[w:ersatzmassen]{Seite}\pageref{w:ersatzmassen} beschrieben, für alle Interpolationspunkte 
     $\xi_{\tcode{c}\mu} \in \bigtimes_{i=0}^2 \{\tcode{xs}_{i \cdot k}, \dots ,\tcode{xs}_{(i+1) \cdot k-1}\}, \mu \in M$ durch
     \[
@@ -270,11 +270,11 @@ typedef struct _Cluster Cluster;
     \]
     die Ersatzmassen in der Clusterbasis berechnet und gespeichert.
     
-    \todo{korrektur}Die Methode \code{\_forward\_nonLeaf(Cluster *c)} nutzt die Struktur der geschachtelten Clusterbasis um die Matrizen $W_\sigma$ anhand der Sohncluster zu konstruieren.Sie berechnet die Ersatzmassen
+    Die Methode \code{\_forward\_nonLeaf(Cluster *c)} nutzt die Struktur der geschachtelten Clusterbasis um die Matrizen $W_\sigma$ anhand der Sohncluster zu konstruieren. Sie berechnet die Ersatzmassen
     nicht aus allen Sonnen des Clusters, sondern aus den Interpolationspunkten und Ersatzmassen der Sohncluster (vgl. \autoref{sec:transmat}).
     Für letztere müssen daher die Ergebnisse der Söhne bereits vorliegen. Daher ruft diese als ersten Schritt \code{forward(cs)} für alle Sohncluster \code{cs} auf. 
     
-    \todo{korrektur}Auf diese Weise durchlaufen die Methoden gemeinsam betrachtet rekursiv den Clusterbaum. Der Code der drei Methoden ist in \autoref{lst:forw}, \autoref{lst:forwnonleaf} und \autoref{lst:forwleaf}
+    Auf diese Weise durchlaufen die Methoden gemeinsam betrachtet rekursiv den Clusterbaum. Der Code der drei Methoden ist in \autoref{lst:forw}, \autoref{lst:forwnonleaf} und \autoref{lst:forwleaf}
     zu finden. Stellt man sich den Baum von der Wurzel aus nach unten hängend vor, werden also die Massen der Sonnen in den Baum hochgezogen. Je höher die Stufe des Baumes, um so gröber ist die 
     Approximation.
     

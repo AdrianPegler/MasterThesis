@@ -8,7 +8,7 @@
   $p \in \N$ Prozesse starten können, von denen jeder eine eindeutige $id \in \nullhaken{p-1}$ und seinen privaten Speicherbereich besitzt. Insbesondere ist in diesem Modell Shared-Memory ausgeschlossen. 
   Außerdem sollen die Prozesse miteinander kommunizieren können, um Daten auszutauschen. Die Menge der Prozesse wird im Folgenden mit $\Proc$ bezeichnet.
 
-  \todo{korrektur}Der Code im GitHub-Repository\footnote{https://github.com/AdrianPegler/Gravitation} entspricht der Umsetzung dieses Kapitels inklusive des Vorangegangenen. Da die Methoden durch die Anpassungen
+  Der Code im GitHub-Repository\footnote{https://github.com/AdrianPegler/Gravitation} entspricht der Umsetzung dieses Kapitels inklusive des Vorangegangenen. Da die Methoden durch die Anpassungen
   länger werden, jedoch viel Code durch die vorigen Abschnitte redundant wäre, werden im Folgenden nur noch kurze Codeausschnitte abgebildet. Für allen weiteren Code sei auf das Repository verwiesen.
   
   \subsection{Arbeitsverteilung}
@@ -60,11 +60,11 @@ void _setup(Cluster *c, int depth){
     \end{subfigure}
     \end{figure}
     
-    \TODO{Um diese Einteilung vorzunehmen, wird vorrangig der Code der Methode \code{_setup(...)} (vgl. \autoref{lst:setup}) angepasst. Dieser ist in \autoref{lst:parsetup} aufgeführt.}
+    Um diese Einteilung vorzunehmen, wird vorrangig der Code der Methode \code{_setup(...)} (vgl. \autoref{lst:setup}) angepasst. Dieser ist in \autoref{lst:parsetup} aufgeführt.
     
-    \TODO{Zudem bekommt der Konstruktor \code{_new_bound_Cluster}  einen neuen Parameter, um den Member \code{active} des zu konstruierenden Clusters zu initialisieren. Für die
+    Zudem bekommt der Konstruktor \code{_new_bound_Cluster}  einen neuen Parameter, um den Member \code{active} des zu konstruierenden Clusters zu initialisieren. Für die
     Konstruktion der Wurzel ist dieser auf \code{semi_active} gesetzt. Danach wird durch die Methode \code{_setup_nonLeafCluster(...)} immer der Wert des Vaters an die Söhne weitergegeben.
-    Der zugehörige Code ist in der Datei \code{cluster.c} zu finden und wird im Folgenden kurz erläutert.}
+    Der zugehörige Code ist in der Datei \code{cluster.c} zu finden und wird im Folgenden kurz erläutert.
     
     Dazu wird zunächst überprüft, ob die \code{SPLIT_DEPTH} erreicht wurde. Ist dies der Fall, wird der Member \code{active} auf 
     die $id$ des zuständigen Prozesses gesetzt. Dies geschieht einfach durch Abzählen. Als nächstes folgt der bereits aus \autoref{lst:setup} bekannte Aufruf, der das Teilen in Sohncluster, das 
@@ -144,24 +144,24 @@ void _setup(Cluster *c, int depth){
     Als Resultat der Aufteilung der Daten müssen wir uns nun Gedanken machen, welche Daten für die Auswertungen der Matrizen zusätzlich zu den lokal vorhandenen gebraucht und damit kommuniziert werden 
     müssen.
     
-    \todo{korrektur}In \autoref{fig:kommimpl} sind diese Zusammenhänge in Bezug auf einen Prozess $P \in \Proc$ visualisiert. Dabei gilt wieder $id_P=1$ und $p=4$. Die dunkel schraffierten Blöcke sind diejenigen, 
-    für deren Auswertung Daten von $P$ benötigt werden: 
-    Entweder Berechnungen aus der \vorw für zulässige oder die Daten von Sonnen für unzulässige Blöcke. Der Prozess $P$ muss die Daten aus den zugehörigen Clustern also an die anderen Prozesse 
+    In \autoref{fig:kommimpl} sind diese Zusammenhänge in Bezug auf einen Prozess $P \in \Proc$ visualisiert. Dabei gilt wieder $id_P=1$ und $p=4$. Die dunkel schraffierten Blöcke sind diejenigen, 
+    für deren Auswertung Daten von $P$ benötigt werden --
+    entweder Berechnungen aus der \vorw für zulässige oder die Daten von Sonnen für unzulässige Blöcke. Der Prozess $P$ muss die Daten aus den zugehörigen Clustern also an die anderen Prozesse 
     übermitteln. Umgekehrt benötigt $P$ die Daten zu den hell schraffierten Blöcken für seine \koppl und \ruckw \kern-0.29em. Lediglich die nicht schraffierten Blöcke benötigen keine Kommunikation, 
     da alle Daten lokal verfügbar sind. Der Datenaustausch kann wie zuvor wieder durch eine Transformation der ``Prozess-Daten-Matrix'' und damit über \code{MPI_Alltoallv(...)} in einem 
     Kommunikationsschritt bewerkstelligt werden. 
     
-    \todo{korrektur}Diesmal liegen die Daten allerdings nicht sequentiell hintereinander, sondern sind über den Clusterbaum und die \code{bodies}-Arrays verteilt. Hinzu kommt, dass für zulässige und unzulässige
+    Diesmal liegen die Daten allerdings nicht sequentiell hintereinander, sondern sind über den Clusterbaum und die \code{bodies}-Arrays verteilt. Hinzu kommt, dass für zulässige und unzulässige
     Blöcke unterschiedliche Daten ausgetauscht werden müssen. Für zulässige Blöcke brauchen lediglich die errechneten Ersatzmassen ausgetauscht werden, da die Interpolationspunkte bereits von jedem 
     Prozess berechnet wurden. Dies ist also nur ein \code{double}-Array mit verhältnismäßig wenigen Daten.
     Für unzulässige Blöcke hingegen müssen alle zugehörigen Daten aus den Memberarrays \code{x}, \code{y}, \code{z} und \code{m} sowie die Anzahl der zum Cluster gehörenden
     Sonnen übertragen werden.
     
-    \todo{korrektur}Auf Grund der Fragmentierung der Daten müssen diesmal für die Kommunikation manuell Sende- und Empfangspuffer angelegt werden. Der zugehörige Code ist in der Datei \code{eval.c} zu finden und wird
+    Auf Grund der Fragmentierung der Daten müssen diesmal für die Kommunikation manuell Sende- und Empfangspuffer angelegt werden. Der zugehörige Code ist in der Datei \code{eval.c} zu finden und wird
     im Folgenden erläutert.
     
     Die Methode \code{void _prep_comm(Cluster *ct, Cluster *cs)} durchläuft ebenso wie die in \autoref{lst:eval} dargestellte Methode \code{_eval(...)} den impliziten Blockbaum und sucht nach 
-    zulässigen und unzulässigen Blöcken mit (semi-)aktivem Targetcluster. Pointer zu diesen Source- und Targetclustern werden in Arrays von Vektoren\footnote{Die Implementierung der vector-Struktur
+    zulässigen und unzulässigen Blöcken mit (semi-)aktivem Targetcluster. Pointer zu diesen Source- und Targetclustern werden in Arrays von Vektoren\footnote{Die Implementierung der \code{vector}-Struktur
     sowie zugehörige Methoden wurden von https://\-gist.\-github.com/\-EmilHernvall/953968 übernommen und leicht modifiziert und erweitert.} gespeichert.\footnote{Mit einem Vektor ist in diesem Fall 
     eine Struktur gemeint, die ein Array mit flexibler Länge darstellt.} Dabei wird darauf geachtet, dass die Daten aus (semi-)aktiven Clustern, für die mehrere Prozesse zuständig sind, für alle 
     beteiligten Prozesse vermerkt werden.
@@ -185,5 +185,5 @@ void _setup(Cluster *c, int depth){
     werden würden. (Semi-)aktive Cluster werden während der \vorw neu berechnet und Cluster, für die genau ein anderer Prozess zuständig ist, werden nach der Kommunikation mit den neuen Daten 
     überschrieben. Diese brauchen also nicht eigens geleert werden, um sicherzustellen, dass keine alten Daten verbleiben und zu fehlerhaften Berechnungen führen.
     
-    \TODO{Durch diese Schritte haben wir unseren Algorithmus nun so angepasst, dass Teilprozesse weitestgehend unabhängig voneinander parallel an der Berechnung der Gravitationskräfte arbeiten können.
-    Im nächsten Kapitel werden wir noch zeigen, dass diese Arbeitsteilung nahezu optimal ist.}
+    Durch diese Schritte haben wir unseren Algorithmus nun so angepasst, dass Teilprozesse weitestgehend unabhängig voneinander parallel an der Berechnung der Gravitationskräfte arbeiten können.
+    Das nächste Kapitel wird noch zeigen, dass diese Arbeitsteilung nahezu optimal ist.

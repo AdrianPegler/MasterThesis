@@ -15,7 +15,7 @@ void forward(Cluster *c){
 
 \begin{figure}[p]
   \begin{subfigure}{0.9\textwidth}
-    \begin{lstlisting}[language=C, label=lst:forwnonleaf, caption={Diese Methode arbeitet auf den Transfermatrizen und ruft daher zuert rekursiv die Vorwärtstransformation für die Sohncluster auf.}]
+    \begin{lstlisting}[language=C, label=lst:forwnonleaf, caption={Diese Methode arbeitet auf den Transfermatrizen und ruft daher zuerst rekursiv die Vorwärtstransformation für die Sohncluster auf.}]
 void _forward_nonLeaf(Cluster *c){
   int i, j, k, w, wj, son, ison, json, kson, wson, wsonj;
   double sum, l1, l2, l3;
