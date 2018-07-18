@@ -1,10 +1,8 @@
 Erinnern wir uns an \autoref{eq:multi_grav} aus der \nameref{ch:einl}, in welcher die gravitationelle Wechselwirkung zwischen zwei Körpern $x$ und $y$ beschrieben wurde. 
-Die Struktur dieser Formel erinnert stark an Matrizen. 
+Durch die Festlegung $(f_{xy})_{x, y \in \Omega}$  wird eine vollbesetzte Matrix definiert. 
 Ein Ansatz, um große vollbesetzte Matrizen speicherplatzsparend aufzustellen und Berechnungen zeiteffektiv durchzuführen, besteht darin, sie als hierarchische Matrizen darzustellen.
 Im Folgenden sollen daher die Grundlagen für allgemeine $\mathcal{H}$- und \hquad eingeführt werden. Für ausführlichere Arbeiten zu dem Thema der hierarchischen Matrizen sei auf die
 Arbeiten von \citet{h2diss} und \citet{hackbusch1999sparse} verwiesen.
-
-\TODO{Quellenangaben einfügen: vgl. Nicht lokale Operationen}
 
 Erarbeitet wurde das Konzept der hierarchischen Matrizen unter anderem zur effektiven Lösung Fredholmscher Integralgleichungen:
 \begin{equation*}
@@ -21,10 +19,12 @@ Die Kernfunktion $g$ muss also in der Form
   g\left(x,y\right) = \sum_{\nu \in \haken{k}} a_{\nu}\left(x\right) b_{\nu}\left(y\right)
 \end{equation*}
 mit $k \in \N$, $a_{\nu}, b_{\nu} \colon \R^d \to \R$ vorliegen. Eine Kernfunktion dieser Form heißt \textit{entartete Kernfunktion} von Rang $k$.
-Allgemein nennen wir eine Funktion $g$ eine Kernfunktion einer Matrix $G$, falls die Funktion $g$ die Matrix $G$ erzeugt, also gerade $G_{\mu\nu} = g{\mu, \nu}$ gilt.
+Allgemein nennen wir eine Funktion $g$ eine Kernfunktion einer Matrix $G$, falls die Funktion $g$ die Matrix $G$ erzeugt, also gerade $G_{\mu\nu} = g(\mu, \nu)$ gilt.
+
 Nicht jede Kernfunktion ist entartet, es lassen sich aber oft entartete Kernfunktionen konstruieren, die die Funktion approximieren. Möglichkeiten sind beispielsweise
 Approximationen durch Taylor-Entwicklung oder Interpolation. \citep{h2diss}
 
+Obige Ausführungen können auch durch Matrizen ausgedrückt werden:
 Seien $X, Y$ Mengen und $G \in \R^{X \times Y}$ eine Matrix mit Kernfunkion $g \colon X \times Y \to \R$. Ist $g$ entartet, so gilt also für $x \in X$ und $y \in Y$ 
 gerade $G_{xy} = g\left(x, y\right) = \sum_{\nu \in \haken{k}} a_{\nu}\left(x\right) b_{\nu}\left(y\right)$. Die Summe in dieser Gleichung können wir auch durch Multiplikation zweier Matrizen $A \in \R^{X \times k}$ und 
 $\trans{B} \in \R^{Y \times k}$ mit $A_{x\nu} = a_{\nu}\left(x\right)$, $B_{y\nu} = b_{\nu}\left(y\right)$ ausdrücken. Analog dazu, die Kernfunktion als entartete Kernfunktion darzustellen, ist also die Darstellung der Matrix
@@ -33,7 +33,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     \subsubsection{Approximation}
     \label{sec:approx}
       Im Folgenden wird eine beispielhafte Approximation einer nicht-entarteten Kernfunktion durch Interpolation vorgestellt, um so eine entartete Kernfunktion zu erhalten.
-      Der Aufbau folgt weitestgehend dem von \citet{nichtlokop}. Für eine Approximation einer nicht-entarten Kernfunktion durch Taylor-Entwicklung sei wiederum auf \citet{h2diss} verwiesen. 
+      Der Aufbau folgt weitestgehend dem von Kapitel 3 von \citet{nichtlokop}. Für eine Approximation einer nicht-entarten Kernfunktion durch Taylor-Entwicklung sei wiederum auf \citet{h2diss} verwiesen. 
       
       Sei $g \colon \Omega \times \Omega \to \R$ eine nicht-entartete Kernfunktion. Für eine Interpolationsordnung $k$ und ein Teilgebiet $\sigma \subset \Omega$ wählen wir Interpolationspunkte 
       $\xi_\inds{1}, \dots , \xi_\inds{k}$. Nun suchen wir eine Approximation von $\left. g\right|_{\Omega \times \sigma}$ der Form
@@ -42,12 +42,13 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	g_\sigma\left(x, y\right) = \sum_{\nu \in \haken{k}} g\left(x, \xi_\inds{\nu}\right) \lag_\inds{\nu}\left(y\right),
       \end{equation}
       in der $x$ und $y$ getrennt sind. Somit hätten wir bereits eine entartete Kernfunktion. In eben dieser Form werden Lagrange-Interpolaten in Stützstellen 
-      $\xi_\inds{\nu}$ mit Lagrange-Basisfunktionen $\lag_\inds{\nu}$ dargestellt. 
+      $\xi_\inds{\nu}$ mit Lagrange-Basisfunktionen $\lag_\inds{\nu}$ dargestellt.
+      
+      Bevor wir die Funktion $g$ allerdings wie in \autoref{eq:gsigma} approximieren können, müssen 
+      wir die Lagrange-Basisfunktionen auf mehrdimensionalen Gebieten konstruieren und einige Eigenschaften sicherstellen.
       
     \subsubsection{Lagrange-Interpolation im mehrdimensionalen Raum}
-      Bevor wir die Funktion $g$ wie in \autoref{eq:gsigma} approximieren können, müssen wir die Lagrange-Basisfunktionen auf mehrdimensionalen Gebieten konstruieren und einige 
-      Eigenschaften sicherstellen. 
-      Zunächst definieren wir dazu die Lagrange-Basispolynome auf dem Referenzintervall $[-1,1]$. Für $k \in \N$, $\nu \in \nullhaken{k}$ und paarweise verschiedene Stützstellen
+      Zunächst definieren wir die Lagrange-Basispolynome auf dem Referenzintervall $[-1,1]$. Für $k \in \N$, $\nu \in \nullhaken{k}$ und paarweise verschiedene Stützstellen
       $\xi_0, \dots , \xi_k \in [-1,1]$ ist durch
       \begin{equation*}
 	\lag_\nu\left(x\right) := \prod_{\substack{\mu \in \nullhaken{k} \\ \mu \neq \nu}} \frac{x - \xi_\mu}{\xi_\nu - \xi_\mu} \ \ \ \ \ \ \ \ \ \ \ \  \text{für alle } x \in [-1,1]
@@ -55,7 +56,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       das $\nu$-te Lagrange-Polynom gegeben.
       Eine Eigenschaft der Lagrange-Polynome, die wir später noch benötigen, ist:
       \begin{equation}
-	\lag_\nu\left(\xi_\mu\right) = \delta_{\nu\mu} =
+	\lag_\nu\left(\xi_\mu\right) = \delta_{\nu\mu} :=
 	\begin{cases}
 	  1 & \text{falls } \nu = \mu,\\
 	  0 & \text{sonst.}
@@ -68,16 +69,17 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\mathfrak{I} \colon C[-1,1] \to \Pi_k, \ \ \ \ \ \ \ \ \ \ \ \ f \mapsto \sum_{\nu \in \nullhaken{k}} f\left(\xi_\nu\right) \lag_\nu
       \end{equation*}
       einen Lagrange-Interpolationsoperator definieren, der auf $[-1,1]$ stetige Funktionen auf Polynome aus $\Pi_k$ abbildet, also auf Polynome von höchstens Grad $k$.
+      \TODO{Somit können wir diese Funktionen bereits mit Hilfe der Stützstellen durch die Lagrange-Polynome annähern.}
       
-      Um diesen Operator auf Funktionen auf beliebigen Intervallen $[a,b]$ mit $a < b$ zu übertragen, definieren wir eine Transformation
+      \TODO{Um diesen Operator auf Funktionen auf beliebigen Intervallen $[a,b]$ mit $a < b$ zu übertragen, definieren wir eine Transformation:}
       \begin{equation*}
-	\Phi_{[a,b]} \colon [-1,1] \to [a,b] \ \ \ \ \ \ \ \ \ \ \ \  x \mapsto \frac{b + a}{2} + \frac{b - a}{2} x,
+	\Phi_{[a,b]} \colon [-1,1] \to [a,b] \ \ \ \ \ \ \ \ \ \ \ \  x \mapsto \frac{b + a}{2} + \frac{b - a}{2} x.
       \end{equation*}
-      die für alle $x \in [-1,1]$ die Eigenschaften
+      \TODO{Diese Transformation hat für alle $x \in [-1,1]$ die Eigenschaften:}
       \begin{equation*}
-	\Phi_{[a,b]}\left(-1\right) = a , \ \ \ \ \Phi_{[a,b]}\left(1\right) = b , \ \ \ \ \Phi'_{[a,b]}\left(x\right) = \frac{b - a}{2} > 0
+	\Phi_{[a,b]}\left(-1\right) = a , \ \ \ \ \Phi_{[a,b]}\left(1\right) = b , \ \ \ \ \Phi'_{[a,b]}\left(x\right) = \frac{b - a}{2} > 0.
       \end{equation*}
-      hat, also affin und bijektiv ist. Für $f \in C[a,b]$ gilt also $\tilde f := f \after \Phi_{[a,b]} \in C[-1,1]$, sodass wir den auf $[-1,1]$ definierten Interpolationsoperator $\mathfrak{I}$
+      Sie ist also affin und bijektiv. Für $f \in C[a,b]$ gilt also $\tilde f := f \after \Phi_{[a,b]} \in C[-1,1]$, sodass wir den auf $[-1,1]$ definierten Interpolationsoperator $\mathfrak{I}$
       auf $\tilde f$ anwenden können. Wir können also einen Interpolationsoperator auf dem Intervall $[a,b]$ durch
       \begin{equation*}
 	\mathfrak{I}_{[a,b]} \colon C[a,b] \to \Pi_k, \ \ \ \ \ \ \ \ \ \ \ \ f \mapsto \mathfrak{I}[f \after \Phi_{[a,b]}] \after \Phi_{[a,b]}^{-1}
@@ -87,19 +89,19 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\mathfrak{I}_{[a,b]}[f] = \sum_{\nu \in \nullhaken{k}} f \after \Phi_{[a,b]}\left(\xi_\nu\right) \lag_\nu \after \Phi_{[a,b]}^{-1} = 
 				 \sum_{\nu \in \nullhaken{k}} f \left( \Phi_{[a,b]}\left(\xi_\nu\right)\right)     \lag_\nu \after \Phi_{[a,b]}^{-1}.
       \end{equation*}
-      Zur Vereinfachung definieren wir für $\nu \in \nullhaken{k}$ und $x \in [a,b]$
+      \todo{Korrektur}Da diese Definition recht unhandlich ist, definieren wir zu Vereinfachung für $\nu \in \nullhaken{k}$ und $x \in [a,b]$:
       \begin{align*}
 	\xi_{[a,b],  \nu} &:= \Phi_{[a,b]}\left(\xi_\nu\right) = \frac{b + a}{2} + \frac{b - a}{2} \xi_\nu\\
 	\lag_{[a,b], \nu} &:= \prod_{\substack{\mu \in \nullhaken{k} \\ \mu \neq \nu}} \frac{x - \xi_{[a,b],  \mu}}{\xi_{[a,b],  \nu} - \xi_{[a,b],  \mu}}.
       \end{align*}
-      Da mit \autoref{eq:lag_delta} folgende Gleichung für alle $\nu,\mu \in \nullhaken{k}$ gilt
+      \TODO{Da mit \autoref{eq:lag_delta} die Gleichung}
       \begin{align*}
 	 \lag_\nu \after \Phi_{[a,b]}^{-1}\left(\xi_{[a,b],\mu}\right) &= \lag_\nu \after \Phi_{[a,b]}^{-1} \left( \Phi_{[a,b]}\left(\xi_{[a,b],\mu}\right) \right)\\
 							    &= \lag_\nu \left(\xi_\mu\right) = \delta_{\nu\mu}\\
-							    &= \lag_{[a,b],\nu}\left( \xi_{[a,b],\mu} \right),
+							    &= \lag_{[a,b],\nu}\left( \xi_{[a,b],\mu} \right)
       \end{align*}
-      stimmen $\lag_\nu \after \Phi_{[a,b]}^{-1}$ und $\lag_{[a,b],\nu}$ in $k+1$ Punkten überein. Da beides Polynome in $\Pi_k$ sind, müssen sie identisch sein und wir erhalten die vereinfachte
-      Darstellung
+      \todo{Korrektur}für alle $\nu,\mu \in \nullhaken{k}$ erfüllt ist, stimmen $\lag_\nu \after \Phi_{[a,b]}^{-1}$ und $\lag_{[a,b],\nu}$ in $k+1$ Punkten überein. Da beides Polynome in $\Pi_k$ sind, müssen sie 
+      bereits identisch sein. Damit erhalten wir die vereinfachte Darstellung:
       \begin{equation*}
 	\mathfrak{I}_{[a,b]}[f] = \sum_{\nu \in \nullhaken{k}} f\left(\xi_{[a,b],\nu}\right) \lag_{[a,b],\nu}, \ \ \ \ \ \ \ \ \ \ \ \ \text{für alle } f \in C[a,b].
       \end{equation*}
@@ -112,15 +114,14 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	f_{x,\iota} \colon [a_\iota,b\iota] \to \R, \ \ \ \ \ \ \ \ \ \ \ \ y \mapsto f\left(x_1, \dots , x_{\iota-1}, y , x_{\iota+1}, \dots , x_d\right),
       \end{equation*}
       bei der alle Parameter außer dem $\iota$-ten fest sind. Auf diese Funktion auf dem Intervall $[a_\iota,b_\iota]$ können wir den Interpolationsoperator $\mathfrak{I}_{[a_\iota,b_\iota]}$ 
-      anwenden und erhalten so einen Operator
+      anwenden und erhalten so den Operator
       \begin{equation*}
-	\mathfrak{I}_{Q,\iota} \colon C\left(Q\right) \to C\left(Q\right)
+	\mathfrak{I}_{Q,\iota} \colon C\left(Q\right) \to C\left(Q\right).
       \end{equation*}
-      für den für $f \in C\left(Q\right)$ und $x \in Q$
+      \TODO{Mit diesem erhalten wir für $f \in C\left(Q\right)$ und $x \in Q$:}
       \begin{equation*}
-	\mathfrak{I}_{Q,\iota}[f]\left(x\right) = \sum_{\nu \in \nullhaken{k}} f\left(x_1, \dots , x_{\iota-1} , \xi_{[a_\iota,b_\iota]} , x_{\iota+1}, \dots , x_d\right) \lag_{[a_\iota,b_\iota],\nu}\left(x_\iota\right)
+	\mathfrak{I}_{Q,\iota}[f]\left(x\right) = \sum_{\nu \in \nullhaken{k}} f\left(x_1, \dots , x_{\iota-1} , \xi_{[a_\iota,b_\iota]} , x_{\iota+1}, \dots , x_d\right) \lag_{[a_\iota,b_\iota],\nu}\left(x_\iota\right).
       \end{equation*}
-      gilt.
       Somit bildet $\mathfrak{I}_{Q,\iota}$ eine stetige Funktion auf eine neue stetige Funktion ab, die sich in der $\iota$-ten Komponente wie ein Polynom verhält. Durch Hintereinanderausführung
       der Operatoren für jede Dimension erhalten wir ein Polynom in jeder Komponente und mit
       \begin{equation*}
@@ -134,7 +135,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \end{equation}
       erfüllt. Mit den Definitionen
       \begin{align*}
-	\xi_{Q ,\nu} &= \left(\xi_{[a_1,b_1],\nu_1} ,    \dots , \xi_{[a_d,b_d],\nu_d}\right),\\
+	\xi_{Q ,\nu} &= \left(\xi_{[a_1,b_1],\nu_1} ,    \dots , \xi_{[a_d,b_d],\nu_d}\right) \text{ und}\\
 	\lag_{Q,\nu} &= \lag_{[a_1,b_1],\nu_1}\left(x_1\right) \dots  \lag_{[a_d,b_d],\nu_d}\left(x_d\right) \text{, für alle } \nu \in M := \nullhaken{k}^d, \ x \in Q
       \end{align*}
       erhalten wir die gewohnte Darstellung
@@ -142,13 +143,13 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\mathfrak{I}_Q[f] = \sum_{\nu \in M} f\left(\xi_{Q,\nu}\right)\lag_{Q,\nu} \text{, für alle } f \in C\left(Q\right).
       \end{equation*}
       
-      Mit diesem Interpolationsoperator können wir nun die entartete Approximation der Kernfunktion $g$ aus \autoref{eq:gsigma} konstruieren. Dazu identifizieren wir $\sigma \in T_\Omega$
-      mit einem überdeckenden Quader $Q_\sigma$.
+      Mit diesem Interpolationsoperator können wir nun die entartete Approximation der Kernfunktion $g$ aus \autoref{eq:gsigma} konstruieren. \TODO{Der Einfachheit halber identifizieren wir im Folgenden
+      die Gebiete $\sigma \in T_\Omega$ mit einem überdeckenden Quader $Q_\sigma$. Der später vorgestellte Algorithmus konstruiert die Gebiete $\sigma$ von vornherein als achsenparallele Quader.}
     
     \subsubsection{Zulässigkeit}
     \label{sec:zul}
-      Wir haben also über Interpolation eine entartete Kernfunktion $g_\sigma$ konstruiert. Für $x \in \Omega$ und $y \in \sigma$ approximiert die Funktion $g_\sigma$ die Funktion $g$ allerdings 
-      nur dann gut, wenn $x$ und $\sigma$ hinreichend weit voneinander entfernt sind (vgl. \citet{h2diss, nichtlokop}). 
+      Wir können also durch Interpolation auf Gebieten $\sigma \subset \Omega$ eine entartete Kernfunktion $g_\sigma$ konstruieren. Für $x \in \Omega$ und $y \in \sigma$ approximiert die Funktion 
+      $g_\sigma$ die Funktion $g$ allerdings nur dann gut, wenn $x$ und $\sigma$ hinreichend weit voneinander entfernt sind (vgl. \citet{h2diss}). 
       Daher wollen wir nun eine Bedingung einführen, die eine Aussage darüber trifft, ob das Gebiet $\sigma$ für ein Gebiet $\tau$ zulässig, also für alle $x \in \tau$
       hinreichend weit entfernt ist. Das Gebiet $\tau$ wird auch \textit{Target-} oder \textit{Zielgebiet}, das Gebiet $\sigma$ auch \textit{Source-} oder \textit{Quellgebiet} genannt.
       %Weiterhin kann die Güte der Approximation durch die Anzahl und Art der Interpolationspunkte verändert werden.
@@ -159,9 +160,8 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\textit{Zulässigkeitsbedingung}.       
       \end{defn}
       
-      Für eine konkrete Zulässigkeitsbedingung benötigen wir noch ein paar Definitionen.
-            
-      Seien $\sigma, \tau \subseteq \Omega$. Dann bezeichnet
+      Wir wollen gerne eine konkrete Zulässigkeitsbedingung konstruieren. Dazu benötigen wir noch ein paar Definitionen.            
+      Seien Gebiete $\sigma, \tau \subseteq \Omega$ gegeben. Dann bezeichnet
       \begin{equation*}
 	diam\left(\sigma\right) := max\{ \norm{x-y} \ | \ x, y \in \sigma \}
       \end{equation*}
@@ -186,21 +186,21 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\textit{$\eta$-Zulässigkeitsbedingung}. Paare $\left(\tau, \sigma\right)$, für die $\mathcal{Z}\left(\tau, \sigma\right) = \ttit{zulässig}$ gilt, werden \textit{$\eta$-zulässig} genannt.
       \end{defn}
 
-      Für kleine $\eta$ zeigen \citet{h2approxint} die exponentielle Konvergenz der durch Interpolation approximierten Funktion gegen die Kernfunktion und \citet{h2diss} die exponentielle Konvergenz
-      bei Approximation durch Taylor-Entwicklung.
+      Für kleine $\eta$ zeigen \citet{h2approxint} in Kapitel 5 die exponentielle Konvergenz der durch Interpolation approximierten Funktion gegen die Kernfunktion und \citet{h2diss} die exponentielle 
+      Konvergenz bei Approximation durch Taylor-Entwicklung.
       
-      \citet{nichtlokop} weist nach, das für asymptotisch glatte Funktionen die Approximation für jedes $\eta > 0$ exponentiell konvergiert, wenn die obige Zulässigkeitsbedingung erfüllt ist.
-      Eine unendlich oft differenzierbare Kernfunktion $g$ heißt asymptotisch glatt, wenn für alle $\alpha , \beta \in \N_0^d$, $x , y \in \R^d$, $x \neq y$, Konstanten $C \colon \N^2 \to \R_{> 0}$
-      existieren, sodass die partiellen Ableitungen von $g$ wie folgt abgeschätzt werden können:
+      \todo{Korrektur Absatz}\citet{nichtlokop} weist in Kapitel 3.4 nach, dass für asymptotisch glatte Funktionen die Approximation für jedes $\eta > 0$ exponentiell konvergiert, wenn die obige Zulässigkeitsbedingung erfüllt
+      ist. Eine unendlich oft differenzierbare Kernfunktion $g$ heißt asymptotisch glatt, wenn für alle $\alpha , \beta \in \N_0^d$ und $x , y \in \R^d$ mit $x \neq y$ eine Konstante 
+      $C \colon \N^2 \to \R_{> 0}$ existiert, sodass die partiellen Ableitungen von $g$ wie folgt abgeschätzt werden können:
       \begin{equation*}
-	|\partial_x^\alpha \partial_y^\beta g\left(x,y\right)| \leq C\left( |\alpha| , |\beta| \right) \norm{ x - y }^{-|\alpha| -|\beta|} | g\left( x,y \right) |.
+	\left| \partial_x^\alpha \partial_y^\beta g\left(x,y\right) \right| \leq C\left( |\alpha| , |\beta| \right) \norm{ x - y }^{-|\alpha| -|\beta|} | g\left( x,y \right) |.
       \end{equation*}
       (vgl. \citet{h2approxint})
       
     \subsubsection{Tschebyscheff-Interpolationspunkte}
     \label{sec:tscheby}
       Die Wahl der Zulässigkeitsbedingung ist nicht der einzige Einflussfaktor auf die Genauigkeit der Approximation. Auch die Wahl der Interpolationspunkte trägt dazu bei.
-      Als optimale Interpolationspunkte haben sich die Tschebyscheff-Interpolationspunkte erwiesen (vgl. \citet{nichtlokop}). Daher führen wir diese im Folgenden kurz ein.
+      Als nahezu optimale Interpolationspunkte haben sich die Tschebyscheff-Interpolationspunkte erwiesen \citep{tscheby}. Daher führen wir diese im Folgenden kurz ein.
       
       \begin{defn}
 	(Tschebyscheff-Polynome)\\
@@ -245,9 +245,9 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	(Baum)\\
 	Ein Paar $T = \left(V,E\right)$ mit $E \subset V \times V$ nennen wir einen Baum mit Knoten $V$ und Kanten $E$, wenn die folgenden Bedingungen erfüllt sind:
 	\begin{enumerate}
-	  \item Es gibt genau ein Element $root\left(T\right) \in V$, so dass für alle $v \in V$ gilt $\left(v, root\left(T\right)\right) \notin E$. Dieses Element heißt \textit{Wurzel} des Baumes T.
-	  \item Zu jedem Knoten $v \in V \backslash \{root\left(T\right)\}$ gibt es $n \in \N$ und einen Weg $\left(v_i\right)_{i = 0}^n$ der Länge $n$ von der Wurzel $root\left(t\right) = v_0$ zu dem Knoten
-		$v = v_n$ mit $\left(v_{i-1}, v_{i}\right) \in E$ für $i \in \haken{n}$.
+	  \item Es gibt genau ein Element $root\left(T\right) \in V$, sodass für alle $v \in V$ gilt: $\left(v, root\left(T\right)\right) \notin E$. Dieses Element heißt \textit{Wurzel} des Baumes $T$.
+	  \item \todo{Korrektur}Zu jedem Knoten $v \in V \backslash \{root\left(T\right)\}$ gibt es $n \in \N$ und einen Weg $w := \left(v_i\right)_{i \in \nullhaken{n}}$ der Länge $n$ von der Wurzel $root\left(t\right) =: v_0$ zum 
+		Knoten $v =: v_n$ mit $\left(v_{i-1}, v_{i}\right) \in E$ für $i \in \haken{n}$.
 	  \item Es gibt keine Zyklen.
 	\end{enumerate}
 	Es gelten folgende Notationen:
@@ -275,7 +275,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\citep{h2diss}
       \end{defn}
       
-      Mit Hilfe einer Baumstruktur wollen wir nun eine Struktur definieren, mit der im Allgemeinen eine beliebige Menge $M$ hierarchisch partitioniert werden kann. Diese Struktur wollen
+      Wir wollen nun eine spezielle Baumstruktur definieren, mit der im Allgemeinen eine beliebige Menge $M$ hierarchisch partitioniert werden kann. Diese Struktur wollen
       wir dann für unsere Menge $\Omega$ nutzen.
       
       \begin{defn}
@@ -295,9 +295,9 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \citet{h2diss} nennt Clusterbäume auch hierarchische Partitionsbäume oder kurz $\mathcal{H}$-Bäume der Menge $M$. Der Name leitet sich direkt von den Eigenschaften
       des Clusterbaumes her. Es gilt nämlich:
       \begin{enumerate}
-      \item Die Menge $P_M^{\left(i\right)} := T_M^{\left(i\right)} \cup \mathcal{L}\left(T, \leq i\right)$ für bildet für alle $i \in \nullhaken{depth\left(T_M\right)}$ eine disjunkte Partition der Menge M.
-      \item Die Partitionen sind über die Ebenen des Baumes hierarchisch angeordnet. Damit ist gemeint, dass für alle $i \in \haken{depth\left(T_M\right)}$ die Partition $P^{\left(i\right)}$ mehr Teilmengen beinnhaltet
-	    als die Partition $P^{\left(i-1\right)}$.
+      \item Die Menge $P_M^{\left(i\right)} := T_M^{\left(i\right)} \cup \mathcal{L}\left(T, \leq i\right)$ bildet für alle $i \in \nullhaken{depth\left(T_M\right)}$ eine disjunkte Partition der Menge M.
+      \item \todo{korrektur} Die Partitionen sind über die Ebenen des Baumes hierarchisch geordnet. Damit ist gemeint, dass für alle $i \in \haken{depth\left(T_M\right)}$ die Partition $P^{\left(i\right)}$ feiner ist
+	    als die Partition $P^{\left(i-1\right)}$, also mehr und kleinere Teilmengen beinhaltet.
       \end{enumerate}
 
       Mit Hilfe eines Clusterbaumes können Partitionen einer Menge also hierarchisch strukturiert werden. Meist werden sie genutzt, um eine Indexmenge oder
@@ -306,23 +306,17 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       Ein weiterer praktischer Aspekt
       von Clusterbäumen ist ihre gute rekursive Konstruierbarkeit. Beginnend mit der vollständigen Menge $M$ wird ein Cluster jeweils in Sohncluster unterteilt,
       bis entweder in den Blättern jeweils nur noch ein Element vorhanden ist oder eine anders geartete Abbruchbedingung erfüllt ist. Für praktische Anwendungen ist
-      es in der Regel nicht effizient, bis zu einelementigen Mengen zu teilen. Üblich sind Abbruchbedingungen, die eine gewisse Mächtigkeit für Blattmengen vorgeben.
+      es in der Regel nicht effizient, bis zu einelementigen Mengen zu teilen. Üblich sind beispielsweise Abbruchbedingungen, die eine gewisse Mächtigkeit für Blattmengen vorgeben.
       Wird diese unterschritten, wird nicht weiter geteilt. 
       
       Das Teilen der Cluster kann ebenfalls unterschiedlich motiviert sein. Naheliegend sind kardinalitätsgesteuerte Zerlegungen, um ein optimales Loadbalancing zu erhalten,
       sowie die Zerlegung anhand der zugrundeliegenden geometrischen Struktur. Auch kombinierte Zerlegungen sind denkbar.
       
-      \begin{figure}[b]
-	\includegraphics[width=0.68\textwidth]{img/blockbaum.png}
-	\caption{Schematische Darstellung eines Blockbaumes. In grün sind zulässige, in rot unzulässige Blöcke gekennzeichnet. (Quelle: \citet{h2-slides})}
-	\label{fig:blockbaum}
-      \end{figure}
-      
       \begin{defn}
 	(Blockbaum, (streng) zulässiger Blockbaum)\\
 	Seien Menge $X, Y$ und jeweils zugehörige Clusterbäume $T_X$ und $T_Y$ gegeben.
 	
-	Einen Clusterbaum $T_{X \times Y}$ der Menge $X \times Y$ mit folgenden Eigenschaften:
+	\TODO{Wir nennen einen Clusterbaum $T_{X \times Y}$ der Menge $X \times Y$ Blockbaum, falls die folgenden Eigenschaften erfüllt sind:}
 	\begin{enumerate}
 	  \item Für alle Knoten $b \in T_{X \times Y}$ existieren Knoten $t \in T_X$ und $s \in T_Y$, sodass $b = t \times s$
 	  \item Falls $b = t \times s \in T_{X \times Y}$ kein Blatt ist, gilt
@@ -335,8 +329,8 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	    \end{cases}
 	  \end{equation*}
 	\end{enumerate}
-	nennen wir \textit{Blockbaum} und seine Knoten \textit{Blöcke}. Die Komponenten $t \in T_X$ und $s \in T_Y$ werden auch \textit{Zeilen-} und \textit{Spaltencluster}
-	genannt.
+	\TODO{Die Knoten des Blockbaumes heißen \textit{Blöcke}. Die Komponenten $t \in T_X$ und $s \in T_Y$ werden auch \textit{Zeilen-} und \textit{Spaltencluster}
+	genannt.}
 	
 	Wir nennen einen Block $b = t \times s$ \textit{zulässig} bezüglich einer Zulässigkeitsbedingung $\mathcal{Z}$, wenn $\mathcal{Z}\left(t,s\right) = \ttit{zulässig}$ erfüllt ist.
 	
@@ -358,14 +352,20 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	\end{align*}
 	bezeichnen wir die Mengen der zulässigen beziehungsweise unzulässigen Blätter eines Blockbaumes. $\mathcal{L}^+\left(T_{X \times Y}\right)$ wird auch \textit{Fernfeld} und 
 	$\mathcal{L}^-\left(T_{X \times Y}\right)$ \textit{Nahfeld} genannt. Die Namen leiten sich von der $\eta$-Zulässigkeitsbedingung her, die auf der relativen Nähe der Cluster zueinander beruht.
-	
       \end{defn}
-
       
-      Mit Hilfe von Blockbäumen können wir nun also Paare von Teilgebieten hierarchisch strukturieren und auf Zulässigkeit prüfen.
-      In \autoref{fig:blockbaum} ist ein Blockbaum, beziehungsweise die Blätter eines Blockbaumes, dargestellt. Zulässige Blattblöcke sind grün, unzulässige rot gekennzeichnet. Zur linken
-      den Blockbaumes ist der Clusterbaum mit den Targetclustern, unten der Clusterbaum mit den Sourceclustern schematisch abgebildet.
-%       Damit haben wir nun alles Notwendige bei der Hand um \hmat definieren zu können.
+      \begin{figure}[t]
+	\includegraphics[width=0.68\textwidth]{img/blockbaum.png}
+	\caption{Schematische Darstellung eines Blockbaumes. In grün sind zulässige, in rot unzulässige Blöcke gekennzeichnet. (Quelle: \citet{h2slides})}
+	\label{fig:blockbaum}
+      \end{figure}
+      
+      \todo{korrektur}Mit Hilfe von Blockbäumen können wir nun also Paare von Teilgebieten hierarchisch strukturieren und auf Zulässigkeit prüfen.
+      In \autoref{fig:blockbaum} ist ein Blockbaum $T_{\Omega \times \Omega}$, genauer die Blätter des Blockbaumes, für eine Menge $\Omega \subset \R^1$ dargestellt. Die unzulässigen Blöcke sind rot, 
+      die zulässigen Blöcke grün markiert. Zur Linken des Blockbaumes ist der Clusterbaum mit den Targetclustern, unten der Clusterbaum mit den Sourceclustern schematisch abgebildet. Die langen, 
+      parallel zur Matrix liegenden Striche stellen die Menge $\Omega$ und die kurzen, orthogonalen Striche die hierarchische Partitionierung dar. Bei einer eindimensionalen geometrischen Struktur,
+      wie sie hier zur Vereinfachung dargestellt ist, beschränken sich die unzulässigen Blöcke auf die Diagonale. Bei höherdimensionalen Strukturen gibt es auch unzulässige Blöcke außerhalb der 
+      Diagonalen, da hier die Nachbarschaftsverhältnisse der Cluster komplexer werden.
       
   \subsection{\hmat}
   \label{sec:hmat}
@@ -377,7 +377,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \end{equation*}
       gilt. Die Menge aller solcher \Rk-Matrizen bezeichnen wir mit
       \begin{equation*}
-	\mathcal{R}\left(m,n,k\right) = \{M \in \R^{m \times n} \ | \ M = A\trans{B}, A \in \R^{m \times k}, B \in \R^{n \times k}\}.
+	\mathcal{R}_k\left(m,n\right) = \{M \in \R^{m \times n} \ | \ M = A\trans{B}, A \in \R^{m \times k}, B \in \R^{n \times k}\}.
       \end{equation*}
       \citep{nichtlokop}
     \end{defn}
@@ -398,13 +398,12 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \citep{h2diss, nichtlokop}
       
     \end{defn}
-    
-    \begin{figure}[t]
+
+    \begin{figure}[b]
       \includegraphics[width=0.7\textwidth]{img/h-matrix.png}
       \caption{Schematische Darstellung einer $\mathcal{H}$-Matrix. In blau sind die Matrizen $A_b$ und $B_b$, in rot die Matrizen $N_b$ gekennzeichnet. (Quelle: \citet{h2slides})}
       \label{fig:hmat}
     \end{figure}
-
 
     Für die Darstellung in Computern sind \hmat von besonderem Interesse, da sie sich durch die Zerlegung in \Rk-Matrizen besonders kompakt speichern lassen. Für eine $\mathcal{H}$-Matrix
     $M$ mit lokalem Rang $k$ existieren nach Definition Familien von Matrizen $\left(A_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)} \text{ und } \left(B_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)}$, mit 
@@ -412,20 +411,23 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       A_b \in \R^{t \times k}, B_b \in \R^{s \times k}, \left. M \right|_b = A_b\trans{B_b} \text{, für alle } b = t \times s \in \mathcal{L}^+\left(T_{X \times Y}\right).
     \end{equation*}
     So verbleiben nur noch für unzulässige Blöcke $b \in \mathcal{L}^-\left(T_{X \times Y}\right)$ vollbesetzte Matrizen $N_b = M|_b$, sogenannte \textit{Nahfeldmatrizen}.
+    
     Das Tripel $\left( \left(A_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)} , \left(B_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)} , \left(N_b\right)_{b \in \mathcal{L}^-\left(T_{X \times Y}\right)} \right)$ bezeichnen wir als $\mathcal{H}$-
     Matrix-Darstellung der Matrix $M$. \citep{nichtlokop} 
     
     In \autoref{fig:hmat} ist eine $\mathcal{H}$-Matrix schematisch dargestellt. Für zulässige Blöcke sind die Matrizen $A_b$ und $B_b$ in blau 
-    und die Nahfeldmatrizen $N_b$ in rot gekennzeichnet. Durch die Dicke der Matrizen $A_b$ und $B_b$ ist der lokale Rang $k$ dargestellt. die Speicherplatzersparnis ist dadurch gut zu erkennen.
+    und die Nahfeldmatrizen $N_b$ in rot gekennzeichnet. Durch die Dicke der Matrizen $A_b$ und $B_b$ ist der lokale Rang $k$ dargestellt. Die Speicherplatzersparnis ist dadurch gut zu erkennen.
     
     Gerade auch im Zusammenhang mit dieser Arbeit ist aber von noch größerem Interesse, dass auch Operationen wie Matrix-Vektor-Multiplikationen auf \Rk-Matrizen und damit auch auf \hmat wesentlich 
-    effektiver implementiert werden können. \citet{h2diss} zeigt, dass die Matrix-Vektor-Multiplikation nur $k\left(n+m\right)$ statt $n \cdot m$ Operationen benötigt.
+    effektiver implementiert werden können. \citet{h2diss} weist nach, dass die Matrix-Vektor-Multiplikation nur $k\left(n+m\right)$ statt $n \cdot m$ Operationen benötigt.
     
 %     \clearpage
     
     \subsection{Optimierung}
     \label{sec:optimierung}
-    Im Folgenden wollen wir noch einige Überlegungen vorstellen, durch die \hmat noch speicherplatzsparender und noch effizienter in der Berechnung werden.
+    %Im Folgenden wollen wir noch einige Überlegungen vorstellen, durch die \hmat noch speicherplatzsparender und noch effizienter in der Berechnung werden.
+    \todo{korrektur} Im Folgenden werden wir uns einige Eigenschaften der \hmat genauer anschauen. Dadurch werden wir Möglichkeiten finden, durch die wir hierarchische Matrizen noch sparsamer speichern und 
+    effizienter Berechnungen auf ihnen durchführen können.
     
     \subsubsection{Zeilen- und Spaltenmatrizen}
     
@@ -451,13 +453,13 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     \end{equation*}
     also durch \Rk-Matrizen darstellen und erhalten so eine Darstellung als hierarchische Matrix. \citep{nichtlokop}
     
-    Ein Blick auf die Definition der Matrix $B_b$ verrät, dass diese nicht von $\tau$ sondern ausschließlich von $\sigma$ abhängt. Wir können sie also für konstantes $\sigma$ für alle Blöcke 
-    $\tilde b = \tilde \tau \times \sigma \in T_{X \times Y}$ durch eine Matrix
+    Ein Blick auf die Definition der Matrizen $B_b$ verrät, dass diese nicht von den Zielgebieten $\tau$ sondern ausschließlich von den Quellgebieten $\sigma$ abhängen. Wir können also für 
+    konstantes $\sigma$ für alle Blöcke $\tilde b = \tilde \tau \times \sigma \in T_{X \times Y}$ die Matrix $B_{\tilde b}$ durch eine Matrix
     \begin{equation*}
       \left(W_\sigma\right)_{y\nu} := \lag_\inds{\nu}\left(y\right)
     \end{equation*} 
-    ersetzen. Anstatt also für jeden Block $b$ wieder eine eigene Matrix aufstellen zu müssen, können sich Blöcke mit gleichem Quellgebiet $\sigma$ die Matrizen teilen. Insbesondere muss diese 
-    Matrix $W_\sigma$ auch nur einmal berechnet werden, womit ein erheblicher Teil des Rechnungsaufwands bei der Konstruktion von \hmat eingespart werden kann. Zudem können wiederum Operationen
+    substituieren. Anstatt also für jeden Block $b$ wieder eine eigene Matrix aufstellen zu müssen, können sich Blöcke mit gleichem Quellgebiet $\sigma$ die Matrizen $W_\sigma$ teilen. Insbesondere muss
+    diese Matrix $W_\sigma$ auch nur einmal berechnet werden, womit ein erheblicher Teil des Rechnungsaufwands bei der Konstruktion von \hmat eingespart werden kann. Zudem können wiederum Operationen
     wie die Matrix-Vektor-Multiplikation effektiver durchgeführt werden, da auch hier die Matrix $W_\sigma$ ausgeklammert werden kann, und so nur einmal in die Berechnung einfließt. \citep{nichtlokop}
     
     \begin{defn}
@@ -467,71 +469,74 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
     \end{defn}
 
     Dargestellt ist diese Optimierung in \autoref{fig:semi-h2}. In hellblau wurden die Spaltenmatrizen $W_\sigma$ auf dem Clusterbaum eingezeichnet. Die verbleibenden dunkelblauen Matrizen sind
-    die nicht optimierten Matrizen $A_b$. Ein Vergleich der Häufigkeit der Matrizen $A_b$ und $W_\sigma$ verdeutlicht die zuvor beschriebene Ersparnis von Redundanz.
+    die nicht optimierten Matrizen $A_b$. Ein Vergleich der Häufigkeit der Matrizen $A_b$ und $W_\sigma$ verdeutlicht die zuvor beschriebene Einsparung von Redundanz.
 
     
     \subsubsection{Transfermatrizen und Clusterbasis}
     \label{sec:transmat}
+    
+    \begin{figure}[b]
+      \begin{tabular}{c}
+	\includegraphics[width=0.5\textwidth]{img/cbaum_full.png}\\
+	
+	\begin{turn}{-90} $\longrightarrow$ \ \ \  \end{turn}\\
+	
+	\includegraphics[width=0.5\textwidth]{img/cbaum_transfer.png}
+      \end{tabular}
+      \caption{Ersetzung der Matrizen $W_\sigma$ durch Transfermatrizen $E_{\tilde \sigma}$ auf Nicht-Blattclustern. (Quelle: \citet{h2slides})}
+      \label{fig:trans}
+    \end{figure}
+    
     Von \citet{h2approxint} wird auf folgende Eigenschaft der Interpolationsoperatoren hingewiesen:
 
     Sei $\mathcal{Q}_k := \{ \prod_{i \in \haken{i_0}} p_i \ | \ p_i \in \Pi_k , \ i_0 \in \N \}$ der durch Tensorprodukte von Polynomen von höchstens Grad $k$ aufgespannte Polynomraum.
     Da alle Cluster durch Polynome der selben Ordnung interpoliert wurden, zeigt \autoref{eq:interpol}, dass $\mathfrak{I}_Q$ gerade eine Projektion auf diesen Raum $\mathcal{Q}_k$ ist.
     
-    Wegen dieser Projektionseigenschaft des Interpolationsoperators folg für $\sigma \in T_X \backslash \mathcal{L}\left(T_X\right)$, Söhne $\tilde \sigma \in sons\left(\sigma\right)$ und 
+    Wegen dieser Projektionseigenschaft des Interpolationsoperators folg für $\sigma \in T_Y \backslash \mathcal{L}\left(T_Y\right)$, Söhne $\tilde \sigma \in sons\left(\sigma\right)$ und 
     für alle $\nu \in \haken{k}$:
     \begin{equation*}
       \lag_\inds{\nu} = \mathfrak{I}_{\tilde \sigma}[\lag_\inds{\nu}] = \sum_{\tilde \nu \in \haken{k}} \lag_\inds{\nu}\left(\xi_{\tilde \sigma,\tilde \nu}\right) \lag_{\tilde \sigma,\tilde \nu}.
     \end{equation*}
     
+    \todo{korrektur}Die Spalten- (bzw. Zeilen-)matrizen lassen sich also verlustfrei aus den Spalten- (bzw. Zeilen-)matrizen der Söhne konstruieren.
     Anstatt also auf jeder Ebene des Clusterbaumes eine vollständige Matrix $W_\sigma \in \R^{\sigma \times k}$ aufzustellen, genügt es für jeden Sohncluster $\tilde \sigma \in sons\left(\sigma\right)$
-    Matrizen $E_{\tilde \sigma} \in \R^{k \times k}$ mit $\left(E_{\tilde \sigma}\right)_{\tilde\nu , \nu} := \lag_\inds{\nu}\left(\xi_{\tilde \sigma, \tilde \nu}\right)$ zu speichern. Dies führt zu 
-    folgender Definition:
+    Matrizen $E_{\tilde \sigma} \in \R^{k \times k}$ mit $\left(E_{\tilde \sigma}\right)_{\tilde\nu , \nu} := \lag_\inds{\nu}\left(\xi_{\tilde \sigma, \tilde \nu}\right)$ zu speichern. 
+    Diese Matrizen haben nur noch $k^2$ statt $|\sigma| \cdot k$ Einträge. Da in der Regel $k < |\sigma|$ gilt, können wir weiteren Speicherplatz einsparen. Dies führt zu folgender Definition:
     
     \begin{defn}
       (Transfermatrix, Clusterbasis)\\
-      Sei $T_X$ ein Clusterbaum mit einer Familie von Spalten- (bzw. Zeilen-)matrizen $W = \left(W_\sigma\right)_{\sigma \in T_X}$. Existiert eine Familie $E = \left(E_\sigma\right)_{\sigma \in T_X}$ 
+      Sei $T_Y$ ein Clusterbaum mit einer Familie von Spalten- (bzw. Zeilen-)matrizen $W = \left(W_\sigma\right)_{\sigma \in T_Y}$. Existiert eine Familie $E = \left(E_\sigma\right)_{\sigma \in T_Y}$ 
       von $\left(k \times k\right)$-Matrizen mit der Eigenschaft
       \begin{equation*}
-	\left. V_\sigma \right|_{\tilde \sigma \times k} = V_{\tilde \sigma} E_{\tilde \sigma} \ \ \ \ \ \ \ \ \ \ \ \ \text{für alle } 
-	\sigma \in T_X \backslash \mathcal{L}\left(T_X\right) \text{ und } \tilde \sigma \in sons\left(\sigma\right),
+	\left. W_\sigma \right|_{\tilde \sigma \times k} = W_{\tilde \sigma} E_{\tilde \sigma} \ \ \ \ \ \ \ \ \ \ \ \ \text{für alle } 
+	\sigma \in T_Y \backslash \mathcal{L}\left(T_Y\right) \text{ und } \tilde \sigma \in sons\left(\sigma\right),
       \end{equation*}
-      so nennen wir $V$ eine \textit{(geschachtelte) Clusterbasis} (von Rang $k$) für den Clusterbaum $T_X$. Die Matrizen der Familie $E$ heißen die korrespondierenden \textit{Transfermatrizen}.
+      so nennen wir $W$ eine \textit{(geschachtelte) Clusterbasis} (von Rang $k$) für den Clusterbaum $T_Y$. Die Matrizen der Familie $E$ heißen \textit{Transfermatrizen}.
       \citep{nichtlokop}
     \end{defn}
 
-    Mit der \textit{geschachtelten Darstellung} $\left(\left(W_\sigma\right)_{\sigma in \mathcal{L}\left(T_X\right)} , \left(E_\sigma\right)_{\sigma \in T_X \backslash \mathcal{L}\left(T_X\right)}\right)$ der Clusterbasen haben wir nun also eine 
+    Mit der \textit{geschachtelten Darstellung} $\left(\left(W_\sigma\right)_{\sigma in \mathcal{L}\left(T_Y\right)} , \left(E_\sigma\right)_{\sigma \in T_Y \backslash \mathcal{L}\left(T_Y\right)}\right)$ der Clusterbasen haben wir nun also eine 
     noch kompaktere Darstellung der Matrizen $B_b$. Dargestellt ist dies in \autoref{fig:trans}.
-    
-    \begin{figure}[t]
-      \begin{tabular}{c}
-	\includegraphics{img/cbaum_full.png}\\
-	
-	\begin{turn}{-90} $\longrightarrow$ \ \ \  \end{turn}\\
-	
-	\includegraphics{img/cbaum_transfer.png}
-      \end{tabular}
-      \caption{Ersetzung der Matrizen $W_\sigma$ durch Transfermatrizen $E_{\tilde \sigma}$ auf Nicht-Blattclustern. (Quelle: \citet{h2slides})}
-      \label{fig:trans}
-    \end{figure}
 
     \subsubsection{Interpolation in beiden Komponenten}
     Auch in diesem Abschnitt folge ich dem Aufbau von \citet{nichtlokop}.
     
     Wir haben bereits einige Eigenschaften der Matrizen $B_b$ beziehungsweise $W_\sigma$ identifiziert, die sich zur Effektivitätssteigerung nutzen lassen.
     Leider bleiben die Speicherplatzineffizienz und der höhere Rechenaufwand für die Matrizen $A_b$ bestehen, die die positiven Eigenschaften der Matrizen $W_\sigma$ nicht teilen. Allerdings 
-    haben wir die Matrizen $W_\sigma$ einfach punktweise aus den Lagrange-Polynomen bei der Interpolation definiert. Es liegt also nahe eine Interpolation nicht nur in einer, sondern in beiden 
-    Variablen durchzuführen. Wir wählen also Interpolationspunkte $\xi_\indt{1}, \dots , \xi_\indt{k}$ und erhalten wiederum mit den zugehörigen Lagrange-Polynomen 
-    $\lag_\indt{1}, \dots, \lag_\indt{k}$:
+    haben wir die Matrizen $W_\sigma$ einfach punktweise aus den Lagrange-Polynomen bei der Interpolation definiert. 
+    
+    Es liegt also nahe eine Interpolation nicht nur in einer, sondern in beiden Variablen durchzuführen. Dazu wählen wir Interpolationspunkte $\xi_\indt{1}, \dots , \xi_\indt{k}$ und erhalten 
+    wiederum mit den zugehörigen Lagrange-Polynomen $\lag_\indt{1}, \dots, \lag_\indt{k}$:
     \begin{equation*}
       g\left(x,y\right) \approx \tilde g\left(x,y\right) = \sum_{\mu \in \haken{k}} \sum_{\nu \in \haken{k}} \lag_\indt{\mu}\left(x\right) g\left(\xi_\indt{\mu}, \xi_\inds{\nu}\right) \lag_\inds{\nu}\left(y\right).
     \end{equation*}
-    Mit 
+    \todo{korrektur}Die Funktion $\tilde g$ ist ebenfalls eine entartete Kernfunktion, nur dass diesmal die Körper $x$ und $y$ ausschließlich in Verbindung mit den Lagrange-Polynomen auftauchen. Mit 
     \begin{equation*}
       \left(S_b\right)_{\mu\nu} := g\left(\xi_\indt{\mu}, \xi_\inds{\nu}\right), \ \mu,\nu \in \haken{k}
     \end{equation*}
     erhalten wir eine Familie von Koeffizientenmatrizen $\left(S_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)} \in \R^{k \times k}$, die weder von $x$, noch von $y$ anhängt, sondern lediglich von den 
     Interpolationspunkten.
-    Außerdem haben wir durch die neuerliche Interpolation die Abhängigkeit von $x$ wiederum auf Lagrange-Polynome beschränkt und erhalten so Matrizen $V_\tau \in \R^{\tau \times k}$ durch
+    Durch die neuerliche Interpolation haben wir die Abhängigkeit von $x$ wiederum auf Lagrange-Polynome beschränkt und erhalten so Matrizen $V_\tau \in \R^{\tau \times k}$ durch
     die Festlegung
     \begin{equation*}
       \left(V_\tau\right)_{x\mu} := \lag_\indt{\mu}\left(x\right).
@@ -541,25 +546,17 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \left. G \right|_b \approx \left. \tilde G \right|_b = V_\tau S_b \trans{W_\sigma}.
     \end{equation*}
     
-    Die Matrizen $V_\tau$ haben dieselben Eigenschaften wie die Matrizen $W_\sigma$. Beide lassen sich also nicht nur effizient speichern, sondern auch effizient konstruieren. Außerdem 
-    brauchen sie auf Grund der Entkoppelung von $\tau$ und $\sigma$ jeweils nur einmal aufgestellt zu werden. Da die Matrizen $S_b$, die die Kopplung zwischen den Clustern 
-    $\tau$ und $\sigma$ beschreiben, wiederum verhältnismäßig klein sind, lassen sich diese wiederum auch effektiv verarbeiten.
+    \todo{korrektur}Da die Matrizen $V_\tau$ analog zu den Matrizen $W_\sigma$ definiert wurden, teilen sie dieselben positiven Eigenschaften. Beide lassen sich also nicht nur effizient speichern, sondern auch 
+    effizient konstruieren. Außerdem brauchen sie auf Grund der Entkoppelung von $\tau$ und $\sigma$ jeweils nur einmal aufgestellt zu werden. Die Matrizen $S_b$, die die Kopplung zwischen den
+    Clustern $\tau$ und $\sigma$ beschreiben, sind wiederum verhältnismäßig klein. Diese haben nur $k \cdot k$ Einträge und lassen sich daher ebenfalls effizient verarbeiten.
     
     \subsection{\hquad}
     \label{sec:hquad}
-    
-    \begin{figure}[b]
-      \includegraphics[width=0.7\textwidth]{img/h2-matrix.png}
-      \caption{Darstellung einer $\mathcal{H}^2$-Matrix: In blau die geschachtelten Clusterbasen, in pink die Kopplungsmatrizen, in rot die verbleibenden Nahfeldmatrizen. (Quelle: \citet{h2slides})}
-      \label{fig:h2}
-    \end{figure}
-
-    
       Die Überlegungen der letzten Abschnitte fließen nun in der Definition der \hquad zusammen.
       
       \begin{defn}
 	(\hquad)\\
-	Sei $T_{X \times Y}$ ein streng zulässiger Blockbaum, $k \in \N_0$ und seien $V$ und $W$ Clusterbasen des Ranges $k$ für die Clusterbäume $T_X$ und $T_Y$. Eine Matrix 
+	Sei $T_{X \times Y}$ ein streng zulässiger Blockbaum, $k \in \N_0$ und seien $V$ und $W$ geschachtelte Clusterbasen des Ranges $k$ für die Clusterbäume $T_X$ und $T_Y$. Eine Matrix 
 	$M \in \R^{X \times Y}$ heißt \textit{$\mathcal{H}^2$-Matrix} mit Zeilenbasis $V$ und Spaltenbasis $W$, falls für alle zulässigen Blattblöcke 
 	$b = \tau \times \sigma \in \mathcal{L}^+\left(T_{X \times Y}\right)$ eine Matrix $S_b \in R^{k \times k}$ existiert, sodass
 	\begin{equation*}
@@ -568,8 +565,13 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
 	erfüllt ist. Die Familie $\left(S_b\right)_{b \in \mathcal{L}^+\left(T_{X \times Y}\right)}$ bezeichnen wir als Familie der \textit{Kopplungsmatrizen}.
       \end{defn}
       
-      Für unzulässig Blattblöcke $b = \tau \times \sigma \in \mathcal{L}^-\left(T_{X \times Y}\right)$ verbleiben, wie auch bei den \hmat, die vollbesetzten Nahfeldmatrizen $N_b$.
+      \begin{figure}[t]
+	\includegraphics[width=0.7\textwidth]{img/h2-matrix.png}
+	\caption{Darstellung einer $\mathcal{H}^2$-Matrix: In blau die geschachtelten Clusterbasen, in pink die Kopplungsmatrizen, in rot die verbleibenden Nahfeldmatrizen. (Quelle: \citet{h2slides})}
+	\label{fig:h2}
+      \end{figure}
       
+      Für unzulässig Blattblöcke $b = \tau \times \sigma \in \mathcal{L}^-\left(T_{X \times Y}\right)$ verbleiben, wie auch bei den \hmat, die vollbesetzten Nahfeldmatrizen $N_b$.
       Mit geschachtelten Darstellungen 
       \[
       \left( 
@@ -606,7 +608,7 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \[
        \ col*(\sigma) := \{ t \in T_X \ | \ \exists \tilde \sigma \in T_Y \colon \ t \times \tilde \sigma \in \mathcal{L}^+\left(T_{X \times Y}\right) \wedge \sigma \in sons^*(\tilde \sigma) \}.
       \]
-      Dieser Unterschied ist in \autoref{fig:hh2diff} bildlich dargestellt:
+      Dieser Unterschied ist in \autoref{fig:hh2diff} bildlich dargestellt.
       
       \begin{figure}[b]
 	\includegraphics[width=\textwidth]{img/H_H2_diff.png}
@@ -616,5 +618,5 @@ $G$ durch Matrizen $A$ und $B$ durch $G = A\trans{B}$.
       \end{figure}
 
 
-      Mit den \hquad haben wir also eine sehr effiziente Teilmenge der hierarchischen Matrizen gefunden, die sich noch kompakter speichern lassen und mit denen Berechnungen noch effizienter 
-      durchgeführt werden können.
+      Mit den \hquad haben wir eine sehr effiziente Teilmenge der hierarchischen Matrizen gefunden, die sich noch kompakter speichern lassen und mit denen Berechnungen noch effizienter 
+      durchgeführt werden können. In \autoref{sec:approxf} wird die Umsetzung dieser Struktur für das Modellproblem der Berechnung von Gravitationskräften vorgestellt.
